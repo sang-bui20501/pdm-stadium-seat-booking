@@ -39,14 +39,14 @@ function SignIn () {
             <form method="post" onSubmit={handleSignin}>
                 <div className="container-fluid text-start">
                     <div className="row mb-3">
-                        <div className="col"> <label for='username'>Username</label> </div>
+                        <div className="col"> <label htmlFor='username'>Username</label> </div>
                         <div className="col">
                             <input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)} required/>
                         </div>
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='password'>Password</label> </div>
+                        <div className="col"> <label htmlFor='password'>Password</label> </div>
                         <div className="col">
                             <input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required/>
                         </div>

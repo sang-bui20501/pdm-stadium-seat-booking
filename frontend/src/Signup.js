@@ -61,7 +61,7 @@ function SignUp () {
             <form autoComplete='off' method="post" onSubmit={handleSignup}>
                 <div className="container-fluid text-start">
                     <div className="row mb-3">
-                        <div className="col"> <label for='first-name'>First name</label> </div>
+                        <div className="col"> <label htmlFor='first-name'>First name</label> </div>
                         <div className="col">
                             <input
                                 type='text'
@@ -74,7 +74,7 @@ function SignUp () {
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='mid-name'>Middle name (optional)</label> </div>
+                        <div className="col"> <label htmlFor='mid-name'>Middle name (optional)</label> </div>
                         <div className="col">
                             <input  
                                 type='text'
@@ -86,7 +86,7 @@ function SignUp () {
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='last-name'>Last name</label> </div>
+                        <div className="col"> <label htmlFor='last-name'>Last name</label> </div>
                         <div className="col">
                             <input  
                                 type='text'
@@ -99,7 +99,7 @@ function SignUp () {
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='username'>Username</label> </div>
+                        <div className="col"> <label htmlFor='username'>Username</label> </div>
                         <div className="col">
                             <input 
                                 type='text' 
@@ -112,7 +112,7 @@ function SignUp () {
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='password'>Password</label> </div>
+                        <div className="col"> <label htmlFor='password'>Password</label> </div>
                         <div className="col">
                             <input 
                                 type='password' 
@@ -125,7 +125,7 @@ function SignUp () {
                     </div>
 
                     <div className="row mb-3">
-                        <div className="col"> <label for='check-pw'>Re-type your password</label> </div>
+                        <div className="col"> <label htmlFor='check-pw'>Re-type your password</label> </div>
                         <div className="col">
                             <input 
                                 type='password' 
