@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import SignUp from './Signup';
 import Home from './Home';
+import SignIn from './Signin';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/signup' element={<SignUp/>}/>
-            <Route path='/signin' />
+            <Route path='/signin' element={<SignIn/>}/>
             <Route path='/book' />
           </Routes>
         </div>

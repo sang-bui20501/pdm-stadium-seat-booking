@@ -46,14 +46,11 @@ function SignUp () {
                     }
                 });
             }
-            else {
-                setCheckPw(null);       // If password does not match re-type pw, clear both password re-type pw
-                setPassword(null);      
+            else {    
                 errorMessage = 'Re-type password must match your password!';
             }
         }
         else {
-            setUsername(null);
             errorMessage = 'Username is already taken! Please choose another one.'
         }
     };
