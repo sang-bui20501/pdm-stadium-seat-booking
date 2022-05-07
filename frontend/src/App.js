@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import SignUp from './Signup';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <div className='content'>
           <Routes>
             <Route path='/' />
-            <Route path='/signup' />
+            <Route path='/signup' element={<SignUp/>}/>
             <Route path='/signin' />
             <Route path='/book' />
           </Routes>
