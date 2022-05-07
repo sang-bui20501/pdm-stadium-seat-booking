@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import SignUp from './Signup';
+import Home from './Home';
+import SignIn from './Signin';
 
 function App() {
   return (
@@ -15,9 +18,9 @@ function App() {
 
         <div className='content'>
           <Routes>
-            <Route path='/' />
-            <Route path='/signup' />
-            <Route path='/signin' />
+            <Route path='/' element={<Home/>}/>
+            <Route path='/signup' element={<SignUp/>}/>
+            <Route path='/signin' element={<SignIn/>}/>
             <Route path='/book' />
           </Routes>
         </div>
