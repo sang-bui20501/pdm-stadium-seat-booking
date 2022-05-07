@@ -9,7 +9,7 @@ function SignUp () {
     var errorMessage = '';
 
     useEffect(() => {
-        if (getToken)
+        if (getToken())
             navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
     }, []);
 
