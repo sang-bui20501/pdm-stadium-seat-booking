@@ -9,14 +9,16 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <div className='header'>
-          <NavLink to='/'>Home</NavLink>
-          <NavLink to='/signup'>Sign Up</NavLink>
-          <NavLink to='/signin'>Sign In</NavLink>
-          <NavLink to='/book'>Book your seats</NavLink>
+        <div className='navbar navbar-expand-lg navbar-light bg-light'>
+          <div className='container-fluid justify-content-center'>
+            <div className='px-3'> <NavLink to='/'>Home</NavLink> </div>
+            <div className='px-3'> <NavLink to='/signup'>Sign Up</NavLink> </div>
+            <div className='px-3'> <NavLink to='/signin'>Sign In</NavLink> </div>
+            <div className='px-3'> <NavLink to='/book'>Book your seats</NavLink> </div>
+          </div>
         </div>
 
-        <div className='content'>
+        <div className='d-flex justify-content-center mt-5'>
           <Routes>
             <Route path='/' element={<Home/>}/>
             <Route path='/signup' element={<SignUp/>}/>

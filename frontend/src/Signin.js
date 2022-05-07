@@ -35,20 +35,25 @@ function SignIn () {
 
     return (
         <div>
+            <h3 className="mb-4">Sign In</h3>
             <form method="post" onSubmit={handleSignin}>
-                <table>
-                    <tr>
-                        <td> <label for='username'>Username</label> </td>
-                        <td> <input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)} required/> </td>
-                    </tr>
+                <div className="container-fluid text-start">
+                    <div className="row mb-3">
+                        <div className="col"> <label for='username'>Username</label> </div>
+                        <div className="col">
+                            <input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)} required/>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='password'>Password</label> </td>
-                        <td> <input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required/> </td>
-                    </tr>
+                    <div className="row mb-3">
+                        <div className="col"> <label for='password'>Password</label> </div>
+                        <div className="col">
+                            <input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required/>
+                        </div>
+                    </div>
 
-                    <tr> <td> <input type='submit' value='Sign In'/> </td> </tr>
-                </table>
+                    <div className="row"> <input className="btn" type='submit' value='Sign In'/> </div>
+                </div>
             </form>
 
             <h1>{errorMessage}</h1>

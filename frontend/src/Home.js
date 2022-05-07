@@ -8,7 +8,7 @@ function Home () {
 
     const Body = () => {
         const token = getToken();
-        if (token) {
+        if (1) {
             return (
                 <div>
                     <h1>Welcome Back!</h1>

@@ -57,11 +57,12 @@ function SignUp () {
 
     return (
         <div>
+            <h3 className="mb-4">Create your account!</h3>
             <form autoComplete='off' method="post" onSubmit={handleSignup}>
-                <table>
-                    <tr>
-                        <td> <label for='first-name'>First name</label> </td>
-                        <td>
+                <div className="container-fluid text-start">
+                    <div className="row mb-3">
+                        <div className="col"> <label for='first-name'>First name</label> </div>
+                        <div className="col">
                             <input
                                 type='text'
                                 name="first-name"
@@ -69,24 +70,24 @@ function SignUp () {
                                 onChange={e => setFName(e.target.value)}
                                 required
                             />
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='mid-name'>Middle name (optional)</label> </td>
-                        <td>
+                    <div className="row mb-3">
+                        <div className="col"> <label for='mid-name'>Middle name (optional)</label> </div>
+                        <div className="col">
                             <input  
                                 type='text'
                                 name="mid-name" 
                                 id="mid-name"
                                 onChange={e => SetMName(e.target.value)}
                             />
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='last-name'>Last name</label> </td>
-                        <td> 
+                    <div className="row mb-3">
+                        <div className="col"> <label for='last-name'>Last name</label> </div>
+                        <div className="col">
                             <input  
                                 type='text'
                                 name="last-name" 
@@ -94,12 +95,12 @@ function SignUp () {
                                 onChange={e => setLName(e.target.value)}
                                 required
                             /> 
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='username'>Username</label> </td>
-                        <td> 
+                    <div className="row mb-3">
+                        <div className="col"> <label for='username'>Username</label> </div>
+                        <div className="col">
                             <input 
                                 type='text' 
                                 name="username" 
@@ -107,12 +108,12 @@ function SignUp () {
                                 onChange={e => setUsername(e.target.value)}
                                 required
                             /> 
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='password'>Password</label> </td>
-                        <td> 
+                    <div className="row mb-3">
+                        <div className="col"> <label for='password'>Password</label> </div>
+                        <div className="col">
                             <input 
                                 type='password' 
                                 name="password" 
@@ -120,23 +121,24 @@ function SignUp () {
                                 onChange={e => setPassword(e.target.value)}
                                 required
                             />
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
 
-                    <tr>
-                        <td> <label for='check-pw'>Re-type your password</label> </td>
-                        <td> 
+                    <div className="row mb-3">
+                        <div className="col"> <label for='check-pw'>Re-type your password</label> </div>
+                        <div className="col">
                             <input 
                                 type='password' 
                                 name="check-pw" 
                                 id="check-pw" 
                                 onChange={e => setCheckPw(e.target.value)}
-                                required/> 
-                        </td>
-                    </tr>
+                                required
+                            /> 
+                        </div>
+                    </div>
 
-                    <tr> <td> <input type='submit' value='Submit'/> </td> </tr>
-                </table>
+                    <div className="row mb-3"> <input className="btn" type='submit' value='Submit'/> </div>
+                </div>
             </form>
 
             <p>{errorMessage}</p>
