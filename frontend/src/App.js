@@ -4,6 +4,7 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import SignUp from './Signup';
 import Home from './Home';
 import SignIn from './Signin';
+import ShowBookings from './showBookings';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
             <Route path='/' element={<Home/>}/>
             <Route path='/signup' element={<SignUp/>}/>
             <Route path='/signin' element={<SignIn/>}/>
-            <Route path='/book' />
+            <Route path='/book-seats' />
+            <Route path='/your-bookings' element={<ShowBookings/>} />
           </Routes>
         </div>
       </BrowserRouter>

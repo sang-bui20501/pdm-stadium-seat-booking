@@ -6,12 +6,17 @@ import { getToken } from "./Utils/Common";
 function Home () {
     const navigate = useNavigate();
 
+
+    const showBookings = () => {
+        navigate('/your-bookings');
+    }
     const Body = () => {
         const token = getToken();
         if (1) {
             return (
                 <div>
                     <h1>Welcome Back!</h1>
+                    <input className="btn" type='button' onClick={showBookings} value='Show your bookings'/>
                 </div>
             );
         }
