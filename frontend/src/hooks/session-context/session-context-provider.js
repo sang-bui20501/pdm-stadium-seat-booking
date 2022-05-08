@@ -13,7 +13,7 @@ export const SessionContextProvider = ({ children, loginUrl }) => {
     const contextData = {
         loginUrl,
         data: "",
-        isAuthenticated: !!cookies["auth-token"],
+        isAuthenticated: true,
         removeAuthCookies
     }
 

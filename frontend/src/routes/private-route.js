@@ -1,23 +1,25 @@
 import React from 'react'
 import { Navigate, Route, useLocation } from 'react-router-dom'
-import useAuth from 'hooks/use-auth/use-auth';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
+import { SessionContext } from './../hooks/session-context/session-context';
 
 const PrivateRoute = ({ Component }) => {
-    const isAuthenticated = useAuth()
-    const { location } = useLocation() 
-    const { navigate } = useNavigate()
+    const { isAuthenticated } = useContext(SessionContext) || {}
+
+    const { location } = useLocation()
+    const navigate = useNavigate()
+
 
     useEffect(() => {
-        if(isAuthenticated) return
+        if (isAuthenticated) return
 
-        navigate({ path: "/login"})
+        navigate({ path: "/sign-in" })
     }, [navigate, location, isAuthenticated])
 
-    if(!isAuthenticated) {
-        return <Navigate to = '/login' state={{ from: location }} />
-    }   
+    if (!isAuthenticated) {
+        return <Navigate to='/sign-in' state={{ from: location }} />
+    }
     return <Component />;
 }
 
