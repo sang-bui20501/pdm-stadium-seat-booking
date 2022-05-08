@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken } from "./Utils/Common";
+import { getToken } from "utils/common";
 
 
 function Home () {

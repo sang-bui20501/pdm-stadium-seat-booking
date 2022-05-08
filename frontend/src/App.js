@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import SignUp from './Signup';
-import Home from './Home';
-import SignIn from './Signin';
-import ShowBookings from './showBookings';
+import SignUp from 'pages/sign-up';
+import Home from 'pages/homepage';
+import SignIn from 'pages/sign-in';
+import ShowBookings from 'pages/show-booking';
 
 function App() {
   return (
