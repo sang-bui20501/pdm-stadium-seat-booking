@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useParams } from 'react'
 import Nav from '../../components/Nav/Nav'
 import DatePicker from "react-date-picker";
-import "./BookingPage.css"
+import "./booking-page.css"
 import axios from "axios"
 
 function BookingPage() {

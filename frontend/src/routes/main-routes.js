@@ -5,7 +5,7 @@ import SignUp from '../pages/sign-up/sign-up'
 import Homepage from '../pages/homepage/homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
-import { getToken } from "../utils/Common"
+import { getToken } from "utils/common"
 
 function MainRoutes() {
   
