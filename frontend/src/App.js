@@ -1,13 +1,13 @@
-import React from 'react'
-import MainRoutes from './routes/MainRoutes'
-import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
+import React from "react"
+import Homepage from "./pages/Homepage/Homepage";
+
 
 function App() {
   return (
     <div className="App">
-      <MainRoutes />
+      <Homepage />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
