@@ -14,4 +14,4 @@ services:
     - MYSQL_ROOT_PASSWORD=secret
     - MYSQL_DATABASE=pdm
   ports:
-    - "3306:3306"
+    - "3366:3306"
