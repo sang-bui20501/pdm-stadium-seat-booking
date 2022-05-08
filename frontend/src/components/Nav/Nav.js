@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import SignIn from '../../pages/SignIn/SignIn'
+import SignIn from 'pages/sign-in/sign-in'
 import logo from "../../assets/logo.png"
 import "./Nav.css"
-import { getSession } from "../../utils/Common"
+import { getSession } from "utils/common"
 
 function Nav() {
   

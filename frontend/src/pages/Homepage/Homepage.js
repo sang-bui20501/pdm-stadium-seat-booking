@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import Nav from '../../components/Nav/Nav'
-import "./Homepage.css"
+import Nav from 'components/Nav/Nav'
+import "./homepage.css"
 import {Link} from "react-router-dom"
 import axios from 'axios'
-import { getToken } from "../../utils/Common"
+import { getToken } from "utils/common"
 
 function Homepage() {
   return (

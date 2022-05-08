@@ -1,9 +1,9 @@
 import React from 'react'
-import BookingPage from '../pages/BookingPage/BookingPage'
-import SignIn from '../pages/SignIn/SignIn'
-import SignUp from '../pages/SignUp/SignUp'
-import Homepage from '../pages/Homepage/Homepage'
-import ShowBookings from '../pages/ShowBookings/ShowBookings'
+import BookingPage from '../pages/booking-page/booking-page'
+import SignIn from '../pages/sign-in/sign-in'
+import SignUp from '../pages/sign-up/sign-up'
+import Homepage from '../pages/homepage/homepage'
+import ShowBookings from '../pages/show-bookings/show-bookings'
 import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 import { getToken } from "../utils/Common"
 
