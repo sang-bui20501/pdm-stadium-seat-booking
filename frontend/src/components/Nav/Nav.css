@@ -7,13 +7,33 @@ nav {
     right: 0;
     left: 0;
     top: 0;
-    font-family: "Monserrat", sans-serif;
+    display: flex;
+    height: 65px;
+    justify-content: space-between;
+    align-items: flex-end;
+    box-shadow: 1px 2px 15px 1px rgba(0, 0, 0, 0.1);
+    padding: 8px 30px 8px 30px;
+    z-index: 1;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.logo-div {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+img {
+    width: 60px;
+    height: 60px;
+}
+
+.sections {
     display: flex;
     justify-content: space-between;
-    box-shadow: 0 2px 15px 1px rgba(0, 0, 0, 0.1);
-    padding: 8px 30px 8px 30px;
-    font-weight: bold;
-    z-index: 1;
+    width: 450px;
 }
 
 body {

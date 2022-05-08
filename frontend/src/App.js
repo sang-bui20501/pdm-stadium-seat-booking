@@ -1,13 +1,13 @@
-import React from "react"
-import Homepage from "./pages/Homepage/Homepage";
-
+import React from 'react'
+import MainRoutes from './routes/MainRoutes'
+import {BrowserRouter, Routes, Route, Link} from "react-router-dom"
 
 function App() {
   return (
     <div className="App">
-      <Homepage />
+      <MainRoutes />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

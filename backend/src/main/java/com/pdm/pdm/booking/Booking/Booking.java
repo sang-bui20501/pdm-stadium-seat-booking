@@ -14,7 +14,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookingId;
 
-    private boolean status;
+    private String status;
 
     private String startTime;
 
@@ -48,11 +48,11 @@ public class Booking {
         }
 
 
-        public boolean getStatus() {
+        public String getStatus() {
             return status;
         }
 
-        public void setStatus(boolean status) {
+        public void setStatus(String status) {
             this.status = status;
         }
 
