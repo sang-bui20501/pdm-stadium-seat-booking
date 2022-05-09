@@ -1,4 +1,4 @@
-package com.pdm.pdm.booking.Booking;
+package com.pdm.pdm.booking.BookingSeat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,23 +6,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
-public class BookingController {
+public class BookingSeatController {
     @Autowired
-    private BookingService bookingService;
+    private BookingSeatService bookingSeatService;
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
-    @GetMapping("booking/signing/save")
-    public String addBooking(Booking booking) {
-        bookingService.save(booking);
+    @GetMapping("booking-seat/signing/save")
+    public String addBooking(BookingSeat bookingSeat) {
+        bookingSeatService.save(bookingSeat);
         return "redirect:/result";
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info
-    @GetMapping("booking/remove/{bookingId}")
-    public String removeBooking(@PathVariable("bookingId") int bookingId) {
+    @GetMapping("booking-seat/remove/{bookingSeatId}")
+    public String removeBooking(@PathVariable("bookingSeatId") int bookingSeatId) {
         try {
-            bookingService.deleteBooking(bookingId);
+            bookingSeatService.deleteBookingSeat(bookingSeatId);
         } catch (Exception e) {
             e.printStackTrace();
         }              
@@ -30,10 +30,10 @@ public class BookingController {
     }
 
 //Show booking status
-    @GetMapping("booking/status/{bookingId}")
-    public String bookingStatus(@PathVariable("bookingId") int bookingId) {
+    @GetMapping("booking-seat/status/{bookingSeatId}")
+    public String bookingStatus(@PathVariable("bookingSeatId") int bookingSeatId) {
         try{
-            bookingService.hasBookings(bookingId);
+            bookingSeatService.hasBookingSeat(bookingSeatId);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -28,7 +28,11 @@ public class Booking {
         this.endTime = endTime;
         this.duration = duration;
     }
-    
+
+    public Booking() {
+
+    }
+
     public String duration(String startTime, String endTime) throws ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date d1 = sdf.parse(startTime);
