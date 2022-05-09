@@ -8,6 +8,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
 import { getToken } from "Utils/Common"
 import PrivateRoute from './private-route';
 import Nav from 'components/Nav/Nav'
+import Payment from 'pages/payment-page/proceed-payment'
+import CheckInfo from 'pages/payment-page/check-info'
 
 function MainRoutes() {
 
@@ -27,6 +29,8 @@ function MainRoutes() {
           <Route path="/sign-up" exact element={<SignUp />} />
           <Route path="/booking" exact element={<PrivateRoute Component={BookingPage} />} />
           <Route path='/your-bookings' exact element={<PrivateRoute Component={ShowBookings} />} onEnter={requireAuth} />
+          <Route path='/proceed-payment' element={<Payment/>} />
+          <Route path='/check-info' element={<CheckInfo/>} />
         </Routes>
       </div>
     </BrowserRouter>

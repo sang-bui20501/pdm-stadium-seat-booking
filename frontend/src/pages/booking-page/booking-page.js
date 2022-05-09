@@ -4,7 +4,6 @@ import DatePicker from "react-date-picker";
 import axios from "axios"
 
 function BookingPage() {
-  const [user, setUser] = useState();
   const [seats, setSeats] = useState([]);
   const [bookingSeat, setBookingSeat] = useState([]);
   const [bookings, setBookings] = useState([]);
@@ -161,7 +160,7 @@ function BookingPage() {
           </div>
         </div>
 
-        <div className='text-center mt-4'>
+        <div className='row text-center mt-4'>
           <input className='btn' type={'submit'} value='Submit'/>
         </div>
       </form>
