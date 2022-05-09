@@ -12,9 +12,9 @@ const PrivateRoute = ({ Component }) => {
 
 
     useEffect(() => {
-        if (isAuthenticated) return
+        if (isAuthenticated === true) return
 
-        navigate({ path: "/sign-in" })
+        navigate({ path: "/" })
     }, [navigate, location, isAuthenticated])
 
     if (!isAuthenticated) {

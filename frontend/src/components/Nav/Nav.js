@@ -9,28 +9,21 @@ function Nav() {
 
 
   return (
-      <nav>
-        <div className="logo-div">
-          <img src={logo} alt="logo"/>
-          <p>Booking App</p>
+      <div className='navbar navbar-expand-lg navbar-light bg-light'>
+        <div className='container-fluid'>
+          <div className="navbar-brand">
+            <img src={logo} alt="logo"/>
+            <small>Booking App</small>
+          </div>
+          <div className='d-flex'>
+            <div className='nav-item mx-3'> <Link to="/">Home</Link> </div>
+            <div className='nav-item mx-3'> <Link to="/booking">Start booking</Link> </div>
+            <div className='nav-item mx-3'> <Link to="/your-bookings">Your bookings</Link> </div>
+            <div className='nav-item mx-3'> <Link to="/sign-in">Sign in</Link> </div>
+          </div>
+          
         </div>
-        <div className="sections">
-          <p>
-            <Link to="/">Home</Link>
-          </p>
-          <p>
-            <Link to="/booking">Start booking</Link>
-          </p>
-          <p>
-            <Link to="/your-bookings">Your bookings</Link>
-          </p>
-        </div>
-        <div className="sign-in">
-          <p>
-            <Link to="/sign-in">Sign in</Link>
-          </p>
-        </div>
-      </nav>
+      </div>
   )
 }
 

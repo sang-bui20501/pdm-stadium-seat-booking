@@ -10,7 +10,7 @@
     left: 0;
     height: 800px;
     background-size: cover;
-    z-index: 0;
+    z-index: -1;
 }
 .card {
     background-color: rgba(0, 0, 0, 0.2);

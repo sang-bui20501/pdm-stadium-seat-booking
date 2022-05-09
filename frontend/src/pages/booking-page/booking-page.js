@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useParams } from 'react'
 import Nav from '../../components/Nav/Nav'
 import DatePicker from "react-date-picker";
-import "./booking-page.css"
 import axios from "axios"
 
 function BookingPage() {
@@ -78,83 +77,94 @@ function BookingPage() {
   }*/
   
   return (
-    <div>
-      <Nav />
-      <div className="form-wrapper">
-        <div className="form-description">
-          <p>Make a Reservation</p>
+    <div className='container-fluid mt-5 col-6'>
+      <h3 className='text-center mb-4'>Make a Reservation</h3>
+      <form>
+        <div className='row mb-3'>
+          <div className='col'> <label>Booking Type</label> </div>
+
+          <div className='col'>
+            <input type="radio" name="booking-type" id='seat' value="seat" onClick={() => {setShowSeatType(true); setShowInput(true)}}/>
+            <label for="seat">Seat</label>
+            &nbsp;&nbsp;
+            <input type="radio" name="booking-type" id='stadium' value="stadium" onClick={() => {setShowSeatType(false); setShowInput(true)}}/>
+            <label for="stadium">Stadium</label>
+          </div>
         </div>
-        <form>
-          <table>
-            <div className="form-section">
-              <tr>
-                <td>Booking Type</td>
-              </tr>
-              <tr>
-                <input type="radio" name="booking-type" value="seat" onClick={() => {setShowSeatType(true); setShowInput(true)}}/>
-                <label for="seat">Seat</label>
-                <input type="radio" name="booking-type" value="stadium" onClick={() => {setShowSeatType(false); setShowInput(true)}}/>
-                <label for="stadium">Stadium</label>
-              </tr>
+
+        <div className="form-section" style={{display: showSeatType ? "block"  : "none"}}>
+          <div className='row mb-3'>
+            <div className='col'> <label>Seat Type</label> </div>
+
+            <div className='col'>
+              <select onChange={(e) => {setSeatType(e.target.value)}}>
+                <option>Normal</option>
+                <option>Mid</option>
+                <option>VIP</option>
+              </select>
             </div>
-            <div className="form-section" style={{display: showSeatType ? "block"  : "none"}}>
-              <tr>
-                <td>Seat Type</td>
-              </tr>
-              <tr>
-                <select onChange={(e) => {setSeatType(e.target.value)}}>
-                  <option>Normal</option>
-                  <option>Mid</option>
-                  <option>VIP</option>
-                </select>
-              </tr>
+          </div>
+        </div>
+
+        <div className="form-section" style={{display: showInput ? "block"  : "none"}}>
+          <div className='row mb-3'>
+            <div className='col'> <label>Date</label> </div>
+
+            <div className='col'>
+              <DatePicker 
+                name="booking-date" 
+                onChange={(date) => {setDate(date); getUnavailableTime(date)}} 
+                value={date} 
+                minDate={new Date()} 
+                maxDate={new Date(Date.now() + 60*60*24*30*1000)}
+              />
             </div>
-            <div className="form-section" style={{display: showInput ? "block"  : "none"}}>
-              <tr>
-                <td>Date</td>
-              </tr>
-              <tr>
-                <DatePicker name="booking-date" onChange={(date) => {setDate(date); getUnavailableTime(date)}} value={date} minDate={new Date()} maxDate={new Date(Date.now() + 60*60*24*30*1000)}/>
-              </tr>
+          </div>
+        </div>
+
+        <div className="form-section" style={{display: showInput ? "block"  : "none"}}>
+          <div className='row mb-3'>
+            <div className='col'> <label>Time</label> </div>
+
+            <div className='col'>
+              <select>
+                {unavailableTime.map((time) => <option value={time}>{time}</option>)}
+              </select>
             </div>
-            <div className="form-section" style={{display: showInput ? "block"  : "none"}}>
-              <tr>
-                <td>Time</td>
-              </tr>
-              <tr>
-                <select>
-                  {unavailableTime.map((time) => <option value={time}>{time}</option>)}
-                </select>
-              </tr>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <div className='row mb-3'>
+            <div className='col'> <label>Duration (hours)</label> </div>
+
+            <div className='col'>
+              <select onChange={(e) => {setDuration(e.target.value)}}>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
             </div>
-            <div className="form-section">
-              <tr>
-                  <td>Duration (hours)</td>
-              </tr>
-              <tr>
-                <select onChange={(e) => {setDuration(e.target.value)}}>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                </select>
-              </tr>
+          </div>
+        </div>
+
+        <div className="form-section">
+          <div className='row mb-3'>
+            <div className='col'> <label>Price</label> </div>
+
+            <div className='col'>
+              <input type="text" name="price" value="1" readOnly='true'/>
             </div>
-            <div className="form-section">
-              <tr>
-                <td>Price</td>
-              </tr>
-              <tr>
-                <input type="text" name="price" value="1"/>
-              </tr>
-            </div>
-          </table>
-          <button className="submit-btn">Submit</button>
-        </form>
-      </div>
-      
+          </div>
+        </div>
+
+        <div className='text-center mt-4'>
+          <input className='btn' type={'submit'} value='Submit'/>
+        </div>
+      </form>
     </div>
   )
 }

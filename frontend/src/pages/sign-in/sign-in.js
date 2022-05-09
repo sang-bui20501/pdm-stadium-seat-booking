@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getToken, setSession } from "Utils/Common";
 
 
@@ -34,9 +34,13 @@ function SignIn () {
         });
     };
 
+    const toSignup = () => {
+        navigate('/sign-up');
+    }
+
     return (
-        <div>
-            <h3 className="mb-4">Sign In</h3>
+        <div className="container-fluid col-5 mt-5">
+            <h3 className="mb-4 text-center">Sign In</h3>
             <form method="post" onSubmit={handleSignin}>
                 <div className="container-fluid text-start">
                     <div className="row mb-3">
@@ -53,7 +57,8 @@ function SignIn () {
                         </div>
                     </div>
 
-                    <div className="row"> <input className="btn" type='submit' value='Sign In'/> </div>
+                    <div className="row mb-3"> <input className="btn" type='submit' value='Sign In'/> </div>
+                    <div className="row"> <input className="btn" type='button' value='Sign up' onClick={toSignup}/> </div>
                 </div>
             </form>
 

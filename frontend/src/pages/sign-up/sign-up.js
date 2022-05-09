@@ -56,8 +56,8 @@ function SignUp () {
     };
 
     return (
-        <div>
-            <h3 className="mb-4">Create your account!</h3>
+        <div className="container-fluid col-7 mt-5">
+            <h3 className="mb-4 text-center">Create your account!</h3>
             <form autoComplete='off' method="post" onSubmit={handleSignup}>
                 <div className="container-fluid text-start">
                     <div className="row mb-3">
