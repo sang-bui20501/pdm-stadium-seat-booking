@@ -9,11 +9,13 @@ export default function Payment() {
     const [expiry, setExpiry] = useState(null);
     const [cvv, setCVV] = useState(null);
     const toNextPage = () => {
-        return navigate('/check-info', {state: {
-            cardNum:    cardNum,
-            expiry:     expiry,
-            cvv:        cvv
-        }});
+        if (cardNum && expiry && cvv) {
+            return navigate('/check-info', {state: {
+                cardNum:    cardNum,
+                expiry:     expiry,
+                cvv:        cvv
+            }});
+        }
     }
 
     return (

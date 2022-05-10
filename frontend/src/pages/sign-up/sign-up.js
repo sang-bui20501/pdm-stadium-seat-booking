@@ -8,9 +8,18 @@ function SignUp () {
     const navigate = useNavigate();
     var errorMessage = '';
 
+    const [usernameList, setUsernameList] = useState(null);
     useEffect(() => {
         if (getToken())
             navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
+
+        setUsernameList(() => {                        // Get all usernames from db
+            axios.get('http://localhost:8080/api/getUsernames').then(res => {
+                console.log(res.data);
+                return res.data.usernames;
+            })
+        });
+
     }, []);
 
     const [firstName, setFName] = useState(null);
@@ -19,26 +28,12 @@ function SignUp () {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [checkPw, setCheckPw] = useState(null);
-
-    // const usernameList = () => {                        // Get all usernames from db
-    //     axios.get('/api/getUsernames').then(res => {
-    //         console.log(res.data);
-    //         return res.data.usernames;
-    //     })
-    // };
     
     const handleSignup = (event) => {
         var form = null;
         event.preventDefault();
 
-        const usernameList = () => {                        // Get all usernames from db
-            axios.get('http://localhost:8080/api/getUsernames').then(res => {
-                console.log(res.data);
-                return res.data.usernames;
-            })
-        };
-
-        if (usernameList.includes(username)) {         // If username is new, proceed
+        if (!usernameList.includes(username)) {         // If username is new, proceed
             if (password === checkPw) {                 // If password match re-type pw, proceed
                 form = {
                     firstName:  firstName,
