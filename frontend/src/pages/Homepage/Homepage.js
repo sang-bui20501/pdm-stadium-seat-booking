@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import "./Homepage.css"
+import styles from "./Homepage.module.css"
 import {Link} from "react-router-dom"
 
 function Homepage() {
   return (
     <div>
-        <div className="main">
-            <div className="card">
-            <h1 className="project-name">Booking App</h1>
+        <div className={styles.main}>
+            <div className={styles.card}>
+            <h1 className={styles["project-name"]}>Booking App</h1>
 
-            <button className="start-booking-btn">
+            <button className={styles["start-booking-btn"]}>
                 <Link to={"/booking"}>Start Booking</Link>
             </button>
             </div>

@@ -21,7 +21,7 @@ function MainRoutes() {
 
   return (
     <BrowserRouter>
-      <div> <Nav></Nav> </div>
+      <div className='header'> <Nav></Nav> </div>
       <div>
         <Routes>
           <Route path="/" exact element={<PrivateRoute Component={Homepage} />} />
