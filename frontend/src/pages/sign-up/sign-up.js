@@ -20,16 +20,25 @@ function SignUp () {
     const [password, setPassword] = useState(null);
     const [checkPw, setCheckPw] = useState(null);
 
-    const usernameList = () => {                        // Get all usernames from db
-        axios.get('/api/getUsernames').then(res => {
-            return res.data.usernames;
-        })
-    };
+    // const usernameList = () => {                        // Get all usernames from db
+    //     axios.get('/api/getUsernames').then(res => {
+    //         console.log(res.data);
+    //         return res.data.usernames;
+    //     })
+    // };
     
     const handleSignup = (event) => {
         var form = null;
         event.preventDefault();
-        if (!usernameList.includes(username)) {         // If username is new, proceed
+
+        const usernameList = () => {                        // Get all usernames from db
+            axios.get('http://localhost:8080/api/getUsernames').then(res => {
+                console.log(res.data);
+                return res.data.usernames;
+            })
+        };
+
+        if (usernameList.includes(username)) {         // If username is new, proceed
             if (password === checkPw) {                 // If password match re-type pw, proceed
                 form = {
                     firstName:  firstName,
@@ -38,8 +47,9 @@ function SignUp () {
                     username:   username,
                     password:   password
                 }
-    
-                axios.post('/api/signup', form).then(res => {   // Send sign up info to backend
+                
+                axios.post('http://localhost:8080/signing/save', form).then(res => {   // Send sign up info to backend
+                    console.log(res.data);
                     if (res.data.token) {                       // Generate token at backend, then send it to frontend
                         setSession(res.data.token, username);   // Set new session with acquired token and username
                         navigate('/');                          // Redirect to Home

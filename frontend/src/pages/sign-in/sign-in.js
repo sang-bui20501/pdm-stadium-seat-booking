@@ -22,7 +22,7 @@ function SignIn () {
             username: username,
             password: password
         };
-        axios.post('/api/signin', form).then(res => {       // Send Sign in info to backend
+        axios.post('http://localhost:8080/api/signin', form).then(res => {       // Send Sign in info to backend
             const token = res.data.token;       // Get the token
             if (token) {
                 setSession(token, username);    // If token exists, create new session with token and username

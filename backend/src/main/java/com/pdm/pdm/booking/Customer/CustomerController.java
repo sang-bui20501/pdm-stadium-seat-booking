@@ -1,13 +1,17 @@
 package com.pdm.pdm.booking.Customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -34,18 +38,58 @@ public class CustomerController {
     // 3. If getting the customer successfully -> go to CustomerForm with foundById-customer
     //                                            else go back to booking page url"/booking"
 
-    @GetMapping("/signing")
+    @GetMapping("/api/signup")
     public String showForm(Model model) {
         model.addAttribute("customer", new Customer());
-        return "CustomerForm";
+        return "sign-up";
+    }
+
+    @GetMapping("/api/getUsernames")
+    public List<String> getUsernames() {
+        List<String> users = new ArrayList<>();
+
+        List<Customer> allCustomer = customerService.getAllCustomer();
+        for (Customer customer: allCustomer) {
+            users.add(customer.getUsername());
+        }
+
+        return users;
     }
 
     @PostMapping("/signing/save")
-    public String addCustomer(Customer customer) {
-        customerService.save(customer);
+    public Customer addCustomer(@RequestBody HashMap<String, String> data) {
+        Customer customer = new Customer();
 
-        // Return to booking page
-        return "redirect:/booking";
+        customer.setFirst_name(data.get("firstName"));
+        customer.setMid_name(data.get("midName"));
+        customer.setLast_name(data.get("lastName"));
+        customer.setUsername(data.get("username"));
+        customer.setPassword(data.get("password"));
+
+        try {
+            customerService.save(customer);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return customer;
+    }
+    
+    @PostMapping("/api/sign-in")
+    public Customer signIn(@RequestBody HashMap<String, String> data) {
+        String username = data.get("username");
+        String password = data.get("password");
+
+        List<Customer> customerList = customerService.getAllCustomer();
+
+        for (Customer customer: customerList) {
+            if (customer.getUsername() == username &&
+            customer.getPassword() == password) {
+                return customer;
+            }
+        }
+
+        return null;
     }
 
     @GetMapping("customer/remove/{id}")
@@ -54,7 +98,7 @@ public class CustomerController {
             customerService.deleteCustomer(id);
 
             // return to homepage if customer has been deleted
-            return "redirect:/";
+            return "redirect:http://localhost:3000";
         } catch (Exception e) {
             e.printStackTrace();
 
