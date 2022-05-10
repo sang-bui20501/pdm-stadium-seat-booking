@@ -3,6 +3,7 @@ package com.pdm.pdm.booking.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,6 +13,10 @@ public class CustomerService {
 
     public void save(Customer customer) {
         customerRepository.save(customer);
+    }
+
+    public List<String> getCustomerBooking(String username) {
+        return customerRepository.getCustomerBookings(username);
     }
 
     public Customer getCustomer(int id) throws Exception {
@@ -32,5 +37,10 @@ public class CustomerService {
         } else {
             throw new Exception("Cannot find user with id: " + id);
         }
+    }
+
+    public List<Customer> getAllCustomer() {
+        List<Customer> allCustomer = (List<Customer>) customerRepository.findAll();
+        return allCustomer;
     }
 }

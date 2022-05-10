@@ -10,6 +10,10 @@ public class SeatService {
     @Autowired
     private SeatRepository seatRepository;
 
+    public Iterable<Seat> findAll() {
+        return seatRepository.findAll();
+    }
+
     public Seat getSeat(int seatId) throws Exception {
         Optional<Seat> tmpSeat = seatRepository.findById(seatId);
         if (tmpSeat.isPresent()) {

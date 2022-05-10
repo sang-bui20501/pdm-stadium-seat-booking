@@ -14,6 +14,8 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookingId;
 
+    private int customer_id;
+
     private String status;
 
     private String startTime;
@@ -22,8 +24,9 @@ public class Booking {
 
     private String duration;
 
-    public Booking(int bookingId, String startTime, String endTime, String duration){
+    public Booking(int bookingId, int customer_id, String startTime, String endTime, String duration){
         this.bookingId = bookingId;
+        this.customer_id = customer_id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.duration = duration;
@@ -41,11 +44,18 @@ public class Booking {
         return sdf.format(duration);
 
     }
-       
+
+        public int getCustomer_id() {
+            return customer_id;
+        }
+
+        public void setCustomer_id(int customer_id) {
+            this.customer_id = customer_id;
+        }
 
         public int getBookingId() {
-            return bookingId;
-        }
+                return bookingId;
+            }
 
         public void setBookingId(int bookingId) {
             this.bookingId = bookingId;

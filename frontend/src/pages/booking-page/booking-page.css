@@ -2,7 +2,7 @@
 
 .form-wrapper {
     margin: 0 auto;
-    margin-top: 150px;
+    margin-top: 70px;
     width: 700px;
     height: 660px;
     box-shadow: 2px 1px 5px 2px rgba(0, 0, 0, 0.2);
@@ -18,7 +18,7 @@
     padding: 20px 0 15px 0;
 }
 
-form {
+.form {
     font-family: "Montserrat", sans-serif;
     margin: 30px 0 0 90px;
 }
@@ -27,21 +27,25 @@ form {
     margin-bottom: 20px;
 }
 
-td {
+.td {
     font-weight: bold;
     color: black;
     font-size: 15px;
 }
 
+<<<<<<< HEAD:frontend/src/pages/booking-page/booking-page.css
 .booking-type {
     font-weight: normal;
 }
 
 input[type="text"] {
+=======
+.input[type="text"] {
+>>>>>>> d63a624c0b523b1557fed8e08f7f53e2a839ecb2:frontend/src/pages/booking-page/booking-page.module.css
     width: 500px;
 }
 
-input[type="radio"] {
+.input[type="radio"] {
     margin: 0 10px 0 10px;
 }
 

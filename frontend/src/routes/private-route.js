@@ -12,11 +12,11 @@ const PrivateRoute = ({ Component }) => {
 
 
     useEffect(() => {
-        if (isAuthenticated)
+        if (!isAuthenticated)
             return navigate({ path: "/" });
     }, [navigate, location, isAuthenticated])
 
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
         return <Navigate to='/sign-in' state={{ from: location }} />
     }
     return <Component />;

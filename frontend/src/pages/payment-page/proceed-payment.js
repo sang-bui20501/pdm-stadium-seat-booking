@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 export default function Payment() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const booking = location.state;
 
     const [cardNum, setCardNum] = useState(null);
     const [expiry, setExpiry] = useState(null);
     const [cvv, setCVV] = useState(null);
     const toNextPage = () => {
-        return navigate('/check-info', {state: {
-            cardNum:    cardNum,
-            expiry:     expiry,
-            cvv:        cvv
-        }});
+        if (cardNum && expiry && cvv) {
+            const paymentInfo = {
+                cardNum:    cardNum,
+                expiry:     expiry,
+                cvv:        cvv,
+            }
+            return navigate('/check-info', {state: {
+                paymentInfo: paymentInfo,
+                booking: booking
+            }});
+        }
     }
 
     return (

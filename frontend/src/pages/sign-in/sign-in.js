@@ -9,8 +9,10 @@ function SignIn () {
     var errorMessage = '';
 
     useEffect(() => {
-        if (getToken())
-            navigate('/');          // If token exists, redirect to Home (prevent going back to Sign In/Sign Up)
+        if (getToken()) {
+            navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
+        }
+        
     }, []);
 
     const [phone, setPhone] = useState(null);
@@ -22,13 +24,14 @@ function SignIn () {
             phone: phone,
             password: password
         };
-        axios.post('/api/signin', form).then(res => {       // Send Sign in info to backend
-            const token = res.data.token;       // Get the token
+        axios.post('http://localhost:8080/api/sign-in', form).then(res => {       // Send Sign in info to backend
+            const token = res.data["password"];       // Get the token
             if (token) {
                 setSession(token, phone);    // If token exists, create new session with token and username
                 navigate('/');                  // Redirect to Home
             }
             else {
+                console.log("Fail!");
                 errorMessage = 'Can\'t sign you in! Either you have entered the wrong credentials or something is wrong, please try again!'
             }
         });

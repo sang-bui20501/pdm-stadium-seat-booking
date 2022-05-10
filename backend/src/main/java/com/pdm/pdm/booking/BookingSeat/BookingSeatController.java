@@ -1,14 +1,21 @@
 package com.pdm.pdm.booking.BookingSeat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookingSeatController {
     @Autowired
     private BookingSeatService bookingSeatService;
+
+    @GetMapping("booking-seat/getAll")
+    public Iterable<BookingSeat> findAll() {
+        return bookingSeatService.findAll();
+    }
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
