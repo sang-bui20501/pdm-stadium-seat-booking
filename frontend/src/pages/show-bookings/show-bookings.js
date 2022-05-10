@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getToken, getUser } from "Utils/Common";
-
+import { getToken, getUser } from "../../utils/Common";
 
 
 function ShowBookings () {

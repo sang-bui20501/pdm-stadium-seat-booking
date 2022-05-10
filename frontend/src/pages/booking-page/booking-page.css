@@ -33,6 +33,10 @@ td {
     font-size: 15px;
 }
 
+.booking-type {
+    font-weight: normal;
+}
+
 input[type="text"] {
     width: 500px;
 }

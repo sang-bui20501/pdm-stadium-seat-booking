@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getToken, setSession } from "Utils/Common";
+import { getToken, setSession } from "../../utils/Common";
 
 
 function SignIn () {
@@ -13,19 +13,19 @@ function SignIn () {
             navigate('/');          // If token exists, redirect to Home (prevent going back to Sign In/Sign Up)
     }, []);
 
-    const [username, setUsername] = useState(null);
+    const [phone, setPhone] = useState(null);
     const [password, setPassword] = useState(null);
     
     const handleSignin = (event) => {
         event.preventDefault();
         var form = {
-            username: username,
+            phone: phone,
             password: password
         };
         axios.post('/api/signin', form).then(res => {       // Send Sign in info to backend
             const token = res.data.token;       // Get the token
             if (token) {
-                setSession(token, username);    // If token exists, create new session with token and username
+                setSession(token, phone);    // If token exists, create new session with token and username
                 navigate('/');                  // Redirect to Home
             }
             else {
@@ -44,9 +44,9 @@ function SignIn () {
             <form method="post" onSubmit={handleSignin}>
                 <div className="container-fluid text-start">
                     <div className="row mb-3">
-                        <div className="col"> <label htmlFor='username'>Username</label> </div>
+                        <div className="col"> <label htmlFor='phone'>Phone</label> </div>
                         <div className="col">
-                            <input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)} required/>
+                            <input type='text' name="phone" id="phone" onChange={e => setPhone(e.target.value)} required/>
                         </div>
                     </div>
 
