@@ -28,12 +28,31 @@ function SignUp () {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [checkPw, setCheckPw] = useState(null);
+
+    function retrieveUsername() {                        // Get all usernames from db
+        return new Promise ( (resolve) => {
+                axios.get('http://localhost:8080/api/getUsernames').then(res => {
+                    return resolve(res.data);
+                })
+            }
+        )
+    };
     
-    const handleSignup = (event) => {
+    const handleSignup = async (event) => {
         var form = null;
         event.preventDefault();
 
-        if (!usernameList.includes(username)) {         // If username is new, proceed
+        const usernameList = await retrieveUsername();
+        
+        // Check duplicate username
+        var duplicateUsername = false;
+        usernameList.forEach(element => {
+            if (element == username) {
+                duplicateUsername = true;
+            }
+        });
+
+        if (!duplicateUsername) {         // If username is new, proceed
             if (password === checkPw) {                 // If password match re-type pw, proceed
                 form = {
                     firstName:  firstName,
@@ -51,7 +70,7 @@ function SignUp () {
                     }
                 });
             }
-            else {    
+            else {   
                 errorMessage = 'Re-type password must match your password!';
             }
         }
