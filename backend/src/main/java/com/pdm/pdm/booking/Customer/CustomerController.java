@@ -74,18 +74,19 @@ public class CustomerController {
 
         return customer;
     }
-    
+
     @PostMapping("/api/sign-in")
     public Customer signIn(@RequestBody HashMap<String, String> data) {
         String username = data.get("username");
-        String password = data.get("password");
+        String password = Customer.getMd5(username + data.get("password"));
 
         List<Customer> customerList = customerService.getAllCustomer();
 
         for (Customer customer: customerList) {
-            if (customer.getUsername() == username &&
-            customer.getPassword() == password) {
-                return customer;
+            if ((customer.getUsername().equals(username)) &&
+            (customer.getPassword().equals(password))) {
+                    return customer;
+
             }
         }
 

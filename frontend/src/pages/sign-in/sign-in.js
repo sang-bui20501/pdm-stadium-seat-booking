@@ -22,13 +22,15 @@ function SignIn () {
             username: username,
             password: password
         };
-        axios.post('http://localhost:8080/api/signin', form).then(res => {       // Send Sign in info to backend
-            const token = res.data.token;       // Get the token
+        axios.post('http://localhost:8080/api/sign-in', form).then(res => {       // Send Sign in info to backend
+            const token = res.data["password"];       // Get the token
             if (token) {
+                console.log("Success!");
                 setSession(token, username);    // If token exists, create new session with token and username
                 navigate('/');                  // Redirect to Home
             }
             else {
+                console.log("Fail!");
                 errorMessage = 'Can\'t sign you in! Either you have entered the wrong credentials or something is wrong, please try again!'
             }
         });
