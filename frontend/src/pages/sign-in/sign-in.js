@@ -9,8 +9,10 @@ function SignIn () {
     var errorMessage = '';
 
     useEffect(() => {
-        if (getToken())
-            navigate('/');          // If token exists, redirect to Home (prevent going back to Sign In/Sign Up)
+        if (getToken()) {
+            navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
+        }
+        
     }, []);
 
     const [username, setUsername] = useState(null);

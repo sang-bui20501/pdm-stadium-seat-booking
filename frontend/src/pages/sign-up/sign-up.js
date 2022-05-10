@@ -10,15 +10,15 @@ function SignUp () {
 
     const [usernameList, setUsernameList] = useState(null);
     useEffect(() => {
-        if (getToken())
+        if (getToken()) {
             navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
-
-        setUsernameList(() => {                        // Get all usernames from db
-            axios.get('http://localhost:8080/api/getUsernames').then(res => {
-                console.log(res.data);
-                return res.data.usernames;
-            })
-        });
+        }
+        // setUsernameList(() => {                        // Get all usernames from db
+        //     axios.get('http://localhost:8080/api/getUsernames').then(res => {
+        //         console.log(res.data)
+        //         return res.data;
+        //     })
+        // });
 
     }, []);
 
@@ -63,19 +63,20 @@ function SignUp () {
                 }
                 
                 axios.post('http://localhost:8080/signing/save', form).then(res => {   // Send sign up info to backend
-                    console.log(res.data);
-                    if (res.data.token) {                       // Generate token at backend, then send it to frontend
-                        setSession(res.data.token, username);   // Set new session with acquired token and username
+                    if (res.data["password"]) {                       // Generate token at backend, then send it to frontend
+                        setSession(res.data["password"], username);   // Set new session with acquired token and username
                         navigate('/');                          // Redirect to Home
                     }
                 });
             }
             else {   
                 errorMessage = 'Re-type password must match your password!';
+                document.getElementById("errorMessage").innerHTML = errorMessage;
             }
         }
         else {
             errorMessage = 'Username is already taken! Please choose another one.'
+            document.getElementById("errorMessage").innerHTML = errorMessage;
         }
     };
 
@@ -165,7 +166,7 @@ function SignUp () {
                 </div>
             </form>
 
-            <p>{errorMessage}</p>
+            <p id="errorMessage"></p>
         </div>
     );
 };

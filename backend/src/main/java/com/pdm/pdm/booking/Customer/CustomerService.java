@@ -15,6 +15,10 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public List<String> getCustomerBooking(String username) {
+        return customerRepository.getCustomerBookings(username);
+    }
+
     public Customer getCustomer(int id) throws Exception {
         Optional<Customer> tmpCustomer = customerRepository.findById(id);
 

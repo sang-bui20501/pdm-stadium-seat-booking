@@ -93,6 +93,12 @@ public class CustomerController {
         return null;
     }
 
+    @PostMapping("api/getBookings")
+    public List<String> getCustomerBookings(@RequestBody HashMap<String, String> data) {
+        String username = data.get("username");
+        return customerService.getCustomerBooking(username);
+    }
+
     @GetMapping("customer/remove/{id}")
     public String removeCustomer(@PathVariable("id") int id) {
         try {

@@ -3,12 +3,18 @@ package com.pdm.pdm.booking.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
+
+    public Iterable<Booking> findALl() {
+        Iterable<Booking> listBooking = bookingRepository.findAll();
+        return listBooking;
+    }
 
     public Booking getBooking(int bookingId) throws Exception {
         Optional<Booking> tmpBooking = bookingRepository.findById(bookingId);
