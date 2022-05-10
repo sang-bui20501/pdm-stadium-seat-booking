@@ -3,18 +3,21 @@ import Nav from '../../components/Nav/Nav'
 import DatePicker from "react-date-picker";
 import styles from "./booking-page.module.css"
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 
 function BookingPage() {
+  const navigate = useNavigate();
+
   const [seats, setSeats] = useState([]);
   const [bookingSeat, setBookingSeat] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [showSeatType, setShowSeatType] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [seatType, setSeatType] = useState();
+  const [seatType, setSeatType] = useState('Normal');
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState();
   const [unavailableTime, setUnavailableTime] = useState([]);
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState('1');
 
   const getSeats = () => {
     axios.get("/data/seats.js").then((res) => {
@@ -69,12 +72,22 @@ function BookingPage() {
     setUnavailableTime(unavailableTime);
   }
 
-  /*
   const handleSubmit = (event) => {
     event.preventDefault();
-
-
-  }*/
+    var basics = {
+      date: date,
+      time: time,
+      duration: duration,
+      price: 0
+    };
+    var state = basics;
+    if (showSeatType) {   //true = seat, false = stadium
+      state['type'] = seatType;
+    }
+      
+    navigate('/proceed-payment', {state: state});
+    // console.log(state);
+  }
   
   return (
     <div>
@@ -149,7 +162,7 @@ function BookingPage() {
               </tr>
             </div>
           </table>
-          <button className={styles["submit-btn"]}>Submit</button>
+          <button className={styles["submit-btn"]} onClick={handleSubmit}>Submit</button>
         </form>
       </div>
       

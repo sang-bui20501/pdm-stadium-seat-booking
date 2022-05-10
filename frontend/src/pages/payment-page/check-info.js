@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 
 export default function CheckInfo() {
     const location = useLocation();
+
+    useEffect(() => {
+        console.log(location.state)
+    })
 
     const proceedPayment = () => {
 

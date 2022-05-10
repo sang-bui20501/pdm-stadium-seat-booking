@@ -29,8 +29,8 @@ function MainRoutes() {
           <Route path="/sign-up" exact element={<SignUp />} />
           <Route path="/booking" exact element={<PrivateRoute Component={BookingPage} />} />
           <Route path='/your-bookings' exact element={<PrivateRoute Component={ShowBookings} />} onEnter={requireAuth} />
-          <Route path='/proceed-payment' element={<Payment/>} />
-          <Route path='/check-info' element={<CheckInfo/>} />
+          <Route path='/proceed-payment' element={<PrivateRoute Component={Payment}/>} />
+          <Route path='/check-info' element={<PrivateRoute Component={CheckInfo}/>} />
         </Routes>
       </div>
     </BrowserRouter>
