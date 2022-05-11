@@ -1,10 +1,7 @@
 package com.pdm.pdm.booking.Booking;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,14 +16,14 @@ public class BookingController {
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
-    @GetMapping("booking/signing/save")
+    @PostMapping("booking/signing/save")
     public String addBooking(Booking booking) {
         bookingService.save(booking);
         return "redirect:/result";
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info
-    @GetMapping("booking/remove/{bookingId}")
+    @DeleteMapping("booking/remove/{bookingId}")
     public String removeBooking(@PathVariable("bookingId") int bookingId) {
         try {
             bookingService.deleteBooking(bookingId);

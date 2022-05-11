@@ -8,7 +8,7 @@ import "./sign-up.css"
 
 function SignUp () {
     const navigate = useNavigate();
-    var errorMessage = '';
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const [usernameList, setUsernameList] = useState(null);
     useEffect(() => {
@@ -72,13 +72,11 @@ function SignUp () {
                 });
             }
             else {   
-                errorMessage = 'Re-type password must match your password!';
-                document.getElementById("errorMessage").innerHTML = errorMessage;
+                setErrorMessage('Re-type password must match your password!');
             }
         }
         else {
-            errorMessage = 'Username is already taken! Please choose another one.'
-            document.getElementById("errorMessage").innerHTML = errorMessage;
+            setErrorMessage('Username is already taken! Please choose another one.');
         }
     };
 

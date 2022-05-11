@@ -3,6 +3,7 @@ package com.pdm.pdm.booking.BookingSeat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +44,9 @@ public class BookingSeatService {
         } else {
             throw new Exception("Booking with id:" + bookingSeatId + " not found");
         }
+    }
+
+    public List<String> getAvailableSeat() {
+        return bookingSeatRepository.getAvailableSeat();
     }
 }

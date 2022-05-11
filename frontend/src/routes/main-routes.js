@@ -2,7 +2,7 @@ import React from 'react'
 import BookingPage from 'pages/booking-page/new-booking-page'
 import SignIn from '../pages/sign-in/sign-in'
 import SignUp from '../pages/sign-up/sign-up'
-import Homepage from 'pages/homepage/homepage'
+import Homepage from '../pages/Homepage/Homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PrivateRoute from './private-route';
