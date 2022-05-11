@@ -4,7 +4,7 @@ import SignIn from '../pages/sign-in/sign-in'
 import SignUp from '../pages/sign-up/sign-up'
 import Homepage from 'pages/homepage/homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PrivateRoute from './private-route';
 import Nav from 'components/Nav/Nav'
 import Payment from 'pages/payment-page/proceed-payment'
