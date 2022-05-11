@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-.main {
+.homepage-main {
     background-image: url(../../assets/homepage-background.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -13,7 +13,7 @@
     z-index: -1;
 }
 
-.card {
+.homepage-card {
     background-color: rgba(0, 0, 0, 0.2);
     width: 500px;
     height: 300px;
@@ -26,14 +26,14 @@
     padding: 50px 0 50px 0;
 }
 
-.project-name {
+.homepage-project-name {
     font-family: "Montserrat-ExtraBold", sans-serif;
     font-size: 60px;
     color: white;
     text-align: center;
 }
 
-.start-booking-btn {
+.homepage-start-booking-btn {
     font-family: "Montserrat-Regular", sans-serif;
     font-weight: bold;
     font-size: 20px;
@@ -43,3 +43,11 @@
     height: 80px;
     border-radius: 15px;
 }
+
+.homepage-start-booking-btn:hover {
+    background-color: rgb(152, 202, 237);
+}
+
+.homepage-start-booking-btn:hover > a {
+    color: white;
+} 

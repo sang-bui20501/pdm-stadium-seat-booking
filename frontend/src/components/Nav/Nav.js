@@ -1,13 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import logo from "../../assets/logo.png"
-import "./Nav.css"
+import "./nav.css"
 
 function Nav() {
   return (
       <nav>
         <div className="logo-div">
-          <img src={logo} alt="logo"/>
+          <img src={logo} className="logo-img" alt="logo"/>
           <p>Booking App</p>
         </div>
         <div className="sections">

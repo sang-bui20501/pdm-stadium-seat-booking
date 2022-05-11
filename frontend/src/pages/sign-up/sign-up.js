@@ -1,7 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getToken, setSession } from "utils/common";
+import axios from "axios"
+import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { getToken, setSession } from "utils/common"
+import pic from "../../assets/signin-background.jpg"
+import "./sign-up.css"
 
 
 function SignUp () {
@@ -81,92 +83,48 @@ function SignUp () {
     };
 
     return (
-        <div className="container-fluid col-7 mt-5">
-            <h3 className="mb-4 text-center">Create your account!</h3>
-            <form autoComplete='off' method="post" onSubmit={handleSignup}>
-                <div className="container-fluid text-start">
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='first-name'>First name</label> </div>
-                        <div className="col">
-                            <input
-                                type='text'
-                                name="first-name"
-                                id="first-name"
-                                onChange={e => setFName(e.target.value)}
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='mid-name'>Middle name (optional)</label> </div>
-                        <div className="col">
-                            <input  
-                                type='text'
-                                name="mid-name" 
-                                id="mid-name"
-                                onChange={e => SetMName(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='last-name'>Last name</label> </div>
-                        <div className="col">
-                            <input  
-                                type='text'
-                                name="last-name" 
-                                id="last-name" 
-                                onChange={e => setLName(e.target.value)}
-                                required
-                            /> 
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='username'>Username</label> </div>
-                        <div className="col">
-                            <input 
-                                type='text' 
-                                name="username" 
-                                id="username" 
-                                onChange={e => setUsername(e.target.value)}
-                                required
-                            /> 
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='password'>Password</label> </div>
-                        <div className="col">
-                            <input 
-                                type='password' 
-                                name="password" 
-                                id="password" 
-                                onChange={e => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='check-pw'>Re-type your password</label> </div>
-                        <div className="col">
-                            <input 
-                                type='password' 
-                                name="check-pw" 
-                                id="check-pw" 
-                                onChange={e => setCheckPw(e.target.value)}
-                                required
-                            /> 
-                        </div>
-                    </div>
-
-                    <div className="row mb-3"> <input className="btn" type='submit' value='Submit'/> </div>
+        <div className="sign-up-form-wrapper">
+            <div>
+                <img src={pic} alt="" className="sign-up-pic"/>
+            </div>
+            <form autoComplete='off' className="sign-up-form" method="post" onSubmit={handleSignup}>
+                <div className="sign-up-form-description">
+                    <p>Booking App Sign Up</p>
+                    <hr></hr>
                 </div>
+                <table>
+                    <tbody>
+                        <div className="sign-up-form-section">
+                            <tr>
+                                <td><label className="sign-up-label" htmlFor='first-name'>First name</label></td>
+                                <td><label className="sign-up-label" htmlFor='last-name'>Last name</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type='text' className="sign-up-name-inputs" name="first-name" id="first-name" onChange={e => setFName(e.target.value)} required /></td>
+                                <td><input type='text' className="sign-up-name-inputs" name="last-name" id="last-name" onChange={e => setLName(e.target.value)} required /></td>
+                                
+                            </tr>
+                        </div>
+                        <div className="sign-up-form-section">
+                            <tr>
+                                <td><label className="sign-up-label" htmlFor='username'>Username</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)}required /></td>
+                            </tr>
+                        </div>
+                        <div className="sign-up-form-section">
+                            <tr>
+                                <td><label className="sign-up-label" htmlFor='password'>Password</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required /></td>
+                            </tr>
+                        </div>
+                    </tbody>
+                </table>
+                <button className="sign-up-btn">Submit</button> 
             </form>
-
-            <p id="errorMessage"></p>
         </div>
     );
 };

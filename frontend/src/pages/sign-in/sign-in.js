@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getToken, setSession } from "utils/common";
+import pic from "../../assets/signin-background.jpg"
+import "./sign-in.css"
 
 
 function SignIn () {
@@ -42,30 +44,37 @@ function SignIn () {
     }
 
     return (
-        <div className="container-fluid col-5 mt-5">
-            <h3 className="mb-4 text-center">Sign In</h3>
-            <form method="post" onSubmit={handleSignin}>
-                <div className="container-fluid text-start">
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='phone'>Phone</label> </div>
-                        <div className="col">
-                            <input type='text' name="phone" id="phone" onChange={e => setPhone(e.target.value)} required/>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3">
-                        <div className="col"> <label htmlFor='password'>Password</label> </div>
-                        <div className="col">
-                            <input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required/>
-                        </div>
-                    </div>
-
-                    <div className="row mb-3"> <input className="btn" type='submit' value='Sign In'/> </div>
-                    <div className="row"> <input className="btn" type='button' value='Sign up' onClick={toSignup}/> </div>
+        <div className="sign-in-form-wrapper">
+            <div className="sign-in-pic-wrapper">
+                <img src={pic} className="sign-in-pic" alt=""/>
+            </div>
+            <form method="post" className="sign-in-form" onSubmit={handleSignin}>
+                <div className="sign-in-form-description">
+                    <p>Booking App Sign In</p>
+                    <hr></hr>
                 </div>
+                <table>
+                    <tbody>
+                        <div className="sign-in-credentials">
+                            <tr>
+                                <td><label className="sign-in-label" htmlFor='phone'>Phone</label></td>
+                            </tr>
+                            <tr>
+                                <td><input type='text' name="phone" id="phone" onChange={e => setPhone(e.target.value)} required/></td>
+                            </tr>
+                        </div>
+                        <div className="sign-in-credentials">
+                            <tr><label className="sign-in-label" htmlFor='password'>Password</label></tr>
+                            <tr><input type='password' name="password" id="password" onChange={e => setPassword(e.target.value)} required/></tr>
+                        </div>
+                    </tbody>
+                </table>
+                <button className="sign-in-btn">Sign In</button>
+                <hr></hr>
+                <p>
+                    <Link to="/sign-up">Register</Link>
+                </p> 
             </form>
-
-            <h1>{errorMessage}</h1>
         </div>
     );
 };

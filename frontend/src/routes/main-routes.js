@@ -6,7 +6,7 @@ import Homepage from 'pages/homepage/homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PrivateRoute from './private-route';
-import Nav from 'components/Nav/Nav'
+import Nav from 'components/nav/nav'
 import Payment from 'pages/payment-page/proceed-payment'
 import CheckInfo from 'pages/payment-page/check-info'
 

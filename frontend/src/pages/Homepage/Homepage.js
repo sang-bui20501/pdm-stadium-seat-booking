@@ -18,11 +18,11 @@ function Homepage() {
         </div>
     </div>*/
     <div>
-        <div className="main">
-            <div className="card">
-            <h1 className="project-name">Booking App</h1>
+        <div className="homepage-main">
+            <div className="homepage-card">
+            <h1 className="homepage-project-name">Booking App</h1>
 
-            <button className="start-booking-btn">
+            <button className="homepage-start-booking-btn">
                 <Link to={"/booking"}>Start Booking</Link>
             </button>
             </div>
