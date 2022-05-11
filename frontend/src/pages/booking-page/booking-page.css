@@ -33,15 +33,7 @@
     font-size: 15px;
 }
 
-<<<<<<< HEAD:frontend/src/pages/booking-page/booking-page.css
-.booking-type {
-    font-weight: normal;
-}
-
-input[type="text"] {
-=======
 .input[type="text"] {
->>>>>>> d63a624c0b523b1557fed8e08f7f53e2a839ecb2:frontend/src/pages/booking-page/booking-page.module.css
     width: 500px;
 }
 

@@ -4,6 +4,7 @@ import "./booking-page.css"
 import DatePicker from "react-date-picker";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
+import { getBookings, getBookingSeat, getPrices, getSeats } from './resources';
 
 function BookingPage() {
   /* query info */
@@ -30,41 +31,28 @@ function BookingPage() {
   const [time, setTime] = useState();
   const [duration, setDuration] = useState(0);
   const [seatPrice, setSeatPrice] = useState(0);
-  
+
   /* additional info */
   const today = new Date().toISOString().split("T")[0];
-  const maxDate = new Date(Date.now() + 60*60*24*30*1000).toISOString().split("T")[0];
+  const maxDate = new Date(Date.now() + 60 * 60 * 24 * 30 * 1000).toISOString().split("T")[0];
   const [selectedHour, setSelectedHour] = useState(0);
   const navigate = useNavigate();
 
-  const getSeats = async () => {
-    axios.get("/data/seats.json").then((res) => {
-      const arr = res.data;
-      setSeats(res.data);
-    }).catch((error) => console.log(error.message));
-  }
 
-  const getBookingSeat = () => {
-    axios.get("/data/bookingseat.json").then((res) => {
-      setBookingSeat(res.data);
-    }).catch((error) => console.log(error.message));
-  }
 
-  const getBookings = () => {
-    axios.get("/data/bookings.json").then((res) => {
-      setBookings(res.data);
-    }).catch((error) => console.log(error.message));
-  }
+  useEffect(() => {
 
-  const getPrices = () => {
-    axios.get("/data/price.json").then((res) => {
-      setPrices(res.data);
-    }).catch((error) => console.log(error.message));
-  }
+    getSeats(setSeats);
+    getBookingSeat(setBookingSeat);
+    getBookings(setBookings);
+    getPrices(setPrices);
+
+  }, []);
+
 
   const getAvailableSeats = (date, type) => {
     const arr = [];
-    
+
     for (let i in bookings) {
       const obj = bookings[i];
       const startTime = new Date(obj.start_time);
@@ -77,7 +65,7 @@ function BookingPage() {
               if (bookingSeat[j].seat_id === seats[k].id && seats[k].type === type) {
                 arr.push(seats[k].id);
               }
-            }  
+            }
           }
         }
       }
@@ -85,18 +73,9 @@ function BookingPage() {
     const available = seats.filter((item) => {
       return arr.indexOf(item.id) === -1 && item.type === type;
     })
- 
+
     return available;
   }
-  
-  useEffect(() => {
-
-    getSeats();
-    getBookingSeat();
-    getBookings();
-    getPrices();
-    
-  }, []);
 
 
   const getSeatPrice = (type) => {
@@ -128,7 +107,7 @@ function BookingPage() {
         for (let j in bookingSeat) {
           for (let k in seats) {
             if (booking_id === bookingSeat[j].booking_id) {
-              if (bookingSeat[j].seat_id === seats[k].id && seats[k].type === type && arr.length > 0) {        
+              if (bookingSeat[j].seat_id === seats[k].id && seats[k].type === type && arr.length > 0) {
                 var hours = startTime.getHours();
                 var minutes = startTime.getMinutes();
                 var endHours = hours + obj.duration;
@@ -151,7 +130,7 @@ function BookingPage() {
                 }
               }
             }
-          } 
+          }
         }
       }
     }
@@ -176,7 +155,7 @@ function BookingPage() {
         const arr = unavailableTime[i].split(":");
         hours.push(parseInt(arr[0]));
       }
-      return hours.filter(function(item, pos, self) {
+      return hours.filter(function (item, pos, self) {
         return self.indexOf(item) === pos;
       });
     }
@@ -235,97 +214,97 @@ function BookingPage() {
       if (response.ok) {
         navigate("/proceed-payment");
       }
-    }).catch((error) => {console.log(error)});
+    }).catch((error) => { console.log(error) });
   }
-  
+
   return (
     <div className="form-wrapper">
       <h3 className="form-description">Make a Reservation</h3>
       <form onSubmit={handleSubmit}>
-          <table>
-            <tbody>
-              <div className="form-section">
-                <tr>
-                  <td>Booking Type</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="radio" name="booking-type" id='seat' value="seat" onClick={() => {setShowSeatType(true); setShowDateInput(true); getSeatPrice(seatType)}}/>
-                    <label for="seat" className="booking-type">Seat</label>
-                    <input type="radio" name="booking-type" id='stadium' value="stadium" onClick={() => {setShowSeatType(false); setShowDateInput(true)}}/>
-                    <label for="stadium" className="booking-type">Stadium</label>
-                  </td>
-                </tr>
-              </div>
-              <div className="form-section" style={{display: showSeatType ? "block"  : "none"}}>
-                <tr>
-                  <td>Seat Type</td>
-                </tr>
-                <tr>
-                  <td>
-                  <select onChange={(e) => {setSeatType(e.target.value); getSeatPrice(e.target.value)}}>
+        <table>
+          <tbody>
+            <div className="form-section">
+              <tr>
+                <td>Booking Type</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="radio" name="booking-type" id='seat' value="seat" onClick={() => { setShowSeatType(true); setShowDateInput(true); getSeatPrice(seatType) }} />
+                  <label for="seat" className="booking-type">Seat</label>
+                  <input type="radio" name="booking-type" id='stadium' value="stadium" onClick={() => { setShowSeatType(false); setShowDateInput(true) }} />
+                  <label for="stadium" className="booking-type">Stadium</label>
+                </td>
+              </tr>
+            </div>
+            <div className="form-section" style={{ display: showSeatType ? "block" : "none" }}>
+              <tr>
+                <td>Seat Type</td>
+              </tr>
+              <tr>
+                <td>
+                  <select onChange={(e) => { setSeatType(e.target.value); getSeatPrice(e.target.value) }}>
                     <option>Normal</option>
                     <option>Mid</option>
                     <option>VIP</option>
                   </select>
-                  </td>
-                </tr>
-              </div>
-              <div className="form-section" style={{display: showDateInput ? "block"  : "none"}}>
-                <tr>
-                  <td>Date</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="date" name="date" min={today} max={maxDate} onChange={e => {setBookingDate(e.target.value); getUnavailableTime(e.target.value, seatType); setShowTimeInput(true)}}/>
-                  </td>
-                </tr>
-              </div>
-              <div className="form-section" style={{display: showTimeInput ? "block"  : "none"}}>
-                <tr>
-                  <td>Time</td>
-                </tr>
-                <tr>
-                  <td>
-                    <select onChange={(e) => setHour(e.target.value)}>
-                      {selectHour()}
-                    </select>
-                  </td>
-                  <td>
-                    <select onChange={(e) => {setMinute(e.target.value); setTime(() => getBookingTime(hour, e.target.value)); setShowDuration(true)}}>
-                      {selectMinute()}
-                    </select>
-                  </td>
-                </tr>
-              </div>
-              <div className="form-section" style={{display: showTimeInput ? "block"  : "none"}}>
-                <tr>
-                  <td>Duration</td>
-                </tr>
-                <tr>
-                  <td>
-                    <select onChange={(e) => {setDuration(e.target.value); console.log(time); setShowPrice(true)}}>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                  </td>
-                </tr>
-              </div>
-              <div className="form-section" style={{display: showPrice ? "block" : "none"}}>
-                <tr>
-                  <td>Price</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="text" name="price" value={seatPrice} readOnly={true}/>
-                  </td>
-                </tr>
-              </div>
-            </tbody>
-          </table>
-          <input className='submit-btn' type="submit" value="Submit"/>
+                </td>
+              </tr>
+            </div>
+            <div className="form-section" style={{ display: showDateInput ? "block" : "none" }}>
+              <tr>
+                <td>Date</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="date" name="date" min={today} max={maxDate} onChange={e => { setBookingDate(e.target.value); getUnavailableTime(e.target.value, seatType); setShowTimeInput(true) }} />
+                </td>
+              </tr>
+            </div>
+            <div className="form-section" style={{ display: showTimeInput ? "block" : "none" }}>
+              <tr>
+                <td>Time</td>
+              </tr>
+              <tr>
+                <td>
+                  <select onChange={(e) => setHour(e.target.value)}>
+                    {selectHour()}
+                  </select>
+                </td>
+                <td>
+                  <select onChange={(e) => { setMinute(e.target.value); setTime(() => getBookingTime(hour, e.target.value)); setShowDuration(true) }}>
+                    {selectMinute()}
+                  </select>
+                </td>
+              </tr>
+            </div>
+            <div className="form-section" style={{ display: showTimeInput ? "block" : "none" }}>
+              <tr>
+                <td>Duration</td>
+              </tr>
+              <tr>
+                <td>
+                  <select onChange={(e) => { setDuration(e.target.value); console.log(time); setShowPrice(true) }}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                  </select>
+                </td>
+              </tr>
+            </div>
+            <div className="form-section" style={{ display: showPrice ? "block" : "none" }}>
+              <tr>
+                <td>Price</td>
+              </tr>
+              <tr>
+                <td>
+                  <input type="text" name="price" value={seatPrice} readOnly={true} />
+                </td>
+              </tr>
+            </div>
+          </tbody>
+        </table>
+        <input className='submit-btn' type="submit" value="Submit" />
       </form>
     </div>
   )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from "./Homepage.module.css"
+import styles from "./homepage.module.css"
 import {Link} from "react-router-dom"
 
 function Homepage() {
