@@ -77,7 +77,7 @@ public class CustomerController {
 
     @PostMapping("/api/sign-in")
     public Customer signIn(@RequestBody HashMap<String, String> data) {
-        String username = data.get("username");
+        String username = data.get("phone");
         String password = Customer.getMd5(username + data.get("password"));
 
         List<Customer> customerList = customerService.getAllCustomer();

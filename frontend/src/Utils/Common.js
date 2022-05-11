@@ -13,5 +13,5 @@ export const getToken = () => {
 };
 
 export const getUser = () => {
-    return sessionStorage.getUser('user') || null;
-}
+    return sessionStorage.getItem('user') || null;
+};
