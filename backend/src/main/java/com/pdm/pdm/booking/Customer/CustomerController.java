@@ -93,13 +93,13 @@ public class CustomerController {
         return null;
     }
 
-    @PostMapping("api/getBookings")
+    @GetMapping("api/getBookings")
     public List<String> getCustomerBookings(@RequestBody HashMap<String, String> data) {
         String username = data.get("username");
         return customerService.getCustomerBooking(username);
     }
 
-    @GetMapping("customer/remove/{id}")
+    @DeleteMapping("customer/remove/{id}")
     public String removeCustomer(@PathVariable("id") int id) {
         try {
             customerService.deleteCustomer(id);
@@ -114,7 +114,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("customer/update/{id}")
+    @PutMapping("customer/update/{id}")
     public String updateCustomer(@PathVariable("id") int id, Model model) {
         try {
             Customer customer = customerService.getCustomer(id);
