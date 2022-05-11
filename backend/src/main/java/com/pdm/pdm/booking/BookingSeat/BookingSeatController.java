@@ -3,6 +3,8 @@ package com.pdm.pdm.booking.BookingSeat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -43,5 +45,10 @@ public class BookingSeatController {
             e.printStackTrace();
         }
         return "redirect:/booking";
+    }
+
+    @GetMapping("booking-seat/getAvailableSeat")
+    public List<String> getAvailableSeat() {
+        return bookingSeatService.getAvailableSeat();
     }
 }
