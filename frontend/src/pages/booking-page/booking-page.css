@@ -2,51 +2,61 @@
 
 .form-wrapper {
     margin: 0 auto;
-    margin-top: 70px;
+    margin-top: 150px;
     width: 700px;
-    height: 660px;
+    height: 800px;
+    font-family: "Montserrat", sans-serif;
     box-shadow: 2px 1px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
 .form-description {
-    font-family: "Montserrat", sans-serif;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
     color: black;
     background-color: rgb(152, 202, 237);
-    padding: 20px 0 15px 0;
+    padding: 30px 0 30px 0;
 }
 
-.form {
-    font-family: "Montserrat", sans-serif;
-    margin: 30px 0 0 90px;
+form {
+    font-weight: bold;
+    margin: 50px 0 0 90px;
 }
 
 .form-section {
     margin-bottom: 20px;
 }
 
-.td {
+td {
     font-weight: bold;
     color: black;
     font-size: 15px;
 }
 
-<<<<<<< HEAD:frontend/src/pages/booking-page/booking-page.css
 .booking-type {
     font-weight: normal;
 }
 
 input[type="text"] {
-=======
-.input[type="text"] {
->>>>>>> d63a624c0b523b1557fed8e08f7f53e2a839ecb2:frontend/src/pages/booking-page/booking-page.module.css
+    border-style: none;
+    background-color: rgba(0, 0, 0, 0.07);
+    padding: 5px 0 5px 10px;
     width: 500px;
 }
 
-.input[type="radio"] {
+input[type="radio"] {
     margin: 0 10px 0 10px;
+}
+
+.seat-selection-id {
+    border-style: none;
+    padding: 5px 15px 5px 15px;
+    margin-right: 25px;
+}
+
+.seat-selection-id:hover {
+    background-color: rgb(152, 202, 237);
+    box-shadow: 2px 1px 5px 3px rgba(0, 0, 0, 0.08);
 }
 
 .submit-btn {

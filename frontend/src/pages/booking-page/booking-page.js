@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useParams } from 'react'
-import Nav from '../../components/Nav/Nav'
-import "./booking-page.css"
+import "./page.css"
 import DatePicker from "react-date-picker";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
