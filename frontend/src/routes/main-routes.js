@@ -1,12 +1,12 @@
 import React from 'react'
-import BookingPage from 'pages/booking-page/new-booking-page'
+import BookingPage from 'pages/booking-page/booking-page'
 import SignIn from '../pages/sign-in/sign-in'
 import SignUp from '../pages/sign-up/sign-up'
-import Homepage from '../pages/Homepage/Homepage'
+import Homepage from '../pages/homepage/homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PrivateRoute from './private-route';
-import Nav from 'components/Nav/Nav'
+import Nav from 'components/nav/nav'
 import Payment from 'pages/payment-page/proceed-payment'
 import CheckInfo from 'pages/payment-page/check-info'
 import EditInfo from 'pages/edit-info/edit-info'
@@ -21,7 +21,7 @@ function MainRoutes() {
   */
   return (
     <BrowserRouter>
-      <div className='header'> <Nav></Nav> </div>
+      <Nav />
       <div>
         <Routes>
           {/*<Route path="/" exact element={<PrivateRoute Component={Homepage} />} />

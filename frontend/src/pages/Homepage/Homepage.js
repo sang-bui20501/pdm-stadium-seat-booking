@@ -23,14 +23,8 @@ function Homepage() {
             <div className="homepage-main">
                 <div className="homepage-card">
                     <h1 className="homepage-project-name">Booking App</h1>
-                    <h2 className='text-white'>Welcome back, {username}</h2>
-
-                    <button className="homepage-start-booking-btn mb-3">
-                        <Link to={"/booking"}>Start Booking</Link>
-                    </button>
-
                     <button className="homepage-start-booking-btn">
-                        <Link to={'/edit-info'}>Change your info</Link>
+                        <Link to={"/booking"}>Start Booking</Link>
                     </button>
                 </div>
             </div>

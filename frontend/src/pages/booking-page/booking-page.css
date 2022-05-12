@@ -5,21 +5,9 @@
     background-image: url("../../assets/homepage-background.jpg");
     margin: 0 auto;
     background-size: cover;
-    position: absolute;
-    top: 0;
     right: 0;
     left: 0;
 }
-
-/*
-.booking-page-form-wrapper {
-    margin: 0 auto;
-    margin-top: 150px;
-    width: 700px;
-    height: 800px;
-    font-family: "Montserrat", sans-serif;
-    box-shadow: 2px 1px 5px 2px rgba(0, 0, 0, 0.2);
-}*/
 
 .booking-page-form-description {
     font-size: 30px;
@@ -33,7 +21,7 @@
 .booking-page-form {
     font-weight: bold;
     margin: 0 auto;
-    margin-top: 120px;
+    margin-top: 65px;
     width: 700px;
     height: 820px;
     box-shadow: 0 2px 10px 7px rgba(0, 0, 0, 0.05);
@@ -88,4 +76,8 @@ input[type="radio"] {
     width: 500px;
     height: 50px;
     margin-left: 90px;
+}
+
+.booking-page-submit-btn:hover {
+    background-color: rgba(152, 202, 237, 0.7);
 }
