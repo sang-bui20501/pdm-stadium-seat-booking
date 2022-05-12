@@ -22,6 +22,9 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.29'
 	implementation 'org.thymeleaf:thymeleaf:3.0.15.RELEASE'
 	implementation 'eu.cedarsoft.devtools:devtools:1.1'
+	implementation 'com.auth0:auth0:1.41.0'
+	implementation 'org.springframework:spring-web:5.3.19'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 }
