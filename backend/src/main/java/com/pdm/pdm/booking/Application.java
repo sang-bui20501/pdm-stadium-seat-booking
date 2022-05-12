@@ -14,8 +14,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public PasswordEncoder passwordEncoder(){ 
-		return NoOpPasswordEncoder.getInstance();
-	}
 } 
