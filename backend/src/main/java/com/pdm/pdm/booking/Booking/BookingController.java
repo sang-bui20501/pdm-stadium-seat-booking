@@ -5,13 +5,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping(path = "/booking")
 public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("booking/getAll")
+    @GetMapping("/getAll")
     public Iterable<Booking> findAll() {
         return bookingService.findALl();
+    }
+
+    @GetMapping("/get-customer-booking/{customer_id}")
+    public Iterable<Booking> getCustomerBooking(@PathVariable("customer_id") String customer_id) {
+        return bookingService.getCustomerBooking(customer_id);
     }
 
 /* User will be redirected to the result page after successfully saved booking info 

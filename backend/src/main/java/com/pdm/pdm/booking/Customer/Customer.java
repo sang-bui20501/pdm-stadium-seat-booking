@@ -1,5 +1,7 @@
 package com.pdm.pdm.booking.Customer;
 
+import jdk.nashorn.internal.objects.annotations.Getter;
+
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -25,19 +27,6 @@ public class Customer {
 
     @Column(name = "password", nullable = false, length = 50)
     private String password;
-
-//    @Column(name = "phone", nullable = false, length = 10)
-//    private String phone;
-//
-//    @Column(name = "type", nullable = false)
-//    private int type;
-
-//    public Customer(String first_name, String last_name, String phone, int type) {
-//        this.first_name = first_name;
-//        this.last_name = last_name;
-//        this.phone = phone;
-//        this.type = type;
-//    }
 
 
     public Customer(String first_name, String last_name, String mid_name, String username, String password) {
@@ -125,22 +114,6 @@ public class Customer {
     }
 
     public void setPassword(String password) {
-        this.password = getMd5(this.username + password);
+        this.password = password;
     }
-
-    //    public String getPhone() {
-//        return phone;
-//    }
-//
-//    public void setPhone(String phone) {
-//        this.phone = phone;
-//    }
-//
-//    public int getType() {
-//        return type;
-//    }
-//
-//    public void setType(int type) {
-//        this.type = type;
-//    }
 }
