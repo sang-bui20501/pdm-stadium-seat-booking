@@ -6,9 +6,10 @@ import Homepage from '../pages/Homepage/Homepage'
 import ShowBookings from '../pages/show-bookings/show-bookings'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import PrivateRoute from './private-route';
-import Nav from 'components/nav/nav'
+import Nav from 'components/Nav/Nav'
 import Payment from 'pages/payment-page/proceed-payment'
 import CheckInfo from 'pages/payment-page/check-info'
+import EditInfo from 'pages/edit-info/edit-info'
 
 function MainRoutes() {
   /*
@@ -37,7 +38,7 @@ function MainRoutes() {
           <Route path='/your-bookings' exact element={<ShowBookings />} />
           <Route path='/proceed-payment' element={<Payment/>} />
           <Route path='/check-info' element={<CheckInfo/>} />
-          
+          <Route path='/edit-info' element={<EditInfo/>} />
         </Routes>
       </div>
     </BrowserRouter>

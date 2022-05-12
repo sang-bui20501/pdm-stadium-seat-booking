@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getToken, getUser } from "Utils/Common";
+import { getToken, getUser } from "utils/common";
 
 
 function ShowBookings () {
@@ -26,6 +26,7 @@ function ShowBookings () {
 
 
     const ListBookings = () => {
+        console.log(bookingList)
         return (Array(bookingList).length)
         if (Array(bookingList).length === 0) {
             return (<h1>There is nothing here, yet</h1>)
