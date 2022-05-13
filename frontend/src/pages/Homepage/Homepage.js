@@ -2,7 +2,7 @@ import React from 'react'
 //import styles from "./Homepage.module.css"
 import "./homepage.css"
 import {Link} from "react-router-dom"
-import { getUser } from 'utils/common'
+import { getUser } from 'Utils/Common'
 
 function Homepage() {
     const username = getUser();

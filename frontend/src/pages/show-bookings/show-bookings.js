@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { getToken, getUser } from "utils/common";
-import check from "../../assets/check-sign.png";
-import "./show-bookings.css";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getToken, getUser } from "Utils/Common";
 
 
 function ShowBookings () {

@@ -36,7 +36,11 @@ public class BookingSeatService {
     public void save (BookingSeat bookingSeat) {
         bookingSeatRepository.save(bookingSeat);
     }
-    
+
+    public String getCustomerBooking(String customer_id, String start_time, String duration){
+        return bookingSeatRepository.getCustomerBooking(customer_id, start_time, duration);
+    }
+
     public String hasBookingSeat(int bookingSeatId) throws Exception {
         Optional <BookingSeat> tmpBooking = bookingSeatRepository.findById(bookingSeatId);
         if (tmpBooking.isPresent()) {

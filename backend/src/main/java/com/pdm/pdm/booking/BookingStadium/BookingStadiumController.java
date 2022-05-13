@@ -1,5 +1,6 @@
 package com.pdm.pdm.booking.BookingStadium;
 
+import com.pdm.pdm.booking.BookingSeat.BookingSeatController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +13,15 @@ public class BookingStadiumController {
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
-    @PostMapping("booking-stadium/signing/save")
-    public String addBooking(BookingStadium bookingStadium) {
+
+    public String addBooking(String price_id, int booking_id) {
+        BookingStadium bookingStadium = new BookingStadium();
+
+        bookingStadium.setBooking_id(booking_id);
+        bookingStadium.setPrice_id(Integer.parseInt(price_id));
+
         bookingStadiumService.save(bookingStadium);
-        return "redirect:/booking";
+        return "Booking Stadium";
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info

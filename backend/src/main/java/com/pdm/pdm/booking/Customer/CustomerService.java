@@ -24,19 +24,19 @@ public class CustomerService {
         return getCustomer(Integer.parseInt(id));
     }
 
-    public Iterable<Seat> getSeat() {
+    public List<String> getSeat() {
         return customerRepository.getSeat();
     }
 
-    public Iterable<BookingSeat> getBookingSeat(String username) {
+    public List<String> getBookingSeat(String username) {
         return customerRepository.getBookingSeat(username);
     }
 
-    public Iterable<BookingStadium> getBookingStadium(String username) {
+    public List<String> getBookingStadium(String username) {
         return customerRepository.getBookingStadium(username);
     }
 
-    public Iterable<Booking> getBooking(String username) {
+    public List<String> getBooking(String username) {
         return customerRepository.getBooking(username);
     }
 

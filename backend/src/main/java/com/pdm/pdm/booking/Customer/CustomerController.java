@@ -71,43 +71,67 @@ public class CustomerController {
     }
 
     @GetMapping("/getBookings")
-    public Iterable<BookingSeat> getCustomerBookings(@RequestBody HashMap<String, String> data) {
+    public String getCustomerBookings(@RequestBody HashMap<String, String> data) {
         String username = data.get("username");
+        String json = "{";
 
-        return customerService.getBookingSeat(username);
-//        String json = "{ ";
-//
-//        List<Seat> allSeats = customerService.getSeat();
-//        json += "\"seat:\" {";
-//        for (Seat seat: allSeats) {
-//            json += "{ \"id\":" + "\"" + seat.getId() + "\"," + "\"price_id\":" + "\"" + seat.getPrice_id() + "\"," + "\"type\":" + "\"" + seat.getType() + "\"," + " }, ";
-//        }
-//        json += "\b\b}";
-//
-//        List<BookingSeat> customerBookingSeat = customerService.getBookingSeat(username);
-//        json += "\"booking_seat:\" {";
-//        for (BookingSeat bookingSeat: customerBookingSeat) {
-//            json += "{ \"id\":" + "\"" + bookingSeat.getId() + "\"," + "\"booking_id\":" + "\"" + bookingSeat.getBooking_id() + "\"," + "\"seat_id\":" + "\"" + bookingSeat.getSeat_id() + "\"," + " }, ";
-//        }
-//        json += "\b\b}";
-//
-//        List<BookingStadium> customerBookingStadium = customerService.getBookingStadium(username);
-//        json += "\"booking_stadium:\" {";
-//        for (BookingStadium bookingStadium: customerBookingStadium) {
-//            json += "{ \"id\":" + "\"" + bookingStadium.getId() + "\"," + "\"price_id\":" + "\"" + bookingStadium.getPrice_id() + "\"," + "\"booking_id\":" + "\"" + bookingStadium.getBooking_id() + "\"," + " }, ";
-//        }
-//        json += "\b\b}";
-//
-//        List<Booking> customerBooking = customerService.getBooking(username);
-//        json += "\"booking:\" {";
-//        for (Booking booking: customerBooking) {
-//            json += "{ \"booking_id\":" + "\"" + booking.getBookingId() + "\"," + "\"duration\":" + "\"" + booking.getDuration() + "\"," + "\"start_time\":" + "\"" + booking.getStartTime() + "\"," + "\"end_time\":" + "\"" + booking.getEndTime() + "\"," + "\"status\":" + "\"" + booking.getStatus() + "\"," + "\"customer_id\":" + "\"" + booking.getCustomer_id() + "\"," + " }, ";
-//        }
-//        json += "\b\b}";
-//
-//        json += "}";
-//
-//        return json;
+        List<String> allCustomerBooking = customerService.getBooking(username);
+        String[] column = {"booking_id", "duration", "end_time", "start_time", "status", "customer_id"};
+        json += "\"booking:\"{";
+        for (String customerBooking: allCustomerBooking) {
+            String[] allValues = customerBooking.split(",", 6);
+            json += "{";
+            for (int i=0; i<allValues.length; i++) {
+                json += "\"" + column[i] + "\":" + "\"" + allValues[i] + "\",";
+            }
+            json = json.substring(0, json.length()-1);
+            json += "},";
+        }
+        if (allCustomerBooking.size() > 0) {
+            json = json.substring(0, json.length() - 1);
+        }
+        json += "},";
+
+
+        List<String> allCustomerBookingSeat = customerService.getBookingSeat(username);
+        column = new String []{"id", "booking_id", "seat_id"};
+        json += "\"booking_seat:\"{";
+        for (String customerBookingSeat: allCustomerBookingSeat) {
+            String[] allValues = customerBookingSeat.split(",", 3);
+            json += "{";
+            for (int i=0; i<allValues.length; i++) {
+                json += "\"" + column[i] + "\":" + "\"" + allValues[i] + "\",";
+            }
+            json = json.substring(0, json.length()-1);
+            json += "},";
+        }
+        if (allCustomerBookingSeat.size() > 0) {
+            json = json.substring(0, json.length() - 1);
+        }
+        json += "},";
+
+
+        List<String> allCustomerBookingStadium = customerService.getBookingStadium(username);
+        column = new String []{"id", "booking_id", "price_id"};
+        json += "\"booking_stadium:\"{";
+        for (String customerBookingStadium: allCustomerBookingStadium) {
+            String[] allValues = customerBookingStadium.split(",", 3);
+            json += "{";
+            for (int i=0; i<allValues.length; i++) {
+                json += "\"" + column[i] + "\":" + "\"" + allValues[i] + "\",";
+            }
+            json = json.substring(0, json.length()-1);
+            json += "},";
+        }
+        if (allCustomerBookingStadium.size() > 0) {
+            json = json.substring(0, json.length() - 1);
+        }
+        json += "},";
+
+
+        json = json.substring(0, json.length()-1);
+        json += "}";
+        return json;
     }
 
     @GetMapping("/edit/{customer_id}")

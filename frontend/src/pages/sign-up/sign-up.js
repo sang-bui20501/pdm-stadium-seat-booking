@@ -1,7 +1,7 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getToken, setSession } from "utils/common"
+import { getToken, setSession } from "Utils/Common"
 import pic from "../../assets/signin-background.jpg"
 import "./sign-up.css"
 

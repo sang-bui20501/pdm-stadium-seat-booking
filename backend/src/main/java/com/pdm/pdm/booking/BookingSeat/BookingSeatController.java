@@ -1,13 +1,16 @@
 package com.pdm.pdm.booking.BookingSeat;
 
+import com.pdm.pdm.booking.Booking.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+//@RequestMapping(path = "/booking-seat")
 public class BookingSeatController {
     @Autowired
     private BookingSeatService bookingSeatService;
@@ -19,10 +22,16 @@ public class BookingSeatController {
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
-    @PostMapping("booking-seat/signing/save")
-    public String addBooking(BookingSeat bookingSeat) {
+
+    public String addBooking(String seat_id, int booking_id) {
+        BookingSeat bookingSeat = new BookingSeat();
+
+        bookingSeat.setBooking_id(booking_id);
+        bookingSeat.setSeat_id(Integer.parseInt(seat_id));
+
         bookingSeatService.save(bookingSeat);
-        return "redirect:/result";
+
+        return "Booking Seat";
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info

@@ -1,7 +1,13 @@
 package com.pdm.pdm.booking.Booking;
 
+import com.pdm.pdm.booking.BookingSeat.BookingSeat;
+import com.pdm.pdm.booking.BookingSeat.BookingSeatController;
+import com.pdm.pdm.booking.BookingStadium.BookingStadium;
+import com.pdm.pdm.booking.BookingStadium.BookingStadiumController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -9,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private BookingStadiumController bookingStadiumController;
+
+    @Autowired
+    private BookingSeatController bookingSeatController;
 
     @GetMapping("/getAll")
     public Iterable<Booking> findAll() {
@@ -22,10 +34,30 @@ public class BookingController {
 
 /* User will be redirected to the result page after successfully saved booking info 
 */
-    @PostMapping("booking/signing/save")
-    public String addBooking(Booking booking) {
+    @PostMapping("/save")
+    public String addBooking(@RequestBody HashMap<String, String> booking_form) {
+        Booking booking = new Booking();
+
+        booking.setCustomer_id(Integer.parseInt(booking_form.get("customer_id")));
+        booking.setDuration(booking_form.get("duration"));
+        booking.setEndTime(booking_form.get("end_time"));
+        booking.setStartTime(booking_form.get("start_time"));
+        booking.setStatus(booking_form.get("status"));
+
         bookingService.save(booking);
-        return "redirect:/result";
+
+        if (booking_form.get("seat_id") != null) {
+            String seat_id = booking_form.get("seat_id");
+            Integer booking_id = booking.getBookingId();
+            bookingSeatController.addBooking(seat_id, booking_id);
+        }
+        if (booking_form.get("price_id") != null) {
+            String price_id = booking_form.get("price_id");
+            Integer booking_id = booking.getBookingId();
+            bookingStadiumController.addBooking(price_id, booking_id);
+        }
+
+        return "Save Booking";
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info
