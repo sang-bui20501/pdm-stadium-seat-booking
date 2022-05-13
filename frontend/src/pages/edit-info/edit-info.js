@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { getToken, getUser } from "Utils/Common";
-
+import { getToken, getUser } from "utils/common";
+import "./edit-info.css"
 
 
 export default function EditInfo () {

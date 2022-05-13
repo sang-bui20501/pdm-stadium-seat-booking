@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getToken, setSession } from "Utils/Common";
+import { getToken, setSession } from "utils/common";
 import pic from "../../assets/signin-background.jpg"
 import "./sign-in.css"
 
@@ -17,19 +17,20 @@ function SignIn () {
         
     }, []);
 
-    const [phone, setPhone] = useState(null);
+    const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     
     const handleSignin = (event) => {
         event.preventDefault();
-        var form = {
-            phone: phone,
+        const form = {
+            username: username,
             password: password
         };
-        axios.post('http://localhost:8080/api/sign-in', form).then(res => {       // Send Sign in info to backend
+
+        axios.post('http://localhost:8080/api/sign-in', form).then(res => {       
             const token = res.data["password"];       // Get the token
             if (token) {
-                setSession(token, phone);    // If token exists, create new session with token and username
+                setSession(token, username);    // If token exists, create new session with token and username
                 navigate('/');                  // Redirect to Home
             }
             else {
@@ -38,10 +39,6 @@ function SignIn () {
             }
         });
     };
-
-    const toSignup = () => {
-        navigate('/sign-up');
-    }
 
     return (
         <div className="sign-in-form-wrapper">
@@ -60,7 +57,7 @@ function SignIn () {
                                 <td><label className="sign-in-label" htmlFor='phone'>Phone</label></td>
                             </tr>
                             <tr>
-                                <td><input type='text' name="phone" id="phone" onChange={e => setPhone(e.target.value)} required/></td>
+                                <td><input type='text' name="phone" id="phone" onChange={e => setUsername(e.target.value)} required/></td>
                             </tr>
                         </div>
                         <div className="sign-in-credentials">

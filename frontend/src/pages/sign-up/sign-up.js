@@ -1,82 +1,62 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getToken, setSession } from "Utils/Common"
+import { getToken, setSession } from "utils/common"
 import pic from "../../assets/signin-background.jpg"
 import "./sign-up.css"
 
 
 function SignUp () {
     const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [usernameList, setUsernameList] = useState([]);
 
-    const [usernameList, setUsernameList] = useState(null);
     useEffect(() => {
+
+        getUsernameList();
+
         if (getToken()) {
             navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
         }
-        // setUsernameList(() => {                        // Get all usernames from db
-        //     axios.get('http://localhost:8080/api/getUsernames').then(res => {
-        //         console.log(res.data)
-        //         return res.data;
-        //     })
-        // });
 
     }, []);
 
     const [firstName, setFName] = useState(null);
-    const [midName, SetMName] = useState(null);
     const [lastName, setLName] = useState(null);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [checkPw, setCheckPw] = useState(null);
 
-    function retrieveUsername() {                        // Get all usernames from db
-        return new Promise ( (resolve) => {
-                axios.get('http://localhost:8080/api/getUsernames').then(res => {
-                    return resolve(res.data);
-                })
-            }
-        )
-    };
+    const getUsernameList = async () => {
+        axios.get("http://localhost:8080/getusernames").then((response) => {
+            setUsernameList(response.data);
+        }).catch((error) => console.log(error.message))
+    }
+    
     
     const handleSignup = async (event) => {
-        var form = null;
+        const form = {
+            first_name:  firstName,
+            last_name:   lastName,
+            username:   username,
+            password:   password
+        }
         event.preventDefault();
-
-        const usernameList = await retrieveUsername();
         
-        // Check duplicate username
-        var duplicateUsername = false;
-        usernameList.forEach(element => {
-            if (element == username) {
-                duplicateUsername = true;
-            }
-        });
-
-        if (!duplicateUsername) {         // If username is new, proceed
-            if (password === checkPw) {                 // If password match re-type pw, proceed
-                form = {
-                    firstName:  firstName,
-                    midName:    midName,
-                    lastName:   lastName,
-                    username:   username,
-                    password:   password
-                }
-                
-                axios.post('http://localhost:8080/signing/save', form).then(res => {   // Send sign up info to backend
-                    if (res.data["password"]) {                       // Generate token at backend, then send it to frontend
-                        setSession(res.data["password"], username);   // Set new session with acquired token and username
-                        navigate('/');                          // Redirect to Home
-                    }
-                });
-            }
-            else {   
-                setErrorMessage('Re-type password must match your password!');
-            }
+        
+        if (!usernameList.includes(username)) {
+            setErrorMessage("Username is taken.");
+        }
+        else if (password === checkPw) {    
+            setErrorMessage("Passwords must match.");
         }
         else {
-            setErrorMessage('Username is already taken! Please choose another one.');
+            axios.post('http://localhost:8080/signup', form).then(res => {   // Send sign up info to backend
+                if (res.data["password"]) {                       // Generate token at backend, then send it to frontend
+                    setSession(res.data["password"], username);   // Set new session with acquired token and username
+                    navigate('/');                          // Redirect to Home
+                }
+            }).catch((error) => console.log(error.message));
         }
     };
 
@@ -123,6 +103,9 @@ function SignUp () {
                 </table>
                 <button className="sign-up-btn">Submit</button> 
             </form>
+            {errorMessage === "" ? "" : 
+                <p>{errorMessage}</p>
+            }
         </div>
     );
 };

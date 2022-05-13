@@ -8,7 +8,6 @@ export default function Payment() {
     const location = useLocation();
     const bookingId = location.state;
 
-    const [cardNum, setCardNum] = useState("123456789");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
