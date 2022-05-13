@@ -16,6 +16,10 @@ public class BookingService {
         return listBooking;
     }
 
+    public Iterable<Booking> getCustomerBooking(String customer_id) {
+        return bookingRepository.getCustomerBooking(customer_id);
+    }
+
     public Booking getBooking(int bookingId) throws Exception {
         Optional<Booking> tmpBooking = bookingRepository.findById(bookingId);
         if (tmpBooking.isPresent()) {

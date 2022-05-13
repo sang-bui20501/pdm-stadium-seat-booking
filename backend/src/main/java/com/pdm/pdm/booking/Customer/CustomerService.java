@@ -1,5 +1,9 @@
 package com.pdm.pdm.booking.Customer;
 
+import com.pdm.pdm.booking.Booking.Booking;
+import com.pdm.pdm.booking.BookingSeat.BookingSeat;
+import com.pdm.pdm.booking.BookingStadium.BookingStadium;
+import com.pdm.pdm.booking.Seat.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +19,25 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public List<String> getCustomerBooking(String username) {
-        return customerRepository.getCustomerBookings(username);
+    public Customer updateCustomer(String username, String password, String id) throws Exception {
+        customerRepository.updateCustomer(username, password, id);
+        return getCustomer(Integer.parseInt(id));
+    }
+
+    public Iterable<Seat> getSeat() {
+        return customerRepository.getSeat();
+    }
+
+    public Iterable<BookingSeat> getBookingSeat(String username) {
+        return customerRepository.getBookingSeat(username);
+    }
+
+    public Iterable<BookingStadium> getBookingStadium(String username) {
+        return customerRepository.getBookingStadium(username);
+    }
+
+    public Iterable<Booking> getBooking(String username) {
+        return customerRepository.getBooking(username);
     }
 
     public Customer getCustomer(int id) throws Exception {
