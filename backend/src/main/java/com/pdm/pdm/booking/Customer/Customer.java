@@ -1,7 +1,5 @@
 package com.pdm.pdm.booking.Customer;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-
 import javax.persistence.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
