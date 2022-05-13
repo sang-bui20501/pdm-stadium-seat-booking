@@ -6,8 +6,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-/*import java.util.Date;
-*/
 @Entity
 public class Booking {
     @Id
@@ -24,12 +22,16 @@ public class Booking {
 
     private String duration;
 
-    public Booking(int booking_id, int customer_id, String startTime, String endTime, String duration){
-        this.booking_id = booking_id;
+
+    private String booking_date;
+
+    public Booking(String booking_date, int bookingId, int customer_id, String startTime, String endTime, String duration){
+        this.booking_id = bookingId;
         this.customer_id = customer_id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.duration = duration;
+        this.booking_date = booking_date;
     }
 
     public Booking() {
@@ -45,7 +47,15 @@ public class Booking {
 
     }
 
-        public int getCustomer_id() {
+    public String getBooking_date() {
+        return booking_date;
+    }
+
+    public void setBooking_date(String booking_date) {
+        this.booking_date = booking_date;
+    }
+
+    public int getCustomer_id() {
             return customer_id;
         }
 

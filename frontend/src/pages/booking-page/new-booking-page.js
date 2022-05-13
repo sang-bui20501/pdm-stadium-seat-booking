@@ -80,7 +80,8 @@ function BookingPage() {
             duration: bookingDuration
         }
         console.log(form);
-        axios.post("http://localhost:8080/api/getavailableseats", form).then((response) => {
+        axios.post("http://localhost:8080/booking/getAvailableSeat", form).then((response) => {
+            console.log(response.data);
             if (response.ok) {
                 setAvailableSeats(response.data);
             }
@@ -98,7 +99,7 @@ function BookingPage() {
             paid_status: false
         }
         console.log(form);
-        axios.post("http://localhost:8080/api/newseatbooking", form).then((response) => {
+        axios.post("http://localhost:8080/booking/save", form).then((response) => {
             if (response.ok) { // db should pass down new booking id just created
                 navigate("/proceed-payment", {state: {booking_id: response.data}});
             }
@@ -114,7 +115,7 @@ function BookingPage() {
             paid_status: false
         }
         console.log(form);
-        axios.post("http://localhost:8080/api/newstadiumbooking", form).then((response) => {
+        axios.post("http://localhost:8080/booking/save", form).then((response) => {
             if (response.ok) { // db should pass down new booking id just created
                 navigate("proceed-payment", {state: {booking_id: response.data}});
             }
