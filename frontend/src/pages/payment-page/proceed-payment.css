@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+.proceed-payment {
+    background-image: url(../../assets/homepage-background.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 800px;
+    background-size: cover;
+    z-index: -1;
+    color: black;
+    font-family: "Montserrat", sans-serif;
+}
+
+.proceed-payment-form {
+    background-color: white;
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    margin-top: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 25px;
+}
+
+.proceed-payment-form-description {
+    background-color: rgb(152, 202, 237);
+    padding: 20px 0 10px 0;
+    width: 500px;
+    font-size: 20px;
+}
+
+.proceed-payment-form-credentials {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.proceed-payment-submit-btn {
+    border-style: none;
+    background-color: rgb(152, 202, 237);
+    font-weight: bold;
+    font-size: 18px;
+    width: 150px;
+    height: 50px;
+}
+
+.proceed-payment-submit-btn:hover {
+    background-color: rgba(152, 202, 237, 0.7);
+}

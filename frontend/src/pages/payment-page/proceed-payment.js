@@ -1,76 +1,35 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import "./proceed-payment.css";
 
 export default function Payment() {
     const navigate = useNavigate();
     const location = useLocation();
-    const booking = location.state;
+    const bookingId = location.state;
 
-    const [cardNum, setCardNum] = useState(null);
-    const [expiry, setExpiry] = useState(null);
-    const [cvv, setCVV] = useState(null);
-    const toNextPage = () => {
-        if (cardNum && expiry && cvv) {
-            const paymentInfo = {
-                cardNum:    cardNum,
-                expiry:     expiry,
-                cvv:        cvv,
+    const [cardNum, setCardNum] = useState("123456789");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        axios.put("http://localhost:8080/api/paybooking", {paid_status: true}).then((response) => {
+            if (response.ok) {
+                navigate("/homepage");
             }
-            return navigate('/check-info', {state: {
-                paymentInfo: paymentInfo,
-                booking: booking
-            }});
-        }
+        }).catch((error) => console.log(error.message));
     }
 
     return (
-        <div className="container-fluid mt-5">
-            <div className="container-fluid col-7">
-                <h3 className="text-center mb-4">Proceed Payment</h3>
-                <div className="row mb-3">
-                    <div className="col"> <label htmlFor="card-number">Card number</label> </div>
-                    <div className="col">
-                        <input 
-                            type={'text'}
-                            id='card-number' 
-                            onChange={e => setCardNum(e.target.value)}
-                            required
-                        />
-                    </div>
+        <div className="proceed-payment">
+            <div className="proceed-payment-form">
+                <div className="proceed-payment-form-description">
+                    <p className="proceed-payment-form-title">Pay for Booking</p>
                 </div>
-
-                <div className="row mb-3">
-                    <div className="col"> <label htmlFor="expiry">Expiry</label> </div>
-                    <div className="col">
-                        <input 
-                            type={'text'} 
-                            id='expiry' 
-                            onChange={e => setExpiry(e.target.value)}
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div className="row mb-3">
-                    <div className="col"> <label htmlFor="cvv">CVV</label> </div>
-                    <div className="col"> 
-                        <input 
-                            type={'number'} 
-                            id='cvv' 
-                            onChange={e => setCVV(e.target.value)}
-                            required
-                        /> 
-                    </div>
-                </div>
-
-                <div className="mt-5 text-end">
-                    <input 
-                        className="btn" 
-                        type={'button'} 
-                        value='Next'
-                        onClick={toNextPage}
-                    />
+                <div className="proceed-payment-form-credentials">
+                    <p>Card number: 123456789</p>
+                    <p>Expires: 09/2025</p>
+                    <p>CVV: 123</p>
+                    <input type="submit" value="Submit" className="proceed-payment-submit-btn"/>
                 </div>
             </div>
         </div>

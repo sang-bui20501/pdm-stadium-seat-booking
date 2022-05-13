@@ -1,5 +1,6 @@
 import { MAIN_URL } from "resources";
 import axios from 'axios'
+
 const getSeats = async (setSeats) => {
     const result = await (axios.get(`${MAIN_URL}/data/seats.json`))
     setSeats(result.data);
