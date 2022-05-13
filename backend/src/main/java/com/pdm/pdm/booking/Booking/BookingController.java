@@ -48,12 +48,12 @@ public class BookingController {
 
         if (booking_form.get("seat_id") != null) {
             String seat_id = booking_form.get("seat_id");
-            Integer booking_id = booking.getBookingId();
+            Integer booking_id = booking.getbooking_id();
             bookingSeatController.addBooking(seat_id, booking_id);
         }
         if (booking_form.get("price_id") != null) {
             String price_id = booking_form.get("price_id");
-            Integer booking_id = booking.getBookingId();
+            Integer booking_id = booking.getbooking_id();
             bookingStadiumController.addBooking(price_id, booking_id);
         }
 
@@ -61,8 +61,8 @@ public class BookingController {
     }
 
 //Delete booking. User will be redirected to the booking page after successfully deleted booking info
-    @DeleteMapping("booking/remove/{bookingId}")
-    public String removeBooking(@PathVariable("bookingId") int bookingId) {
+    @DeleteMapping("booking/remove/{booking_id}")
+    public String removeBooking(@PathVariable("booking_id") int bookingId) {
         try {
             bookingService.deleteBooking(bookingId);
         } catch (Exception e) {
@@ -72,8 +72,8 @@ public class BookingController {
     }
 
 //Show booking status
-    @GetMapping("booking/status/{bookingId}")
-    public String bookingStatus(@PathVariable("bookingId") int bookingId) {
+    @GetMapping("booking/status/{booking_id}")
+    public String bookingStatus(@PathVariable("booking_id") int bookingId) {
         try{
             bookingService.hasBookings(bookingId);
         }catch (Exception e){

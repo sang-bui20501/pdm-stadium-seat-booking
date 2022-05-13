@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int bookingId;
+    private int booking_id;
 
     private int customer_id;
 
@@ -24,8 +24,8 @@ public class Booking {
 
     private String duration;
 
-    public Booking(int bookingId, int customer_id, String startTime, String endTime, String duration){
-        this.bookingId = bookingId;
+    public Booking(int booking_id, int customer_id, String startTime, String endTime, String duration){
+        this.booking_id = booking_id;
         this.customer_id = customer_id;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -53,12 +53,12 @@ public class Booking {
             this.customer_id = customer_id;
         }
 
-        public int getBookingId() {
-                return bookingId;
+        public int getbooking_id() {
+                return booking_id;
             }
 
-        public void setBookingId(int bookingId) {
-            this.bookingId = bookingId;
+        public void setbooking_id(int booking_id) {
+            this.booking_id = booking_id;
         }
 
 
