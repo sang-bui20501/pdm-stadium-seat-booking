@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState, useNavigate } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getToken, getUser } from "utils/common";
 import "./edit-info.css"
@@ -86,7 +87,7 @@ export default function EditInfo () {
     return (
         <div className="edit-info-body">
         <div className="edit-info-form-wrapper">
-          <form className="edit-info-form" onSubmit={handleSubmit()}>
+          <form className="edit-info-form" onSubmit={handleSubmit}>
             <h3 className="edit-info-form-description">Make a Reservation</h3>
             <table className="edit-info-table">
               <tbody>

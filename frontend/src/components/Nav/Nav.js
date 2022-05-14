@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import logo from "../../assets/logo.png"
-import "./nav.css"
+import "./Nav.css"
 
 function Nav() {
   return (
