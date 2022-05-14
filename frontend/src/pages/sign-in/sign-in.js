@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getToken, setSession } from "utils/common";
 import pic from "../../assets/signin-background.jpg"
 import "./sign-in.css"
 import { useCookies } from './../../hooks/use-cookie/use-cookie';
@@ -24,12 +23,11 @@ function SignIn () {
         };
 
         axios.post('http://localhost:8080/authenticate', form).then(response => {
-            setCustomerId(1);
             if(response.data.token) {
                 setCookie("jwt", response.data.token)
                 setCookie("userId", response.data.userId)
                 setCookie("username", response.data.username)
-                navigate("/", {state: {customerId: customerId}});   
+                navigate("/");   
             }
 
         }).catch(error => console.log(error.message));

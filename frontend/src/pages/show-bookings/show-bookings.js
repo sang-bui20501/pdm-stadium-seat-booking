@@ -1,19 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import check from "../../assets/check-sign.png"
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./show-bookings.css"
-
+import { useCookies } from './../../hooks/use-cookie/use-cookie';
 
 function ShowBookings () {
     const navigate = useNavigate();
-    const location = useLocation();
-    const customerId = location.state;
+    
+
     const [bookingList, setBookingList] = useState([]);
     const [bookingId, setBookingId] = useState();
 
     const getBookingList = async () => {
-        axios.get(`http://localhost:8080/customer/${customerId}/getBookings`).then((response) => {
+        axios.get(`http://localhost:8080/customer//getBookings`).then((response) => {
             if (response.ok) {
                 setBookingList(response.data);
             }
@@ -26,9 +26,9 @@ function ShowBookings () {
 
     const handleClick = (e) => {
         e.preventDefault();
-        axios.delete(`http://localhost:8080/booking/remove/${bookingId}`).then((response) => {
+        axios.delete(`http://localhost:8080/booking/remove/`).then((response) => {
             if (response.ok) {
-                navigate("/your-bookings", {state: {customerId: customerId}});
+                navigate("/your-bookings");
             }
         }).catch((error) => console.log(error.message));
     }

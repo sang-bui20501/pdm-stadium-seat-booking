@@ -1,70 +1,39 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getToken, setSession } from "utils/common"
 import pic from "../../assets/signin-background.jpg"
 import "./sign-up.css"
+import { useCookies } from "../../hooks/use-cookie/use-cookie";
 
 
 function SignUp () {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
     const [usernameList, setUsernameList] = useState([]);
-    const [customerId, setCustomerId] = useState();
 
-    useEffect(() => {
-
-        getUsernameList();
-
-        if (getToken()) {
-            navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
-        }
-
-    }, []);
 
     const [firstName, setFName] = useState(null);
     const [lastName, setLName] = useState(null);
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
-    const [checkPw, setCheckPw] = useState(null);
 
-    const getUsernameList = async () => {
-        axios.get("http://localhost:8080/customer/getUsernames").then((response) => {
-            setUsernameList(response.data);
-        }).catch((error) => console.log(error.message))
-    }
-    
-    
+
     const handleSignup = async (event) => {
         const form = {
             firstName:  firstName,
             lastName:   lastName,
+            midName: "",
             username:   username,
             password:   password
         }
         event.preventDefault();
         
-        
-        if (!usernameList.includes(username)) {
-            setErrorMessage("Username is taken.");
-        }
-        else if (password === checkPw) {    
-            setErrorMessage("Passwords must match.");
-        }
-        else {
-            axios.post('http://localhost:8080/customer/sign-up', form).then(response => {
-                //setCustomerId(response.data);
-                setCustomerId(1); // placeholder
-                /*   // Send sign up info to backend
-                if (res.data["password"]) {                       // Generate token at backend, then send it to frontend
-                    setSession(res.data["password"], username);   // Set new session with acquired token and username
-                    navigate('/');                          // Redirect to Home
-                }*/
-                if (response.ok) {
-                    navigate("/", {state: {customerId: customerId}});
-                }
-            }).catch((error) => console.log(error.message));
-        }
+        axios.post('http://localhost:8080/sign-up', form).then(response => {
+            if (response.ok) {
+                navigate("/");
+            }
+        }).catch((error) => console.log(error.message));
+
     };
 
     return (
