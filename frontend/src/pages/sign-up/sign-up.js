@@ -29,7 +29,7 @@ function SignUp () {
         event.preventDefault();
         
         axios.post('http://localhost:8080/sign-up', form).then(response => {
-            if (response.ok) {
+            if (response.data) {
                 navigate("/");
             }
         }).catch((error) => console.log(error.message));

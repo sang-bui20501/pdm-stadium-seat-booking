@@ -17,15 +17,14 @@ export default function EditInfo () {
     const [user, setUser] = useState();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [disableEdit, setDisableEdit] = useState(true);
+    const [disableUsernameEdit, setDisableUsernameEdit] = useState(true);
+    const [disablePasswordEdit, setDisablePasswordEdit] = useState(true);
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     
     const getUser = async () => {
         axios.get(`http://localhost:8080/customer/edit/${customerId}`).then((response) => {
-            console.log(response.data);
             if (response.data) {
-                
                 setUser(response.data);
                 setFirstName(response.data.first_name);
                 setLastName(response.data.last_name);
@@ -84,8 +83,8 @@ export default function EditInfo () {
         if (password !== user.password) {
             form.password = password;
         }
-        axios.post(`http://localhost:8080/edit/${customerId}/update`).then((response) => {
-            if (response.ok) {
+        axios.post(`http://localhost:8080/customer/edit/${customerId}/update`, form).then((response) => {
+            if (response.data) {
                 navigate("/edit-info")
             }
         }).catch((error) => console.log(error.message));
@@ -95,7 +94,7 @@ export default function EditInfo () {
         <div className="edit-info-body">
         <div className="edit-info-form-wrapper">
           <form className="edit-info-form" onSubmit={handleSubmit}>
-            <h3 className="edit-info-form-description">Make a Reservation</h3>
+            <h3 className="edit-info-form-description">Your info</h3>
             <table className="edit-info-table">
               <tbody>
                   <div className="edit-info-form-section">
@@ -113,8 +112,8 @@ export default function EditInfo () {
                         <td className="edit-info-td"><label for="username">Username</label></td>
                     </tr>
                     <tr>
-                        <td className="edit-info-td"><input type='text' className="edit-info-item" name="username" value={username} readOnly={disableEdit} onChange={(e) => setUsername(e.target.value)}/></td>
-                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disableEdit ? "Edit" : "Ok"} onClick={() => setDisableEdit(!disableEdit)}/></td>
+                        <td className="edit-info-td"><input type='text' className="edit-info-item" name="username" value={username} readOnly={disableUsernameEdit} onChange={(e) => setUsername(e.target.value)}/></td>
+                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disableUsernameEdit ? "Edit" : "Ok"} onClick={() => setDisableUsernameEdit(!disableUsernameEdit)}/></td>
                     </tr>
                 </div>
                 <div className="edit-info-form-section">
@@ -122,8 +121,8 @@ export default function EditInfo () {
                         <td className="edit-info-td"><label for="password">Password</label></td>
                     </tr>
                     <tr>
-                        <td className="edit-info-td"><input type='password' className="edit-info-item" name="password" value={password} readOnly={disableEdit} onChange={(e) => setPassword(e.target.value)}/></td>
-                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disableEdit ? "Edit" : "Ok"} onClick={() => setDisableEdit(!disableEdit)}/></td>
+                        <td className="edit-info-td"><input type='password' className="edit-info-item" name="password" value={password} readOnly={disablePasswordEdit} onChange={(e) => setPassword(e.target.value)}/></td>
+                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disablePasswordEdit ? "Edit" : "Ok"} onClick={() => setDisablePasswordEdit(!disablePasswordEdit)}/></td>
                     </tr>
                 </div>
               </tbody>

@@ -83,15 +83,16 @@ function BookingPage() {
             duration: bookingDuration
         }
         console.log(form);
-        axios.post("http://localhost:8080/getavailableseats", form).then((response) => {
+        axios.post("http://localhost:8080/booking/getavailableseats", form).then((response) => {
             console.log(response.data);
-            if (response.ok) {
+            if (response.data) {
                 setAvailableSeats(response.data);
             }
         }).catch((error) => console.log(error.message));
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
         const form = {
             customer_id: customerId,
             seat_id: seatId,
@@ -103,7 +104,7 @@ function BookingPage() {
         }
         console.log(form);
         axios.post(`http://localhost:8080/booking/${customerId}/save`, form).then((response) => {
-            if (response.ok) { // db should pass down new booking id just created
+            if (response.data) {
                 navigate("/proceed-payment", {state: {booking_id: response.data}});
             }
         }).catch((error) => console.log(error.message));

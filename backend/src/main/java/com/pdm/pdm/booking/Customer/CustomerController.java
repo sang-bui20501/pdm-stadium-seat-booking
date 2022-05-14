@@ -141,9 +141,10 @@ public class CustomerController {
 
         String username = customer_form.get("username");
         String password = customer_form.get("password");
-
+        System.out.println(username);
         try {
             Customer customer = customerService.updateCustomer(username, password, id);
+            
             return jsonMapper.writeValueAsString(customer);
         } catch (Exception e) {
             e.printStackTrace();
