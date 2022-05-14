@@ -9,7 +9,7 @@ export const useCookies = () => {
     }
     const removeCookie = (cookieNameList) => {
         cookieNameList.forEach((cookieName) => Cookies.remove(cookieName))
-        setCookiesValue(Cookies.get)
+        setCookiesValue(Cookies.get())
     }
 
     return { cookies, setCookie, removeCookie}

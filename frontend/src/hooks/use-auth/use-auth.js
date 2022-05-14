@@ -1,4 +1,7 @@
+import React from 'react'
 
 export default function useAuth() {
-    return true;
+    const [isAuthenticated, setAuthenticated] = React.useState(false)
+
+    return [setAuthenticated, isAuthenticated];
 };

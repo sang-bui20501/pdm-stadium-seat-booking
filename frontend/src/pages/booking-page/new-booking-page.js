@@ -3,11 +3,13 @@ import "./booking-page.css"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 //import Payment from '../../components/payment/payment';
+import { useCookies } from './../../hooks/use-cookie/use-cookie';
 
 function BookingPage() {
     /* query info */
+    const { cookies } = useCookies();
     const [availableSeats, setAvailableSeats] = useState([]);
-    const customerId = 1;
+    const customerId = cookies['userId'];
 
     /* form info */
     const [bookingType, setBookingType] = useState("");

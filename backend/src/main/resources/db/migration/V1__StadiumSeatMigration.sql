@@ -1,3 +1,10 @@
+DROP TABLE IF EXISTS customer;
+DROP TABLE IF EXISTS price;
+DROP TABLE IF EXISTS seat;
+DROP TABLE IF EXISTS booking;
+
+
+
 CREATE TABLE customer (
     id int NOT NULL AUTO_INCREMENT,
     first_name varchar(50) NOT NULL,

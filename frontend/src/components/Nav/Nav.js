@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import logo from "../../assets/logo.png"
-import "./Nav.css"
+import "./nav.css"
 
 function Nav() {
   return (
@@ -23,5 +23,5 @@ function Nav() {
       </nav>
   )
 }
-
+// nav
 export default Nav

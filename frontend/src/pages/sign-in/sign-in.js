@@ -4,17 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { getToken, setSession } from "utils/common";
 import pic from "../../assets/signin-background.jpg"
 import "./sign-in.css"
+import { useCookies } from './../../hooks/use-cookie/use-cookie';
 
 
 function SignIn () {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (getToken()) {
-            navigate('/');          // If exist a token, redirect to Home (prevent goind back to Sign Up/Sign In)
-        }
-        
-    }, []);
+    const { setCookie } = useCookies()
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
@@ -27,22 +23,15 @@ function SignIn () {
             password: password
         };
 
-        axios.post('http://localhost:8080/customer/sign-in', form).then(response => {
-            //setCustomerId(response.data);
-            setCustomerId(1); // placeholder 
-            /*    
-            const token = res.data["password"];       // Get the token
-            if (token) {
-                setSession(token, username);    // If token exists, create new session with token and username
-                navigate('/');                  // Redirect to Home
+        axios.post('http://localhost:8080/authenticate', form).then(response => {
+            setCustomerId(1);
+            if(response.data.token) {
+                setCookie("jwt", response.data.token)
+                setCookie("userId", response.data.userId)
+                setCookie("username", response.data.username)
+                navigate("/", {state: {customerId: customerId}});   
             }
-            else {
-                console.log("Fail!");
-                errorMessage = 'Can\'t sign you in! Either you have entered the wrong credentials or something is wrong, please try again!'
-            }*/
-            if (response.ok) {
-                navigate("/", {state: {customerId: customerId}});
-            }
+
         }).catch(error => console.log(error.message));
     };
 

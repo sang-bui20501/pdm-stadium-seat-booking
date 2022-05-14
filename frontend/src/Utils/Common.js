@@ -15,3 +15,4 @@ export const getToken = () => {
 export const getUser = () => {
     return sessionStorage.getItem('user') || null;
 };
+//.

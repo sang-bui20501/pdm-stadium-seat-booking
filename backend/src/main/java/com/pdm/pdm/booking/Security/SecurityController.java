@@ -1,7 +1,10 @@
 package com.pdm.pdm.booking.Security;
 
 import com.pdm.pdm.booking.Customer.Customer;
+import com.pdm.pdm.booking.Customer.CustomerDTO;
 import com.pdm.pdm.booking.Customer.CustomerRepository;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,11 +34,12 @@ public class SecurityController {
 
     @PostMapping("/register")
     public void register(@RequestBody Customer customer) {
+        customerRepo.save(customer);
         //Add register logic here
     }
 
     @PostMapping("/authenticate")
-    public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
+    public CustomerDTO authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
 
         try {
             authenticationManager.authenticate(
@@ -51,7 +55,8 @@ public class SecurityController {
 
         final String token =
                 jwtUtility.generateToken(userDetails);
-        return new JwtResponse(token);
+        final String id = String.valueOf(customerRepo.findCustomerByUsername(userDetails.getUsername()).getId());
+        return new CustomerDTO(userDetails.getUsername(), id, token);
     }
 
 }
