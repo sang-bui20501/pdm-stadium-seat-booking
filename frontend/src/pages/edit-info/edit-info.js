@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useCookies } from './../../hooks/use-cookie/use-cookie';
 import "./edit-info.css"
 
 
@@ -11,7 +11,9 @@ export default function EditInfo () {
     //const location = useLocation();
     //const customerId = location.state;
     const navigate = useNavigate();
-    const customerId = 1;
+    const { cookies } = useCookies();
+    const customerId = cookies.userId;
+    
     const [user, setUser] = useState();
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
@@ -21,7 +23,9 @@ export default function EditInfo () {
     
     const getUser = async () => {
         axios.get(`http://localhost:8080/customer/edit/${customerId}`).then((response) => {
-            if (response.ok) {
+            console.log(response.data);
+            if (response.data) {
+                
                 setUser(response.data);
                 setFirstName(response.data.first_name);
                 setLastName(response.data.last_name);
@@ -34,10 +38,14 @@ export default function EditInfo () {
     useEffect(() => {
         // placeholder values
         //setUser({username: "alo123", password: "123456", first_name: "Sang", last_name: "Bui"});
-        setFirstName("Sang");
-        setLastName("Bui");
-        setUsername("alo123");
-        setPassword("123456");
+
+        // setFirstName("Sang");
+        // setLastName("Bui");
+        // setUsername("alo123");
+        // setPassword("123456");
+
+        getUser();
+
     }, []);
     /*
     const handleSubmit = () => {
@@ -78,7 +86,7 @@ export default function EditInfo () {
         }
         axios.post(`http://localhost:8080/edit/${customerId}/update`).then((response) => {
             if (response.ok) {
-                navigate("/edit-info", {state: {customerId: customerId}})
+                navigate("/edit-info")
             }
         }).catch((error) => console.log(error.message));
     }

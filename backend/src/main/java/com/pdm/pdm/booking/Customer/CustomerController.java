@@ -51,26 +51,6 @@ public class CustomerController {
         return users;
     }
 
-    @PostMapping("/sign-up")
-    public String addCustomer(@RequestBody HashMap<String, String> sign_up_form) {
-        Customer customer = new Customer();
-        ObjectMapper jsonMapper = new ObjectMapper();
-
-        customer.setFirst_name(sign_up_form.get("firstName"));
-        customer.setMid_name(sign_up_form.get("midName"));
-        customer.setLast_name(sign_up_form.get("lastName"));
-        customer.setUsername(sign_up_form.get("username"));
-        customer.setPassword(sign_up_form.get("password"));
-
-        try {
-            customerService.save(customer);
-            return jsonMapper.writeValueAsString(customer);
-        } catch (Exception e) {
-            System.out.println(e);
-            return "{\"errorMessage\":\"Username is used\"}";
-        }
-    }
-
     @PostMapping("/sign-in")
     public Customer signIn(@RequestBody HashMap<String, String> data) {
         String username = data.get("phone");

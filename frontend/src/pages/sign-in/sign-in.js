@@ -27,7 +27,7 @@ function SignIn () {
                 setCookie("jwt", response.data.token)
                 setCookie("userId", response.data.userId)
                 setCookie("username", response.data.username)
-                navigate("/");   
+                navigate("/", {replace: true});   
             }
 
         }).catch(error => console.log(error.message));
