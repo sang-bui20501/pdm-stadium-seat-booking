@@ -14,7 +14,7 @@ function BookingPage() {
     const [seatType, setSeatType] = useState("Normal");
     const [seatId, setSeatId] = useState();
     const [bookingDate, setBookingDate] = useState(new Date());
-    const [bookingTime, setBookingTime] = useState();
+    const [bookingTime, setBookingTime] = useState("06:00");
     const [bookingDuration, setBookingDuration] = useState(1);
     const [seatPrice, setSeatPrice] = useState(5);
     const [stadiumPrice, setStadiumPrice] = useState(500);
@@ -22,7 +22,7 @@ function BookingPage() {
     /* show or hide display */
     const [showSeatType, setShowSeatType] = useState(false);
     const [showFormInput, setShowFormInput] = useState(false);
-
+    const [showSeatChoices, setShowSeatChoices] = useState(false);
 
     /* additional info */
     const today = new Date().toISOString().split("T")[0];
@@ -107,6 +107,16 @@ function BookingPage() {
         }).catch((error) => console.log(error.message));
     }
 
+    const getSeatChoices = () => {
+        const arr = [];
+        for (let i in availableSeats) {
+            arr.push(
+                <td className="booking-page-td"><button value={availableSeats[i]}>Seat {availableSeats[i]}</button></td>
+            );
+        }
+        return arr;
+    }
+
     return (
         <div className="booking-page-body">
             <div className="booking-page-form-wrapper">
@@ -179,7 +189,10 @@ function BookingPage() {
                     </div>
                     <div className="booking-page-form-section" style={{display: showSeatType ? "block" : "none"}}>
                         <tr>
-                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={() => handleClick()}>Choose a seat</button></td>
+                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={() => {handleClick(); setShowSeatChoices(!showSeatChoices)}}>Choose a seat</button></td>
+                        </tr>
+                        <tr>
+                            {getSeatChoices()}
                         </tr>
                     </div>
                     <div className="booking-page-form-section">
