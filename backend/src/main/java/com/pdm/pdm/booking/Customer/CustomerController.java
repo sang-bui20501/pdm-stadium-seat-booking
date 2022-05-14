@@ -12,6 +12,7 @@ import com.pdm.pdm.booking.Price.PriceService;
 import com.pdm.pdm.booking.Seat.Seat;
 import com.pdm.pdm.booking.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/customer")
 public class CustomerController {
     @Autowired

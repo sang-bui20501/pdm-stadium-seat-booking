@@ -9,12 +9,14 @@ import com.pdm.pdm.booking.Price.PriceService;
 import com.pdm.pdm.booking.Seat.Seat;
 import com.pdm.pdm.booking.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Secured( {"ROLE_myAuthority"} )
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/booking")
