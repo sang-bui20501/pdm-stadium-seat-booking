@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 @Entity
 public class Customer {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "first_name", nullable = false, length = 50)
