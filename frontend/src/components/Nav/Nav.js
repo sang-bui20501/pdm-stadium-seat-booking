@@ -14,6 +14,7 @@ function Nav() {
           <Link to="/">Home</Link>
           <Link to="/booking">Start booking</Link>
           <Link to="/your-bookings">Your bookings</Link>
+          <Link to ="/edit-info">Your info</Link>
           {/*<Link to={'/proceed-payment'}>Payment</Link>*/}
         </div>
         <div className="sign-in">

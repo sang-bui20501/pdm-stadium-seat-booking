@@ -1,33 +1,47 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useNavigate } from "react";
+
 import { getToken, getUser } from "utils/common";
 import "./edit-info.css"
 
 
 export default function EditInfo () {
-    const token = getToken();
-    const [phone, setPhone] = useState();
-    const [newPass, setNewPass] = useState();
-    const [password, setPassword] = useState();
-    const [rePass, setRePass] = useState();
-    const [oldPass, setOldPass] = useState();
-    const [newInfo, setNewInfo] = useState();
     
+    //const token = getToken();
+    //const location = useLocation();
+    //const customerId = location.state;
+    const navigate = useNavigate();
+    const customerId = 1;
+    const [user, setUser] = useState();
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [disableEdit, setDisableEdit] = useState(true);
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
+    
+    const getUser = async () => {
+        axios.get(`http://localhost:8080/customer/edit/${customerId}`).then((response) => {
+            if (response.ok) {
+                setUser(response.data);
+                setFirstName(response.data.first_name);
+                setLastName(response.data.last_name);
+                setUsername(response.data.username);
+                setPassword(response.data.password);
+            }
+        }).catch(error => console.log(error.message));
+    }
+
     useEffect(() => {
-        setPhone(() => {
-            axios.post('api/getPhone', {token: token}).then(res => {
-                return res.data;
-            });
-        });
-
-        setOldPass(() => {
-            axios.post('api/getPass', {token: token}).then(res => {
-                return res.data;
-            });
-        })
-    });
-
+        // placeholder values
+        //setUser({username: "alo123", password: "123456", first_name: "Sang", last_name: "Bui"});
+        setFirstName("Sang");
+        setLastName("Bui");
+        setUsername("alo123");
+        setPassword("123456");
+    }, []);
+    /*
     const handleSubmit = () => {
+        
         if (password === rePass && newPass != oldPass) {
             if (newPass === '') {
                 setNewInfo({
@@ -47,9 +61,70 @@ export default function EditInfo () {
         }
         else
             console.log('Failed! Either re-type password is wrong or new password is already used');
-    };
+
+    };*/
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = {
+            username: user.username,
+            password: user.password
+        };
+        if (username !== user.username) {
+            form.username = username;
+        }
+        if (password !== user.password) {
+            form.password = password;
+        }
+        axios.post(`http://localhost:8080/edit/${customerId}/update`).then((response) => {
+            if (response.ok) {
+                navigate("/edit-info", {state: {customerId: customerId}})
+            }
+        }).catch((error) => console.log(error.message));
+    }
 
     return (
+        <div className="edit-info-body">
+        <div className="edit-info-form-wrapper">
+          <form className="edit-info-form" onSubmit={handleSubmit()}>
+            <h3 className="edit-info-form-description">Make a Reservation</h3>
+            <table className="edit-info-table">
+              <tbody>
+                  <div className="edit-info-form-section">
+                    <tr>
+                        <td className="edit-info-td"><label for="first-name">First name</label></td>
+                        <td className="edit-info-td"><label for="last-name">Last name</label></td>
+                    </tr>
+                    <tr>
+                        <td className="edit-info-td"><input type='text' className="edit-info-name" name="first-name" value={firstName} readOnly={true}/></td>
+                        <td className="edit-info-td"><input type='text' className="edit-info-name" name="last-name" value={lastName} readOnly={true}/></td>   
+                    </tr>
+                  </div>
+                <div className="edit-info-form-section">
+                    <tr>
+                        <td className="edit-info-td"><label for="username">Username</label></td>
+                    </tr>
+                    <tr>
+                        <td className="edit-info-td"><input type='text' className="edit-info-item" name="username" value={username} readOnly={disableEdit} onChange={(e) => setUsername(e.target.value)}/></td>
+                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disableEdit ? "Edit" : "Ok"} onClick={() => setDisableEdit(!disableEdit)}/></td>
+                    </tr>
+                </div>
+                <div className="edit-info-form-section">
+                    <tr>
+                        <td className="edit-info-td"><label for="password">Password</label></td>
+                    </tr>
+                    <tr>
+                        <td className="edit-info-td"><input type='password' className="edit-info-item" name="password" value={password} readOnly={disableEdit} onChange={(e) => setPassword(e.target.value)}/></td>
+                        <td className="edit-info-td"><input type="button" className="edit-info-edit-btn" value={disableEdit ? "Edit" : "Ok"} onClick={() => setDisableEdit(!disableEdit)}/></td>
+                    </tr>
+                </div>
+              </tbody>
+            </table>
+            <input className="edit-info-submit-btn" type="submit" value="Submit"/>
+          </form>
+        </div>
+      </div>
+        /*
         <div className="d-flex justify-content-center mt-5">
             <div className="card w-50">
                 <div className="list-group">
@@ -69,8 +144,8 @@ export default function EditInfo () {
                                         type={'number'} 
                                         id='phone' 
                                         name='phone' 
-                                        value={phone} 
-                                        onChange = {e => setPhone(e.target.value)}
+                                        value={username} 
+                                        onChange = {e => setUsername(e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -85,7 +160,7 @@ export default function EditInfo () {
                                         type={'password'} 
                                         id='new-password' 
                                         name='new-password'
-                                        onChange={e => setNewPass(e.target.value)}
+                                        onChange={e => setPassword(e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -119,7 +194,7 @@ export default function EditInfo () {
                                     type={'password'} 
                                     id='re-password' 
                                     name='re-password'
-                                    onChange={e => setRePass(e.target.value)}
+                                    onChange={e => setPassword(e.target.value)}
                                     required
                                 />
                             </div>
@@ -132,5 +207,6 @@ export default function EditInfo () {
                 </div>
             </div>
         </div>
+        */
     );
 }

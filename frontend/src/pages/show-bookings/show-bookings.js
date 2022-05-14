@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import check from "../../assets/check-sign.png"
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "./show-bookings.css"
 
 
 function ShowBookings () {
     const navigate = useNavigate();
-    const userId = 1;
+    const location = useLocation();
+    const customerId = location.state;
     const [bookingList, setBookingList] = useState([]);
+    const [bookingId, setBookingId] = useState();
 
     const getBookingList = async () => {
-        axios.get(`http://localhost:8080/${userId}/bookinglist`).then((response) => {
+        axios.get(`http://localhost:8080/customer/${customerId}/getBookings`).then((response) => {
             if (response.ok) {
                 setBookingList(response.data);
             }
@@ -21,6 +23,22 @@ function ShowBookings () {
     useEffect(() => {
         getBookingList();
     }, []);
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        axios.delete(`http://localhost:8080/booking/remove/${bookingId}`).then((response) => {
+            if (response.ok) {
+                navigate("/your-bookings", {state: {customerId: customerId}});
+            }
+        }).catch((error) => console.log(error.message));
+    }
+
+    const getDate = (time) => {
+        const year = time.getUTCYear();
+        const month = time.getUTCMonth() + 1;
+        const date = time.getUTCDate();
+        return date + "/" + month + "/" + year;
+    }
 
     const listBookings = () => {
         const arr = [];
@@ -34,27 +52,29 @@ function ShowBookings () {
                             <button className="show-booking-pay-btn"><Link to="/proceed-payment">Pay for booking</Link></button>
                         </div>
                         <div className="show-booking-item-info">
-                            <p className="show-booking-info-item">Seat info: {item.seat_info}</p>
+                            <p className="show-booking-info-item">Seat info: Seat {item.id} {item.seat_type}</p>
                             <p className="show-booking-info-item">Time: {item.start_time} - {item.end_time}</p>
-                            <p className="show-booking-info-item">Date: {item.date}</p>
-                            <p className="show-booking-info-item">Price: {item.seat_price * item.duration}</p>
+                            <p className="show-booking-info-item">Date: {getDate(item.start_time)}</p>
+                            <p className="show-booking-info-item">Price: {item.price}</p>
                             <p className="show-booking-info-item">Status: Unpaid</p>
                         </div>
                     </div>
                 );
             }
             else {
+                var now = new Date();
+                now = now.getTime();
                 arr.push(
                     <div className="show-booking-item">
                         <div className="show-booking-item-general-info">
                             <p className="show-booking-item-title">Seat booking</p>
-                            <img src={check} alt="" className="show-booking-item-status"/>
+                            <button className="show-booking-pay-btn" style={{display: item.start_time.getTime() >= now ? "block" : "none"}} onClick={() => {setBookingId(item.booking_id); handleClick()}}>Delete</button>
                         </div>
                         <div className="show-booking-item-info">
-                            <p className="show-booking-info-item">Seat info: {item.seat_info}</p>
+                            <p className="show-booking-info-item">Seat info: Seat {item.id} {item.seat_type}</p>
                             <p className="show-booking-info-item">Time: {item.start_time} - {item.end_time}</p>
-                            <p className="show-booking-info-item">Date: {item.date}</p>
-                            <p className="show-booking-info-item">Price: {item.seat_price * item.duration}</p>
+                            <p className="show-booking-info-item">Date: {getDate(item.start_time)}</p>
+                            <p className="show-booking-info-item">Price: {item.price}</p>
                             <p className="show-booking-info-item">Status: Paid</p>
                         </div>
                     </div>
@@ -94,19 +114,20 @@ function ShowBookings () {
         <div className="show-booking-wrapper">
             <h1 className="show-booking-title">Your bookings</h1>
             <div className="show-booking-list">
-                <div className="show-booking-item">
-                    <div className="show-booking-item-general-info">
-                        <p className="show-booking-item-title">Seat booking</p>
-                        <button className="show-booking-pay-btn"><Link to="/proceed-payment">Pay for booking</Link></button>
+            <div className="show-booking-item">
+                        <div className="show-booking-item-general-info">
+                            <p className="show-booking-item-title">Seat booking</p>
+                          
+                            <button className="show-booking-pay-btn">Delete</button>
+                        </div>
+                        <div className="show-booking-item-info">
+                            <p className="show-booking-info-item">Seat info: Seat 2 Normal</p>
+                            <p className="show-booking-info-item">Time: 19:00 - 21:00</p>
+                            <p className="show-booking-info-item">Date: 22/05/2022</p>
+                            <p className="show-booking-info-item">Price: 150</p>
+                            <p className="show-booking-info-item">Status: Paid</p>
+                        </div>
                     </div>
-                    <div className="show-booking-item-info">
-                        <p className="show-booking-info-item">Seat info: Seat 2 type normal</p>
-                        <p className="show-booking-info-item">Time: 19:00 - 21:00 </p>
-                        <p className="show-booking-info-item">Date: 22 - 05 - 2022</p>
-                        <p className="show-booking-info-item">Price: 150</p>
-                        <p className="show-booking-info-item">Status: Unpaid</p>
-                    </div>
-                </div>
                 {listBookings()}
             </div>
         </div>

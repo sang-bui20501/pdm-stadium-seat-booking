@@ -10,6 +10,7 @@ function SignUp () {
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
     const [usernameList, setUsernameList] = useState([]);
+    const [customerId, setCustomerId] = useState();
 
     useEffect(() => {
 
@@ -28,7 +29,7 @@ function SignUp () {
     const [checkPw, setCheckPw] = useState(null);
 
     const getUsernameList = async () => {
-        axios.get("http://localhost:8080/getusernames").then((response) => {
+        axios.get("http://localhost:8080/customer/getUsernames").then((response) => {
             setUsernameList(response.data);
         }).catch((error) => console.log(error.message))
     }
@@ -36,8 +37,8 @@ function SignUp () {
     
     const handleSignup = async (event) => {
         const form = {
-            first_name:  firstName,
-            last_name:   lastName,
+            firstName:  firstName,
+            lastName:   lastName,
             username:   username,
             password:   password
         }
@@ -51,10 +52,16 @@ function SignUp () {
             setErrorMessage("Passwords must match.");
         }
         else {
-            axios.post('http://localhost:8080/signup', form).then(res => {   // Send sign up info to backend
+            axios.post('http://localhost:8080/customer/sign-up', form).then(response => {
+                //setCustomerId(response.data);
+                setCustomerId(1); // placeholder
+                /*   // Send sign up info to backend
                 if (res.data["password"]) {                       // Generate token at backend, then send it to frontend
                     setSession(res.data["password"], username);   // Set new session with acquired token and username
                     navigate('/');                          // Redirect to Home
+                }*/
+                if (response.ok) {
+                    navigate("/", {state: {customerId: customerId}});
                 }
             }).catch((error) => console.log(error.message));
         }

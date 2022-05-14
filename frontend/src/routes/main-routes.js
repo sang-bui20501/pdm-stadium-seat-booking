@@ -37,7 +37,7 @@ function MainRoutes() {
           <Route path="/booking" exact element={<BookingPage />} />
           <Route path='/your-bookings' exact element={<ShowBookings />} />
           <Route path='/proceed-payment' element={<Payment/>} />
-          <Route path='/check-info' element={<CheckInfo/>} />
+          <Route path='/check-info' element={<CheckInfo/>} /> {/* not necessary */}
           <Route path='/edit-info' element={<EditInfo/>} />
         </Routes>
       </div>

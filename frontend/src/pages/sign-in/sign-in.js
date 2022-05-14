@@ -8,7 +8,6 @@ import "./sign-in.css"
 
 function SignIn () {
     const navigate = useNavigate();
-    var errorMessage = '';
 
     useEffect(() => {
         if (getToken()) {
@@ -19,6 +18,7 @@ function SignIn () {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [customerId, setCustomerId] = useState(null);
     
     const handleSignin = (event) => {
         event.preventDefault();
@@ -27,7 +27,10 @@ function SignIn () {
             password: password
         };
 
-        axios.post('http://localhost:8080/api/sign-in', form).then(res => {       
+        axios.post('http://localhost:8080/customer/sign-in', form).then(response => {
+            //setCustomerId(response.data);
+            setCustomerId(1); // placeholder 
+            /*    
             const token = res.data["password"];       // Get the token
             if (token) {
                 setSession(token, username);    // If token exists, create new session with token and username
@@ -36,8 +39,11 @@ function SignIn () {
             else {
                 console.log("Fail!");
                 errorMessage = 'Can\'t sign you in! Either you have entered the wrong credentials or something is wrong, please try again!'
+            }*/
+            if (response.ok) {
+                navigate("/", {state: {customerId: customerId}});
             }
-        });
+        }).catch(error => console.log(error.message));
     };
 
     return (
@@ -54,10 +60,10 @@ function SignIn () {
                     <tbody>
                         <div className="sign-in-credentials">
                             <tr>
-                                <td><label className="sign-in-label" htmlFor='phone'>Phone</label></td>
+                                <td><label className="sign-in-label" htmlFor='username'>Username</label></td>
                             </tr>
                             <tr>
-                                <td><input type='text' name="phone" id="phone" onChange={e => setUsername(e.target.value)} required/></td>
+                                <td><input type='text' name="username" id="username" onChange={e => setUsername(e.target.value)} required/></td>
                             </tr>
                         </div>
                         <div className="sign-in-credentials">

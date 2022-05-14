@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function BookingPage() {
     /* query info */
     const [availableSeats, setAvailableSeats] = useState([]);
+    const customerId = 1;
 
     /* form info */
     const [bookingType, setBookingType] = useState("");
@@ -80,7 +81,7 @@ function BookingPage() {
             duration: bookingDuration
         }
         console.log(form);
-        axios.post("http://localhost:8080/booking/getAvailableSeat", form).then((response) => {
+        axios.post("http://localhost:8080/getavailableseats", form).then((response) => {
             console.log(response.data);
             if (response.ok) {
                 setAvailableSeats(response.data);
@@ -88,9 +89,9 @@ function BookingPage() {
         }).catch((error) => console.log(error.message));
     }
 
-    const handleSubmitBookingSeat = async (e) => {
+    const handleSubmit = async (e) => {
         const form = {
-            customer_id: 1,
+            customer_id: customerId,
             seat_id: seatId,
             seat_type: seatType,
             date: bookingDate,
@@ -99,33 +100,17 @@ function BookingPage() {
             paid_status: false
         }
         console.log(form);
-        axios.post("http://localhost:8080/booking/save", form).then((response) => {
+        axios.post(`http://localhost:8080/booking/${customerId}/save`, form).then((response) => {
             if (response.ok) { // db should pass down new booking id just created
                 navigate("/proceed-payment", {state: {booking_id: response.data}});
             }
         }).catch((error) => console.log(error.message));
     }
 
-    const handleSubmitBookingStadium = async (e) => {
-        const form = {
-            customer_id : 1,
-            date: bookingDate,
-            time: bookingTime,
-            duration: bookingDuration,
-            paid_status: false
-        }
-        console.log(form);
-        axios.post("http://localhost:8080/booking/save", form).then((response) => {
-            if (response.ok) { // db should pass down new booking id just created
-                navigate("proceed-payment", {state: {booking_id: response.data}});
-            }
-        }).catch((error) => error.message);
-    }
-
     return (
         <div className="booking-page-body">
             <div className="booking-page-form-wrapper">
-            <form className="booking-page-form" onSubmit={bookingType === "Seat" ? handleSubmitBookingSeat : handleSubmitBookingStadium}>
+            <form className="booking-page-form" onSubmit={handleSubmit()}>
                 <h3 className="booking-page-form-description">Make a Reservation</h3>
                 <table className="booking-page-table">
                 <tbody>
@@ -137,7 +122,7 @@ function BookingPage() {
                         <td className="booking-page-td">
                         <input type="radio" name="booking-type" id='seat' value="seat" onChange={() => {setBookingType("Seat"); setShowSeatType(true); setShowFormInput(true)}}/>
                         <label for="seat" className="booking-page-booking-type">Seat</label>
-                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => {setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false)}}/>
+                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => {setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false); setSeatId(null)}}/>
                         <label for="stadium" className="booking-page-booking-type">Stadium</label>
                         </td>
                     </tr>
