@@ -1,10 +1,11 @@
 package com.pdm.pdm.booking.Security;
 
+import java.util.HashMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pdm.pdm.booking.Customer.Customer;
 import com.pdm.pdm.booking.Customer.CustomerDTO;
 import com.pdm.pdm.booking.Customer.CustomerRepository;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,10 +33,24 @@ public class SecurityController {
         this.customerRepo = customerRepo;
     }
 
-    @PostMapping("/register")
-    public void register(@RequestBody Customer customer) {
-        customerRepo.save(customer);
-        //Add register logic here
+    @PostMapping("/sign-up")
+    public String addCustomer(@RequestBody HashMap<String, String> sign_up_form) {
+        Customer customer = new Customer();
+        ObjectMapper jsonMapper = new ObjectMapper();
+
+        customer.setFirst_name(sign_up_form.get("firstName"));
+        customer.setMid_name(sign_up_form.get("midName"));
+        customer.setLast_name(sign_up_form.get("lastName"));
+        customer.setUsername(sign_up_form.get("username"));
+        customer.setPassword(sign_up_form.get("password"));
+
+        try {
+            customerRepo.save(customer);
+            return jsonMapper.writeValueAsString(customer);
+        } catch (Exception e) {
+            System.out.println(e);
+            return "{\"errorMessage\":\"Username is used\"}";
+        }
     }
 
     @PostMapping("/authenticate")
@@ -58,5 +73,7 @@ public class SecurityController {
         final String id = String.valueOf(customerRepo.findCustomerByUsername(userDetails.getUsername()).getId());
         return new CustomerDTO(userDetails.getUsername(), id, token);
     }
+
+
 
 }
