@@ -18,6 +18,10 @@ public class Price {
         this.rate = rate;
     }
 
+    public Price() {
+
+    }
+
     public int getPriceId() {
         return priceId;
     }

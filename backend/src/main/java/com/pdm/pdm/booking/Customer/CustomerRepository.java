@@ -18,17 +18,17 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
     @Query(value = "SELECT * FROM booking_seat WHERE booking_seat.booking_id IN " +
             "(SELECT booking.booking_id FROM booking WHERE booking.customer_id IN " +
-            "(SELECT customer.id FROM customer WHERE customer.username = ?1))", nativeQuery = true)
-    List<String> getBookingSeat(String username);
+            "(SELECT customer.id FROM customer WHERE customer.id = ?1))", nativeQuery = true)
+    List<String> getBookingSeat(String customer_id);
 
     @Query(value = "SELECT * FROM booking_stadium WHERE booking_stadium.booking_id IN " +
             "(SELECT booking.booking_id FROM booking WHERE booking.customer_id IN " +
-            "(SELECT customer.id FROM customer WHERE customer.username = ?1))", nativeQuery = true)
-    List<String> getBookingStadium(String username);
+            "(SELECT customer.id FROM customer WHERE customer.id = ?1))", nativeQuery = true)
+    List<String> getBookingStadium(String customer_id);
 
     @Query(value = "SELECT * FROM booking WHERE booking.customer_id IN " +
-            "(SELECT customer.id FROM customer WHERE customer.username = ?1)", nativeQuery = true)
-    List<String> getBooking(String username);
+            "(SELECT customer.id FROM customer WHERE customer.id = ?1)", nativeQuery = true)
+    List<String> getBooking(String customer_id);
 
     @Modifying
     @Query(value = "UPDATE customer SET username = ?1, password = ?2 WHERE id = ?3", nativeQuery = true)

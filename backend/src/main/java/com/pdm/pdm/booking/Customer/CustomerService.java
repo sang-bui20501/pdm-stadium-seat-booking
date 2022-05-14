@@ -28,16 +28,16 @@ public class CustomerService {
         return customerRepository.getSeat();
     }
 
-    public List<String> getBookingSeat(String username) {
-        return customerRepository.getBookingSeat(username);
+    public List<String> getBookingSeat(String customer_id) {
+        return customerRepository.getBookingSeat(customer_id);
     }
 
-    public List<String> getBookingStadium(String username) {
-        return customerRepository.getBookingStadium(username);
+    public List<String> getBookingStadium(String customer_id) {
+        return customerRepository.getBookingStadium(customer_id);
     }
 
-    public List<String> getBooking(String username) {
-        return customerRepository.getBooking(username);
+    public List<String> getBooking(String customer_id) {
+        return customerRepository.getBooking(customer_id);
     }
 
     public Customer getCustomer(int id) throws Exception {

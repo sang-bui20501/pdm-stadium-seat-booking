@@ -50,4 +50,8 @@ public class BookingService {
             throw new Exception("Booking with id:" + bookingId + " not found");
         }
     }
+
+    public void payUpdate(int booking_id) {
+        bookingRepository.payUpdate("true", booking_id);
+    }
 }

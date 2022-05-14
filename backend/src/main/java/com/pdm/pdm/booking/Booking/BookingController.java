@@ -4,6 +4,8 @@ import com.pdm.pdm.booking.BookingSeat.BookingSeat;
 import com.pdm.pdm.booking.BookingSeat.BookingSeatService;
 import com.pdm.pdm.booking.BookingStadium.BookingStadium;
 import com.pdm.pdm.booking.BookingStadium.BookingStadiumService;
+import com.pdm.pdm.booking.Price.Price;
+import com.pdm.pdm.booking.Price.PriceService;
 import com.pdm.pdm.booking.Seat.Seat;
 import com.pdm.pdm.booking.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class BookingController {
     @Autowired
     private SeatService seatService;
 
+    @Autowired
+    private PriceService priceService;
+
     @GetMapping("/getAll")
     public Iterable<Booking> findAll() {
         return bookingService.findALl();
@@ -39,11 +44,12 @@ public class BookingController {
         return bookingService.getCustomerBooking(customer_id);
     }
 
-    @PostMapping("/getavailableseats")
-    public String getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws ParseException {
+    @GetMapping("/getavailableseats")
+    public String getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
         String start_time = seatForm.get("start_time");
         String duration = seatForm.get("duration");
         String booking_date = seatForm.get("booking_date");
+        String seat_type = seatForm.get("seat_type");
 
         String json = "{";
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
@@ -96,12 +102,15 @@ public class BookingController {
                     break;
                 }
             }
-            if (check == 0) {
+            if (check == 0 && (seat.getType().equals(seat_type))) {
+                Price seatPrice = priceService.getPrice(seat.getPrice_id());
+
                 json += "{";
 
                 json += "\"id:\"" + seat.getId() + ",";
                 json += "\"price_id:\"" + seat.getPrice_id() + ",";
-                json += "\"type:\"" + " \"" + seat.getType() + "\"";
+                json += "\"type:\"" + " \"" + seat.getType() + "\",";
+                json += "\"price:\"" + " \"" + seatPrice.getRate()*Integer.parseInt(duration) + "\"";
 
                 json += "},";
 
@@ -116,19 +125,32 @@ public class BookingController {
         return json;
     }
 
-/* User will be redirected to the result page after successfully saved booking info 
-*/
-    @PostMapping("/save")
-    public String addBooking(@RequestBody HashMap<String, String> booking_form) {
+
+    @PostMapping("/save/{customer_id}")
+    public String addBooking(@RequestBody HashMap<String, String> booking_form, @PathVariable("customer_id") String customer_id) throws ParseException {
         Booking booking = new Booking();
 
-        booking.setCustomer_id(Integer.parseInt(booking_form.get("customer_id")));
+        booking.setCustomer_id(Integer.parseInt(customer_id));
         booking.setDuration(booking_form.get("duration"));
-        booking.setEndTime(booking_form.get("end_time"));
         booking.setStartTime(booking_form.get("start_time"));
-        booking.setStatus(booking_form.get("status"));
+        booking.setBooking_date(booking_form.get("booking_date"));
+        booking.setStatus("false");
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+
+        Date start_time_date = dateFormat.parse(booking.getStartTime());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start_time_date);
+        calendar.add(Calendar.HOUR, Integer.parseInt(booking.getDuration()));
+
+        Date end_time_date = calendar.getTime();
+
+        booking.setEndTime(dateFormat.format(end_time_date));
+
 
         bookingService.save(booking);
+
 
         if (booking_form.get("seat_id") != null) {
             String seat_id = booking_form.get("seat_id");
@@ -140,21 +162,42 @@ public class BookingController {
             String price_id = booking_form.get("price_id");
             Integer booking_id = booking.getbooking_id();
             bookingStadiumService.save(new BookingStadium(booking_id, Integer.parseInt(price_id)));
-
         }
 
-        return "Save Booking";
+        return "{ \"booking_id\": \"" + booking.getbooking_id() + "\"}";
     }
 
-//Delete booking. User will be redirected to the booking page after successfully deleted booking info
-    @DeleteMapping("booking/remove/{booking_id}")
-    public String removeBooking(@PathVariable("booking_id") int bookingId) {
+    @PostMapping("/paying/{booking_id}")
+    public String payBooking(@PathVariable("booking_id") int bookingId) throws Exception {
+        Booking booking = bookingService.getBooking(bookingId);
+
+        if (booking.getStatus().equals("true")) {
+            return "{\"pay_message:\" \"This booking is paid\"}";
+        } else {
+            bookingService.payUpdate(bookingId);
+            return "{\"pay_message:\" \"Pay successfully\"}";
+        }
+    }
+
+    @DeleteMapping("/remove/{booking_id}")
+    public String removeBooking(@PathVariable("booking_id") int bookingId) throws Exception {
+        Booking booking = bookingService.getBooking(bookingId);
+        String booking_stadium_id = bookingStadiumService.findByBookingId(booking.getbooking_id());
+        String booking_seat_id = bookingSeatService.findByBookingId(booking.getbooking_id());
+
         try {
+            if (booking_stadium_id != null) {
+                bookingStadiumService.deleteBookingStadium(Integer.parseInt(booking_stadium_id));
+            }
+            if (booking_seat_id != null) {
+                bookingSeatService.deleteBookingSeat(Integer.parseInt(booking_stadium_id));
+            }
             bookingService.deleteBooking(bookingId);
         } catch (Exception e) {
             e.printStackTrace();
-        }              
-        return "redirect:/booking";
+        }
+
+        return "{ \"booking_id\": \"" + booking.getbooking_id() + "\"}";
     }
 
 //Show booking status

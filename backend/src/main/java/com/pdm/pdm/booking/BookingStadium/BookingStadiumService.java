@@ -19,6 +19,10 @@ public class BookingStadiumService {
         }
     }
 
+    public String findByBookingId(Integer booking_id) {
+        return bookingStadiumRepository.findBookingStadiumByBooking_id(booking_id);
+    }
+
     public void deleteBookingStadium(int bookingStadiumId) throws Exception {
         Optional<BookingStadium> tmpBooking = bookingStadiumRepository.findById(bookingStadiumId);
         if (tmpBooking.isPresent()) {
