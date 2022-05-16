@@ -33,7 +33,7 @@ public class CustomerService {
     }
 
     public List<BookingSeat> getBookingSeat(String customer_id) {
-        return bookingSeatRepository.getBookingSeat(customer_id);
+        return bookingSeatRepository.getAllBooking(customer_id);
     }
 
     public List<String> getBookingStadium(String customer_id) {

@@ -89,6 +89,7 @@ function BookingPage() {
                 setAvailableSeats(response.data);
             }
         }).catch((error) => console.log(error.message));
+        setShowSeatChoices(!showSeatChoices);
     }
 
     const handleSubmit = async (e) => {
@@ -192,7 +193,7 @@ function BookingPage() {
                     </div>
                     <div className="booking-page-form-section" style={{display: showSeatType ? "block" : "none"}}>
                         <tr>
-                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={() => {handleClick(); setShowSeatChoices(!showSeatChoices)}}>Choose a seat</button></td>
+                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={handleClick}>Choose a seat</button></td>
                         </tr>
                         <tr>
                             {getSeatChoices()}

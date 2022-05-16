@@ -44,7 +44,7 @@ public class BookingController {
         return bookingService.getCustomerBooking(customer_id);
     }
 
-    @GetMapping("/getavailableseats")
+    @PostMapping("/getavailableseats")
     public List<AvailableSeatPriceDTO> getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
         String start_time = seatForm.get("start_time");
         String duration = seatForm.get("duration");
@@ -52,7 +52,7 @@ public class BookingController {
         String seat_type = seatForm.get("seat_type");
 
         String json = "{";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-mm-dd");
 
         Date booking_date_date = dateFormat2.parse(booking_date);
