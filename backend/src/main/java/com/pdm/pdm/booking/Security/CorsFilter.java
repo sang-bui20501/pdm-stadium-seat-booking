@@ -30,7 +30,6 @@ public class CorsFilter implements Filter {
 
         if(request.getMethod().equals("POST") || request.getMethod().equals("OPTIONS")){
             response.setStatus(200);
-            System.out.println("Hereeee");
             return;
         }
         chain.doFilter(req, res);
