@@ -16,9 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Secured( {"ROLE_myAuthority"} )
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(path = "/booking")
 public class BookingController {
     @Autowired

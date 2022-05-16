@@ -1,9 +1,8 @@
 package com.pdm.pdm.booking.Customer;
 
-import com.pdm.pdm.booking.Booking.Booking;
 import com.pdm.pdm.booking.BookingSeat.BookingSeat;
-import com.pdm.pdm.booking.BookingStadium.BookingStadium;
-import com.pdm.pdm.booking.Seat.Seat;
+import com.pdm.pdm.booking.BookingSeat.BookingSeatDTO;
+
 import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,11 +14,6 @@ import javax.transaction.Transactional;
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query(value = "SELECT * FROM seat", nativeQuery = true)
     List<String> getSeat();
-
-    @Query(value = "SELECT * FROM booking_seat WHERE booking_seat.booking_id IN " +
-            "(SELECT booking.booking_id FROM booking WHERE booking.customer_id IN " +
-            "(SELECT customer.id FROM customer WHERE customer.id = ?1))", nativeQuery = true)
-    List<String> getBookingSeat(String customer_id);
 
     @Query(value = "SELECT * FROM booking_stadium WHERE booking_stadium.booking_id IN " +
             "(SELECT booking.booking_id FROM booking WHERE booking.customer_id IN " +

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class BookingSeat {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int booking_id;

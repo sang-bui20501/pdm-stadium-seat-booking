@@ -2,6 +2,8 @@ package com.pdm.pdm.booking.Customer;
 
 import com.pdm.pdm.booking.Booking.Booking;
 import com.pdm.pdm.booking.BookingSeat.BookingSeat;
+import com.pdm.pdm.booking.BookingSeat.BookingSeatDTO;
+import com.pdm.pdm.booking.BookingSeat.BookingSeatRepository;
 import com.pdm.pdm.booking.BookingStadium.BookingStadium;
 import com.pdm.pdm.booking.Seat.Seat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private BookingSeatRepository bookingSeatRepository;
 
     public void save(Customer customer) {
         customerRepository.save(customer);
@@ -28,8 +32,8 @@ public class CustomerService {
         return customerRepository.getSeat();
     }
 
-    public List<String> getBookingSeat(String customer_id) {
-        return customerRepository.getBookingSeat(customer_id);
+    public List<BookingSeat> getBookingSeat(String customer_id) {
+        return bookingSeatRepository.getBookingSeat(customer_id);
     }
 
     public List<String> getBookingStadium(String customer_id) {

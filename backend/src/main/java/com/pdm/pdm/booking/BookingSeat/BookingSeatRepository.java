@@ -20,4 +20,9 @@ public interface BookingSeatRepository extends CrudRepository<BookingSeat, Integ
     @Query(value = "SELECT booking_seat.id FROM booking_seat WHERE booking_seat.booking_id IN " +
             "(SELECT booking.booking_id FROM booking WHERE booking.booking_id = ?1)", nativeQuery = true)
     String findBookingSeatByBooking_id(Integer booking_id);
+
+    @Query(value = "SELECT * FROM booking_seat WHERE booking_seat.booking_id IN " +
+            "(SELECT booking.booking_id FROM booking WHERE booking.customer_id IN " +
+            "(SELECT customer.id FROM customer WHERE customer.id = ?1))", nativeQuery = true)
+    List<BookingSeat> getBookingSeat(String customer_id);
 }

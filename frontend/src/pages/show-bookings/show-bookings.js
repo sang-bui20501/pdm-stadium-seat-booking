@@ -8,12 +8,13 @@ import { useCookies } from './../../hooks/use-cookie/use-cookie';
 function ShowBookings () {
     const navigate = useNavigate();
     
+    const { cookies } = useCookies()
 
     const [bookingList, setBookingList] = useState([]);
     const [bookingId, setBookingId] = useState();
 
     const getBookingList = async () => {
-        axios.get(`http://localhost:8080/customer//getBookings`).then((response) => {
+        axios.get(`http://localhost:8080/customer/getBookings/${cookies.userId}`).then((response) => {
             if (response.ok) {
                 setBookingList(response.data);
             }

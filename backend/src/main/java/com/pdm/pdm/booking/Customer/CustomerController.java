@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pdm.pdm.booking.Booking.Booking;
 import com.pdm.pdm.booking.Booking.BookingService;
 import com.pdm.pdm.booking.BookingSeat.BookingSeat;
+import com.pdm.pdm.booking.BookingSeat.BookingSeatDTO;
 import com.pdm.pdm.booking.BookingStadium.BookingStadium;
 import com.pdm.pdm.booking.BookingStadium.BookingStadiumService;
 import com.pdm.pdm.booking.Price.Price;
@@ -70,61 +71,9 @@ public class CustomerController {
     }
 
     @GetMapping("/getBookings/{customer_id}")
-    public String getCustomerBookings(@PathVariable("customer_id") String customer_id) throws Exception {
-        String json = "{";
+    public List<BookingSeat> getCustomerBookings(@PathVariable("customer_id") String customer_id) throws Exception {
+       return customerService.getBookingSeat(customer_id);
 
-
-        List<String> allCustomerBookingSeat = customerService.getBookingSeat(customer_id);
-        String[] column = new String []{"id", "booking_id", "seat_id"};
-        json += "\"booking_seat:\"{";
-        for (String customerBookingSeat: allCustomerBookingSeat) {
-            String[] allValues = customerBookingSeat.split(",", 3);
-            json += "{";
-            for (int i=1; i<allValues.length; i++) {
-                json += "\"" + column[i] + "\":" + "\"" + allValues[i] + "\",";
-            }
-            Seat seat = seatService.getSeat(Integer.parseInt(allValues[2]));
-            Price price = priceService.getPrice(seat.getPrice_id());
-            Booking booking = bookingService.getBooking(Integer.parseInt(allValues[1]));
-
-            json += "\"" + "seat_type" + "\":" + "\"" + seat.getType() + "\",";
-            json += "\"" + "price" + "\":" + "\"" + price.getRate()*Integer.parseInt(booking.getDuration()) + "\",";
-            json += "\"" + "status" + "\":" + "\"" + booking.getStatus() + "\"";
-
-            json += "},";
-        }
-        if (allCustomerBookingSeat.size() > 0) {
-            json = json.substring(0, json.length() - 1);
-        }
-        json += "},";
-
-
-        List<String> allCustomerBookingStadium = customerService.getBookingStadium(customer_id);
-        column = new String []{"id", "booking_id", "price_id"};
-        json += "\"booking_stadium:\"{";
-        for (String customerBookingStadium: allCustomerBookingStadium) {
-            String[] allValues = customerBookingStadium.split(",", 3);
-            json += "{";
-            for (int i=1; i<allValues.length-1; i++) {
-                json += "\"" + column[i] + "\":" + "\"" + allValues[i] + "\",";
-            }
-            Price price = priceService.getPrice(Integer.parseInt(allValues[2]));
-            Booking booking = bookingService.getBooking(Integer.parseInt(allValues[1]));
-
-            json += "\"" + "price" + "\":" + "\"" + price.getRate()*Integer.parseInt(booking.getDuration()) + "\",";
-            json += "\"" + "status" + "\":" + "\"" + booking.getStatus() + "\"";
-
-            json += "},";
-        }
-        if (allCustomerBookingStadium.size() > 0) {
-            json = json.substring(0, json.length() - 1);
-        }
-        json += "},";
-
-
-        json = json.substring(0, json.length()-1);
-        json += "}";
-        return json;
     }
 
     @GetMapping("/edit/{customer_id}")
