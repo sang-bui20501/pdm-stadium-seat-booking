@@ -45,7 +45,7 @@ public class BookingController {
     }
 
     @GetMapping("/getavailableseats")
-    public String getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
+    public List<AvailableSeatPriceDTO> getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
         String start_time = seatForm.get("start_time");
         String duration = seatForm.get("duration");
         String booking_date = seatForm.get("booking_date");
@@ -53,7 +53,7 @@ public class BookingController {
 
         String json = "{";
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/mm/yyyy");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-mm-dd");
 
         Date booking_date_date = dateFormat2.parse(booking_date);
 
@@ -91,12 +91,12 @@ public class BookingController {
                 }
             }
         }
-
+        ArrayList<AvailableSeatPriceDTO> list = new ArrayList<>();
         Iterable<Seat> allSeat = seatService.findAll();
         int check;
         for (Seat seat: allSeat) {
             check = 0;
-            for (int seat_id: unavailableSeat) {
+            for (int seat_id : unavailableSeat) {
                 if (seat.getId() == seat_id) {
                     check = 1;
                     break;
@@ -105,24 +105,10 @@ public class BookingController {
             if (check == 0 && (seat.getType().equals(seat_type))) {
                 Price seatPrice = priceService.getPrice(seat.getPrice_id());
 
-                json += "{";
-
-                json += "\"id:\"" + seat.getId() + ",";
-                json += "\"price_id:\"" + seat.getPrice_id() + ",";
-                json += "\"type:\"" + " \"" + seat.getType() + "\",";
-                json += "\"price:\"" + " \"" + seatPrice.getRate()*Integer.parseInt(duration) + "\"";
-
-                json += "},";
-
-                availableSeat += 1;
+                list.add(new AvailableSeatPriceDTO(seat.getId(), seat.getPrice_id(), seat.getType(), seatPrice.getRate() * Integer.parseInt(duration)));
             }
         }
-
-        if (availableSeat > 0) {
-            json = json.substring(0, json.length() - 1);
-        }
-        json += "}";
-        return json;
+        return list;
     }
 
 
