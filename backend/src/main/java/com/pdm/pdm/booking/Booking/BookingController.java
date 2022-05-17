@@ -9,7 +9,6 @@ import com.pdm.pdm.booking.Price.PriceService;
 import com.pdm.pdm.booking.Seat.Seat;
 import com.pdm.pdm.booking.Seat.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
@@ -116,7 +115,7 @@ public class BookingController {
     public String addBooking(@RequestBody HashMap<String, String> booking_form, @PathVariable("customer_id") String customer_id) throws ParseException {
         Booking booking = new Booking();
 
-        booking.setCustomer_id(Integer.parseInt(customer_id));
+        booking.setCustomerId(Integer.parseInt(customer_id));
         booking.setDuration(booking_form.get("duration"));
         booking.setStartTime(booking_form.get("start_time"));
         booking.setBooking_date(booking_form.get("booking_date"));
@@ -169,7 +168,7 @@ public class BookingController {
     public String removeBooking(@PathVariable("booking_id") int bookingId) throws Exception {
         Booking booking = bookingService.getBooking(bookingId);
         String booking_stadium_id = bookingStadiumService.findByBookingId(booking.getbooking_id());
-        String booking_seat_id = bookingSeatService.findByBookingId(booking.getbooking_id());
+        String booking_seat_id = String.valueOf(bookingSeatService.findByBookingId(booking.getbooking_id()).getSeat_id());
 
         try {
             if (booking_stadium_id != null) {

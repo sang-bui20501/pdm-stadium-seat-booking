@@ -24,8 +24,8 @@ public class BookingSeatService {
         }
     }
 
-    public String findByBookingId(int booking_id) {
-        return bookingSeatRepository.findBookingSeatByBooking_id(booking_id);
+    public BookingSeat findByBookingId(int booking_id) {
+        return bookingSeatRepository.findBookingSeatByBookingId(booking_id);
     }
 
     public void deleteBookingSeat(int bookingSeatId) throws Exception {

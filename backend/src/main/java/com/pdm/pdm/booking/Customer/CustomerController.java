@@ -2,6 +2,7 @@ package com.pdm.pdm.booking.Customer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pdm.pdm.booking.Booking.AllBookingDTO;
 import com.pdm.pdm.booking.Booking.Booking;
 import com.pdm.pdm.booking.Booking.BookingService;
 import com.pdm.pdm.booking.BookingSeat.BookingSeat;
@@ -71,7 +72,7 @@ public class CustomerController {
     }
 
     @GetMapping("/getBookings/{customer_id}")
-    public List<BookingSeat> getCustomerBookings(@PathVariable("customer_id") String customer_id) throws Exception {
+    public List<AllBookingDTO> getCustomerBookings(@PathVariable("customer_id") String customer_id) throws Exception {
        return customerService.getBookingSeat(customer_id);
 
     }

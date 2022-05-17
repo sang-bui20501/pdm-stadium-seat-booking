@@ -10,13 +10,15 @@ public class BookingSeat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int booking_id;
+    @Column(name = "booking_id", nullable = false, length = 50)
+    private int bookingId;
 
-    private int seat_id;
+    @Column(name = "seat_id", nullable = false, length = 50)
+    private int seatId;
 
     public BookingSeat(int booking_id, int seat_id) {
-        this.booking_id = booking_id;
-        this.seat_id = seat_id;
+        this.bookingId = booking_id;
+        this.seatId = seat_id;
     }
 
     public BookingSeat() {
@@ -27,8 +29,8 @@ public class BookingSeat {
     public String toString() {
         return "BookingSeat{" +
                 "id=" + id +
-                ", booking_id=" + booking_id +
-                ", seat_id=" + seat_id +
+                ", booking_id=" + bookingId +
+                ", seat_id=" + seatId +
                 '}';
     }
 
@@ -41,18 +43,18 @@ public class BookingSeat {
     }
 
     public int getBooking_id() {
-        return booking_id;
+        return bookingId;
     }
 
     public void setBooking_id(int booking_id) {
-        this.booking_id = booking_id;
+        this.bookingId = booking_id;
     }
 
     public int getSeat_id() {
-        return seat_id;
+        return seatId;
     }
 
     public void setSeat_id(int seat_id) {
-        this.seat_id = seat_id;
+        this.seatId = seat_id;
     }
 }
