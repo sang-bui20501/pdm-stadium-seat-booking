@@ -38,8 +38,8 @@ public class BookingService {
         }
     }
 
-    public void save (Booking booking) {
-        bookingRepository.save(booking);
+    public Booking save (Booking booking) {
+        return bookingRepository.save(booking);
     }
     
     public String hasBookings(int bookingId) throws Exception {
