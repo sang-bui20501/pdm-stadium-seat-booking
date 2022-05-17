@@ -8,10 +8,10 @@ public class AllBookingDTO {
   private int duration;
   private String start_time;
   private String end_time;
-  private String status;
+  private String bookingStatus;
 
   public AllBookingDTO(int booking_id, int id, String type, int rate, int duration,
-      String start_time, String end_time, String status) {
+      String start_time, String end_time, String bookingStatus) {
     this.booking_id = booking_id;
     this.id = id;
     this.type = type;
@@ -19,7 +19,7 @@ public class AllBookingDTO {
     this.duration = duration;
     this.start_time = start_time;
     this.end_time = end_time;
-    this.status = status;
+    this.bookingStatus = bookingStatus;
   }
 
   public int getBooking_id() {
@@ -78,11 +78,11 @@ public class AllBookingDTO {
     this.end_time = end_time;
   }
 
-  public String isStatus() {
-    return status;
+  public String getBookingStatus() {
+    return bookingStatus;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setBookingStatus(String bookingStatus) {
+    this.bookingStatus = bookingStatus;
   }
 }
