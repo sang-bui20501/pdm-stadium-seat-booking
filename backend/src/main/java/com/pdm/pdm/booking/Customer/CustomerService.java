@@ -7,6 +7,7 @@ import com.pdm.pdm.booking.BookingSeat.BookingSeat;
 import com.pdm.pdm.booking.BookingSeat.BookingSeatDTO;
 import com.pdm.pdm.booking.BookingSeat.BookingSeatRepository;
 import com.pdm.pdm.booking.BookingStadium.BookingStadium;
+import com.pdm.pdm.booking.BookingStadium.BookingStadiumRepository;
 import com.pdm.pdm.booking.Price.Price;
 import com.pdm.pdm.booking.Price.PriceRepository;
 import com.pdm.pdm.booking.Seat.Seat;
@@ -30,6 +31,8 @@ public class CustomerService {
     private SeatRepository seatRepository;
     @Autowired
     private PriceRepository priceRepository;
+    @Autowired
+    private BookingStadiumRepository bookingStadiumRepository;
 
     public void save(Customer customer) {
         customerRepository.save(customer);
@@ -48,12 +51,14 @@ public class CustomerService {
         ArrayList<AllBookingDTO> allBooking = new ArrayList<>();
 
         for(Booking booking : bookingRepository.findAllByCustomerId(Integer.parseInt(customer_id))){
+            BookingStadium bookingStadium = bookingStadiumRepository.findBookingStadiumByBooking_id(booking.getbooking_id());
             BookingSeat bookingSeat = bookingSeatRepository.findBookingSeatByBookingId(booking.getbooking_id());
             Seat seat = seatRepository.findById(bookingSeat.getSeat_id()).get();
             Price price = priceRepository.findById(seat.getPrice_id()).get();
             System.out.println(booking.getStatus());
             allBooking.add(
                 new AllBookingDTO(booking.getbooking_id(),
+                    bookingStadium.getId(),
                     seat.getId(),
                     seat.getType(),
                     price.getRate(),

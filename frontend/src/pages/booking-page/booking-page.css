@@ -76,6 +76,7 @@ input[type="radio"] {
     width: 500px;
     height: 50px;
     margin-left: 90px;
+    text-align: center;
 }
 
 .booking-page-submit-btn:hover {
@@ -92,5 +93,19 @@ input[type="radio"] {
 }
 
 .booking-page-choose-seat:hover {
+    background-color: rgba(152, 202, 237, 0.7);
+}
+
+.booking-page-seat-choice {
+    margin-top: 10px;
+    border-style: none;
+    background-color: rgb(152, 202, 237);
+    font-weight: bold;
+    font-size: 15px;
+    width: 70px;
+    height: 40px;
+}
+
+.booking-page-seat-choice:focus {
     background-color: rgba(152, 202, 237, 0.7);
 }

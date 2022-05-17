@@ -8,6 +8,10 @@ export default function Payment() {
     const location = useLocation();
     const bookingId = location.state.bookingId;
 
+    useEffect(() => {
+        console.log(bookingId);
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         axios.post(`http://localhost:8080/booking/paying/${bookingId}`).then((response) => {

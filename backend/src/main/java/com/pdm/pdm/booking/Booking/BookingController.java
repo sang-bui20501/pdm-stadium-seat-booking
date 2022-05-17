@@ -143,6 +143,7 @@ public class BookingController {
             bookingStadiumService.save(new BookingStadium(booking_id, Integer.parseInt(price_id)));
         }
 
+        System.out.println("{ \"booking_id\": \"" + booking.getbooking_id() + "\"}");
         return "{ \"booking_id\": \"" + booking.getbooking_id() + "\"}";
     }
 

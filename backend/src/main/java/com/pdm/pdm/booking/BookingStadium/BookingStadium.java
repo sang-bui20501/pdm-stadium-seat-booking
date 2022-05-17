@@ -14,8 +14,10 @@ public class BookingStadium {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    private int booking_id;;
+    @Column(name = "booking_id", nullable = false, length = 50)
+    private int booking_id;
 
+    @Column(name = "seat_id", nullable = false, length = 50)
     private int price_id;
 
     public BookingStadium(int booking_id, int price_id) {

@@ -82,7 +82,7 @@ function BookingPage() {
 
         axios.post(`http://localhost:8080/booking/save/${customerId}`, form).then((response) => {
             if (response.data) {
-                navigate("/proceed-payment", { state: { booking_id: response.data } });
+                navigate("/proceed-payment", { state: {bookingId: response.data.booking_id} });
             }
         }).catch((error) => console.log(error.message));
     }
@@ -91,7 +91,7 @@ function BookingPage() {
         const arr = [];
         for (let i in availableSeats) {
             arr.push(
-                <td className="booking-page-td"><button value={availableSeats[i]} onClick = {() => setSelectedSeat(availableSeats[i])}>Seat {availableSeats[i].id}</button></td>
+                <td className="booking-page-td"><button className="booking-page-seat-choice" value={availableSeats[i]} onClick = {() => setSelectedSeat(availableSeats[i])}>Seat {availableSeats[i].id}</button></td>
             );
         }
         return arr;
@@ -188,7 +188,7 @@ function BookingPage() {
                             </div>
                         </tbody>
                     </table>
-                    <input className="booking-page-submit-btn"  onClick = {handleSubmit}/>
+                    <input className="booking-page-submit-btn" type="submit" value="Submit" onClick = {handleSubmit}/>
                 </div>
             </div>
         </div>
