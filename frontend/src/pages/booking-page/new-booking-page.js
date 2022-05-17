@@ -14,12 +14,13 @@ function BookingPage() {
     /* form info */
     const [bookingType, setBookingType] = useState("");
     const [seatType, setSeatType] = useState("Normal");
-    const [seatId, setSeatId] = useState();
+    const [seatId, setSeatId] = useState(null);
     const [bookingDate, setBookingDate] = useState(new Date());
     const [bookingTime, setBookingTime] = useState("06:00");
     const [bookingDuration, setBookingDuration] = useState(1);
-    const [seatPrice, setSeatPrice] = useState(5);
-    const [stadiumPrice, setStadiumPrice] = useState(500);
+    const [seatPrice, setSeatPrice] = useState(90);
+    const [stadiumPrice, setStadiumPrice] = useState(20000);
+    const [priceId, setPriceId] = useState(null);
 
     /* show or hide display */
     const [showSeatType, setShowSeatType] = useState(false);
@@ -35,51 +36,14 @@ function BookingPage() {
 
         
     }, []);
-
-    /*
-    const displaySeatOptions = () => {
-        const arr = [];
-        const availableSeats = getAvailableSeats(bookingDate, bookingDuration, seatType); // bc it doesn't set nên dùng cái này tạm :))
-        for (let i in availableSeats) {
-            const seat_id = availableSeats[i];
-            arr.push(<button className="booking-page-seat-selection-id" key={i} value={availableSeats[i]} onClick={(e) => {setSeatId(e.target.value)}}>Seat</button>)
-        }
-
-        return arr;
-    }*/
-    /*
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const bookingForm = {
-            id: bookings.length,
-            customer_id: 1,
-            start_time: new Date(bookingDate + "T" + bookingTime),
-            duration: bookingDuration,
-            paid_status: false,
-        }
-
-        if (showSeatType) {
-            const bookingSeatForm = {
-                id: bookingSeat.length,
-                booking_id: bookings.length,
-                seat_id: seatId,
-            }
-        }
-        
-        axios.post("/api/book", bookingForm).then((response) => {
-        if (response.ok) {
-            navigate("/proceed-payment", {state: {booking: bookingForm}});
-        }
-        }).catch((error) => {console.log(error)});
-    }*/
   
     const handleClick = async (e) => {
         e.preventDefault();
         const form = {
             seat_type: seatType,
             booking_date: bookingDate,
-            start_time: `${bookingDate} ${bookingTime}`,
+            start_time: getStartTime(bookingDate, bookingTime),
+            end_time: getEndTime(bookingDate, bookingTime, bookingDuration),
             duration: bookingDuration
         }
         console.log(form);
@@ -92,19 +56,33 @@ function BookingPage() {
         setShowSeatChoices(!showSeatChoices);
     }
 
+    const getStartTime = (date, time) => {
+        return date + " " + time;
+    }
+
+    const getEndTime = (date, time, duration) => {
+        let hour = time.split(":")[0];
+        let min = time.split(":")[1];
+        hour = parseInt(hour) + parseInt(duration);
+        let end = hour + ":" + min;
+        return date + " " + end;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const form = {
             customer_id: customerId,
             seat_id: seatId,
             seat_type: seatType,
-            date: bookingDate,
-            start_time: bookingTime,
+            booking_date: bookingDate,
+            start_time: getStartTime(bookingDate, bookingTime),
+            end_time: getEndTime(bookingDate, bookingTime, bookingDuration),
             duration: bookingDuration,
+            price_id: priceId,
             paid_status: false
         }
         console.log(form);
-        axios.post(`http://localhost:8080/booking/${customerId}/save`, form).then((response) => {
+        axios.post(`http://localhost:8080/booking/save/${customerId}`, form).then((response) => {
             if (response.data) {
                 navigate("/proceed-payment", {state: {booking_id: response.data}});
             }
@@ -124,7 +102,7 @@ function BookingPage() {
     return (
         <div className="booking-page-body">
             <div className="booking-page-form-wrapper">
-            <form className="booking-page-form" onSubmit={handleSubmit()}>
+            <form className="booking-page-form" onSubmit={handleSubmit}>
                 <h3 className="booking-page-form-description">Make a Reservation</h3>
                 <table className="booking-page-table">
                 <tbody>
@@ -136,7 +114,7 @@ function BookingPage() {
                         <td className="booking-page-td">
                         <input type="radio" name="booking-type" id='seat' value="seat" onChange={() => {setBookingType("Seat"); setShowSeatType(true); setShowFormInput(true)}}/>
                         <label for="seat" className="booking-page-booking-type">Seat</label>
-                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => {setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false); setSeatId(null)}}/>
+                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => {setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false); setSeatId(null); setPriceId(3)}}/>
                         <label for="stadium" className="booking-page-booking-type">Stadium</label>
                         </td>
                     </tr>
@@ -148,9 +126,9 @@ function BookingPage() {
                     <tr>
                         <td className="booking-page-td">
                         <select onChange={(e) => {setSeatType(e.target.value)}}>
-                            <option>Normal</option>
-                            <option>Mid</option>
+                            <option>NORMAL</option>
                             <option>VIP</option>
+                            <option>COUPLE</option>
                         </select>
                         </td>
                     </tr>

@@ -27,13 +27,14 @@ public class Booking {
 
     private String booking_date;
 
-    public Booking(String booking_date, int bookingId, int customer_id, String startTime, String endTime, String duration){
+    public Booking(String booking_date, int bookingId, int customer_id, String startTime, String endTime, String duration, String status){
         this.bookingId = bookingId;
         this.customerId = customer_id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.duration = duration;
         this.booking_date = booking_date;
+        this.status = status;
     }
 
     public Booking() {

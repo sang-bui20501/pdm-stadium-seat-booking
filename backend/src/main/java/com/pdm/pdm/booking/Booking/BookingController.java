@@ -46,18 +46,20 @@ public class BookingController {
     @PostMapping("/getavailableseats")
     public List<AvailableSeatPriceDTO> getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
         String start_time = seatForm.get("start_time");
+        String end_time = seatForm.get("end_time");
         String duration = seatForm.get("duration");
         String seat_type = seatForm.get("seat_type");
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
 
         Date start_time_date = dateFormat.parse(start_time);
-
+        Date end_time_date = dateFormat.parse(end_time);
+        /*
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start_time_date);
         calendar.add(Calendar.HOUR, Integer.parseInt(duration));
 
-        Date end_time_date = calendar.getTime();
+        Date end_time_date = calendar.getTime();*/
 
 
         Iterable<Booking> allBooking = bookingService.findALl();
@@ -112,8 +114,9 @@ public class BookingController {
         booking.setBooking_date(booking_form.get("booking_date"));
         booking.setStatus("false");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        booking.setEndTime(booking_form.get("end_time"));
+        /*
         Date start_time_date = dateFormat.parse(booking.getStartTime());
 
         Calendar calendar = Calendar.getInstance();
@@ -122,7 +125,7 @@ public class BookingController {
 
         Date end_time_date = calendar.getTime();
 
-        booking.setEndTime(dateFormat.format(end_time_date));
+        booking.setEndTime(dateFormat.format(end_time_date));*/
 
 
         bookingService.save(booking);
@@ -134,7 +137,7 @@ public class BookingController {
             Integer booking_id = booking.getbooking_id();
             bookingSeatService.save(new BookingSeat(booking_id, Integer.parseInt(seat_id)));
         }
-        if (booking_form.get("price_id") != null) {
+        else if (booking_form.get("price_id") != null) {
             String price_id = booking_form.get("price_id");
             Integer booking_id = booking.getbooking_id();
             bookingStadiumService.save(new BookingStadium(booking_id, Integer.parseInt(price_id)));
