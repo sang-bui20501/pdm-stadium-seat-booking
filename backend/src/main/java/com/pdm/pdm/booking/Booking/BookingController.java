@@ -149,13 +149,13 @@ public class BookingController {
     @PostMapping("/paying/{booking_id}")
     public String payBooking(@PathVariable("booking_id") int bookingId) throws Exception {
         Booking booking = bookingService.getBooking(bookingId);
-
+        /*
         if (booking.getStatus().equals("true")) {
             return "{\"pay_message:\" \"This booking is paid\"}";
-        } else {
+        } else {*/
             bookingService.payUpdate(bookingId);
             return "{\"pay_message:\" \"Pay successfully\"}";
-        }
+        
     }
 
     @DeleteMapping("/remove/{booking_id}")

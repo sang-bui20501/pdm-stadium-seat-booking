@@ -11,7 +11,6 @@ function ShowBookings () {
     const { cookies } = useCookies()
 
     const [bookingList, setBookingList] = useState([]);
-    const [bookingId, setBookingId] = useState();
 
     const getBookingList = async () => {
         axios.get(`http://localhost:8080/customer/getBookings/${cookies.userId}`).then((response) => {
@@ -25,14 +24,22 @@ function ShowBookings () {
         getBookingList();
     }, []);
 
-    const handleClick = (e) => {
+
+    const handleDelete = (e, id) => {
         e.preventDefault();
-        axios.delete(`http://localhost:8080/booking/remove/`).then((response) => {
-            if (response.ok) {
+        axios.delete(`http://localhost:8080/booking/remove/${id}`).then((response) => {
+            if (response.data) {
                 navigate("/your-bookings");
             }
         }).catch((error) => console.log(error.message));
     }
+
+    
+    const handlePayment = (e, id) => {
+        e.preventDefault();
+        navigate("/proceed-payment", {state: {bookingId: id}});
+    }
+
 
     const getDate = (time) => {
         return time.split(" ")[0];
@@ -46,19 +53,18 @@ function ShowBookings () {
         const arr = [];
         for (let i in bookingList) {
             const item = bookingList[i];
-            /*
-            if (!item.status) {
+            if (item.bookingStatus === "PENDING") {
                 arr.push(
                     <div className="show-booking-item">
                         <div className="show-booking-item-general-info">
-                            <p className="show-booking-item-title">Seat booking</p>
-                            <button className="show-booking-pay-btn"><Link to="/proceed-payment">Pay for booking</Link></button>
+                            <p className="show-booking-item-title">Booking #{item.booking_id}</p>
+                            <button className="show-booking-pay-btn" onClick={(e) => handlePayment(e, item.booking_id)}>Pay for booking</button>
                         </div>
                         <div className="show-booking-item-info">
                             <p className="show-booking-info-item">Seat info: Seat {item.id} {item.type}</p>
-                            <p className="show-booking-info-item">Start time: {item.start_time}</p>
-                            <p className="show-booking-info-item">End time: {item.end_time}</p>
-                            <p className="show-booking-info-item">Price: {item.rate}</p>
+                            <p className="show-booking-info-item">Booking date: {getDate(item.start_time)}</p>
+                            <p className="show-booking-info-item">Booking time: {getTime(item.start_time)} - {getTime(item.end_time)}</p>
+                            <p className="show-booking-info-item">Price: {item.rate * item.duration}</p>
                             <p className="show-booking-info-item">Status: Unpaid</p>
                         </div>
                     </div>
@@ -70,64 +76,23 @@ function ShowBookings () {
                 arr.push(
                     <div className="show-booking-item">
                         <div className="show-booking-item-general-info">
-                            <p className="show-booking-item-title">Seat booking</p>
-                            <button className="show-booking-pay-btn" style={{display: item.start_time.getTime() >= now ? "block" : "none"}} onClick={() => {setBookingId(item.booking_id); handleClick()}}>Delete</button>
+                            <p className="show-booking-item-title">Booking #{item.booking_id}</p>
+                            <button className="show-booking-pay-btn" style={{display: item.start_time.getTime() >= now ? "block" : "none"}} onClick={(e) => handleDelete(e, item.bookingId)}>Delete</button>
                         </div>
                         <div className="show-booking-item-info">
                             <p className="show-booking-info-item">Seat info: Seat {item.id} {item.type}</p>
-                            <p className="show-booking-info-item">Start time: {item.start_time}</p>
-                            <p className="show-booking-info-item">End time: {item.end_time}</p>
-                            <p className="show-booking-info-item">Price: {item.rate}</p>
+                            <p className="show-booking-info-item">Booking date: {getDate(item.start_time)}</p>
+                            <p className="show-booking-info-item">Booking time: {getTime(item.start_time)} - {getTime(item.end_time)}</p>
+                            <p className="show-booking-info-item">Price: {item.rate * item.duration}</p>
                             <p className="show-booking-info-item">Status: Paid</p>
                         </div>
                     </div>
                 )
-            }*/
-            arr.push(
-                <div className="show-booking-item">
-                    <div className="show-booking-item-general-info">
-                        <p className="show-booking-item-title">Seat booking</p>
-                        <button className="show-booking-pay-btn"><Link to="/proceed-payment">Pay for booking</Link></button>
-                    </div>
-                    <div className="show-booking-item-info">
-                        <p className="show-booking-info-item">Seat info: Seat {item.id} {item.type}</p>
-                        <p className="show-booking-info-item">Booking date: {getDate(item.start_time)}</p>
-                        <p className="show-booking-info-item">Booking time: {getTime(item.start_time)} - {getTime(item.end_time)}</p>
-                        <p className="show-booking-info-item">Price: {item.rate * item.duration}</p>
-                        <p className="show-booking-info-item">Status: {item.status}</p>
-                    </div>
-                </div>
-            );
+            }
         }
         console.log(arr);
         return arr;
     }
-
-
-    /*
-    const ListBookings = () => {
-        console.log(bookingList)
-        return (Array(bookingList).length)
-        if (Array(bookingList).length === 0) {
-            return (<h1>There is nothing here, yet</h1>)
-        }
-        else {
-            for (let index = 0; index < bookingList.length; index++) {
-                const element = bookingList[index];
-                return (
-                    <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title"> {element.name} </h5>
-                            <p className="card-text">
-                                Date booked: {element.date} <br/>
-                                Number of seats: {element.seats} <br/>
-                            </p>
-                        </div>
-                    </div> 
-                )
-            }
-        }
-    };*/
 
     return (
         <div className="show-booking-wrapper">

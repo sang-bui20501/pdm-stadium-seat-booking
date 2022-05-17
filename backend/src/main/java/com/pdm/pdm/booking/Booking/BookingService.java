@@ -52,6 +52,6 @@ public class BookingService {
     }
 
     public void payUpdate(int booking_id) {
-        bookingRepository.payUpdate("true", booking_id);
+        bookingRepository.payUpdate("PAID", booking_id);
     }
 }
