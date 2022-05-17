@@ -77,7 +77,7 @@ function ShowBookings () {
                     <div className="show-booking-item">
                         <div className="show-booking-item-general-info">
                             <p className="show-booking-item-title">Booking #{item.booking_id}</p>
-                            <button className="show-booking-pay-btn" style={{display: item.start_time.getTime() >= now ? "block" : "none"}} onClick={(e) => handleDelete(e, item.bookingId)}>Delete</button>
+                            <button className="show-booking-pay-btn" style={{display: new Date(item.start_time).getTime() >= now ? "block" : "none"}} onClick={(e) => handleDelete(e, item.bookingId)}>Delete</button>
                         </div>
                         <div className="show-booking-item-info">
                             <p className="show-booking-info-item">Seat info: Seat {item.id} {item.type}</p>

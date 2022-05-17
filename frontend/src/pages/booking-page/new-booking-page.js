@@ -12,6 +12,7 @@ function BookingPage() {
     const customerId = cookies['userId'];
 
     /* form info */
+    const [selectedSeat, setSelectedSeat] = useState({})
     const [bookingType, setBookingType] = useState("");
     const [seatType, setSeatType] = useState("Normal");
     const [seatId, setSeatId] = useState(null);
@@ -29,14 +30,14 @@ function BookingPage() {
 
     /* additional info */
     const today = new Date().toISOString().split("T")[0];
-    const maxDate = new Date(Date.now() + 60*60*24*30*1000).toISOString().split("T")[0];
+    const maxDate = new Date(Date.now() + 60 * 60 * 24 * 30 * 1000).toISOString().split("T")[0];
     const navigate = useNavigate();
 
     useEffect(() => {
 
-        
+
     }, []);
-  
+
     const handleClick = async (e) => {
         e.preventDefault();
         const form = {
@@ -46,14 +47,12 @@ function BookingPage() {
             end_time: getEndTime(bookingDate, bookingTime, bookingDuration),
             duration: bookingDuration
         }
-        console.log(form);
         axios.post("http://localhost:8080/booking/getavailableseats", form).then((response) => {
-            console.log(response.data);
             if (response.data) {
                 setAvailableSeats(response.data);
+                setShowSeatChoices(!showSeatChoices);
             }
         }).catch((error) => console.log(error.message));
-        setShowSeatChoices(!showSeatChoices);
     }
 
     const getStartTime = (date, time) => {
@@ -68,23 +67,22 @@ function BookingPage() {
         return date + " " + end;
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         const form = {
             customer_id: customerId,
-            seat_id: seatId,
-            seat_type: seatType,
-            booking_date: bookingDate,
+            seat_id: selectedSeat.id,
+            seat_type: selectedSeat.type,
+            booking_date: new Date(),
             start_time: getStartTime(bookingDate, bookingTime),
             end_time: getEndTime(bookingDate, bookingTime, bookingDuration),
             duration: bookingDuration,
-            price_id: priceId,
+            price_id: selectedSeat.price_id,
             paid_status: false
         }
-        console.log(form);
+
         axios.post(`http://localhost:8080/booking/save/${customerId}`, form).then((response) => {
             if (response.data) {
-                navigate("/proceed-payment", {state: {booking_id: response.data}});
+                navigate("/proceed-payment", { state: { booking_id: response.data } });
             }
         }).catch((error) => console.log(error.message));
     }
@@ -93,7 +91,7 @@ function BookingPage() {
         const arr = [];
         for (let i in availableSeats) {
             arr.push(
-                <td className="booking-page-td"><button value={availableSeats[i]}>Seat {availableSeats[i]}</button></td>
+                <td className="booking-page-td"><button value={availableSeats[i]} onClick = {() => setSelectedSeat(availableSeats[i])}>Seat {availableSeats[i].id}</button></td>
             );
         }
         return arr;
@@ -102,96 +100,96 @@ function BookingPage() {
     return (
         <div className="booking-page-body">
             <div className="booking-page-form-wrapper">
-            <form className="booking-page-form" onSubmit={handleSubmit}>
-                <h3 className="booking-page-form-description">Make a Reservation</h3>
-                <table className="booking-page-table">
-                <tbody>
-                    <div className="booking-page-form-section">
-                    <tr>
-                        <td className="booking-page-td">Booking Type</td>
-                    </tr>
-                    <tr>
-                        <td className="booking-page-td">
-                        <input type="radio" name="booking-type" id='seat' value="seat" onChange={() => {setBookingType("Seat"); setShowSeatType(true); setShowFormInput(true)}}/>
-                        <label for="seat" className="booking-page-booking-type">Seat</label>
-                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => {setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false); setSeatId(null); setPriceId(3)}}/>
-                        <label for="stadium" className="booking-page-booking-type">Stadium</label>
-                        </td>
-                    </tr>
-                    </div>
-                    <div className="booking-page-form-section" style={{display: showSeatType ? "block" : "none"}}>
-                    <tr>
-                        <td className="booking-page-td">Seat Type</td>
-                    </tr>
-                    <tr>
-                        <td className="booking-page-td">
-                        <select onChange={(e) => {setSeatType(e.target.value)}}>
-                            <option>NORMAL</option>
-                            <option>VIP</option>
-                            <option>COUPLE</option>
-                        </select>
-                        </td>
-                    </tr>
-                    </div>
-                    <div className="booking-page-form-input-div" style={{display: showFormInput ? "block" : "none"}}>
-                    <div className="booking-page-form-section">
-                        <tr>
-                            <td className="booking-page-td">Date</td>
-                        </tr>
-                        <tr>
-                            <td className="booking-page-td">
-                                <input type="date" name="date" min={today} max={maxDate} onChange={(e) => {setBookingDate(e.target.value)}}/>
-                            </td>
-                        </tr>
-                    </div>
-                    <div className="booking-page-form-section">
-                        <tr>
-                            <td className="booking-page-td">Time</td>
-                        </tr>
-                        <tr>
-                            <td className="booking-page-td">
-                            <input type="time" max="19:00" min="6:00" onChange={(e) => setBookingTime(e.target.value)}/>
-                            </td>
-                        </tr>
-                    </div>
-                    <div className="booking-page-form-section">
-                        <tr>
-                            <td className="booking-page-td">Duration</td>
-                        </tr>
-                        <tr>
-                            <td className="booking-page-td">
-                                <select onChange={(e) => {setBookingDuration(e.target.value)}}>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </div>
-                    <div className="booking-page-form-section" style={{display: showSeatType ? "block" : "none"}}>
-                        <tr>
-                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={(e) => handleClick(e)}>Choose a seat</button></td>
-                        </tr>
-                        <tr>
-                            {getSeatChoices()}
-                        </tr>
-                    </div>
-                    <div className="booking-page-form-section">
-                        <tr>
-                            <td className="booking-page-td">Price</td>
-                        </tr>
-                        <tr>
-                            <td className="booking-page-td">
-                                <input type="text" className="booking-seat-price" name="price" value={showSeatType ? (seatPrice*bookingDuration) : (stadiumPrice*bookingDuration)} readOnly={true}/>
-                            </td>
-                        </tr>
-                    </div>
-                    </div>
-                </tbody>
-                </table>
-                <input className="booking-page-submit-btn" type="submit" value="Submit"/>
-            </form>
+                <div className="booking-page-form">
+                    <h3 className="booking-page-form-description">Make a Reservation</h3>
+                    <table className="booking-page-table">
+                        <tbody>
+                            <div className="booking-page-form-section">
+                                <tr>
+                                    <td className="booking-page-td">Booking Type</td>
+                                </tr>
+                                <tr>
+                                    <td className="booking-page-td">
+                                        <input type="radio" name="booking-type" id='seat' value="seat" onChange={() => { setBookingType("Seat"); setShowSeatType(true); setShowFormInput(true) }} />
+                                        <label for="seat" className="booking-page-booking-type">Seat</label>
+                                        <input type="radio" name="booking-type" id='stadium' value="stadium" onChange={() => { setBookingType("Stadium"); setShowFormInput(true); setShowSeatType(false); setSeatId(null); setPriceId(3) }} />
+                                        <label for="stadium" className="booking-page-booking-type">Stadium</label>
+                                    </td>
+                                </tr>
+                            </div>
+                            <div className="booking-page-form-section" style={{ display: showSeatType ? "block" : "none" }}>
+                                <tr>
+                                    <td className="booking-page-td">Seat Type</td>
+                                </tr>
+                                <tr>
+                                    <td className="booking-page-td">
+                                        <select onChange={(e) => { setSeatType(e.target.value) }}>
+                                            <option>NORMAL</option>
+                                            <option>VIP</option>
+                                            <option>COUPLE</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </div>
+                            <div className="booking-page-form-input-div" style={{ display: showFormInput ? "block" : "none" }}>
+                                <div className="booking-page-form-section">
+                                    <tr>
+                                        <td className="booking-page-td">Date</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="booking-page-td">
+                                            <input type="date" name="date" min={today} max={maxDate} onChange={(e) => { setBookingDate(e.target.value) }} />
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div className="booking-page-form-section">
+                                    <tr>
+                                        <td className="booking-page-td">Time</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="booking-page-td">
+                                            <input type="time" onChange={(e) => setBookingTime(e.target.value)} />
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div className="booking-page-form-section">
+                                    <tr>
+                                        <td className="booking-page-td">Duration</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="booking-page-td">
+                                            <select onChange={(e) => { setBookingDuration(e.target.value) }}>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div className="booking-page-form-section" style={{ display: showSeatType ? "block" : "none" }}>
+                                    <tr>
+                                        <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={(e) => handleClick(e)}>Choose a seat</button></td>
+                                    </tr>
+                                    <tr>
+                                        {getSeatChoices()}
+                                    </tr>
+                                </div>
+                                <div className="booking-page-form-section">
+                                    <tr>
+                                        <td className="booking-page-td">Price</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="booking-page-td">
+                                            <input type="text" className="booking-seat-price" name="price" value={showSeatType ? (seatPrice * bookingDuration) : (stadiumPrice * bookingDuration)} readOnly={true} />
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </tbody>
+                    </table>
+                    <input className="booking-page-submit-btn"  onClick = {handleSubmit}/>
+                </div>
             </div>
         </div>
     )
