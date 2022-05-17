@@ -47,14 +47,9 @@ public class BookingController {
     public List<AvailableSeatPriceDTO> getAvailableSeat(@RequestBody HashMap<String, String> seatForm) throws Exception {
         String start_time = seatForm.get("start_time");
         String duration = seatForm.get("duration");
-        String booking_date = seatForm.get("booking_date");
         String seat_type = seatForm.get("seat_type");
 
-        String json = "{";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-mm-dd");
-
-        Date booking_date_date = dateFormat2.parse(booking_date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm");
 
         Date start_time_date = dateFormat.parse(start_time);
 
@@ -68,15 +63,11 @@ public class BookingController {
         Iterable<Booking> allBooking = bookingService.findALl();
         Iterable<BookingSeat> allBookingSeat = bookingSeatService.findAll();
         List<Integer> unavailableSeat = new ArrayList<>();
-        Integer availableSeat = 0;
+
         for (Booking booking: allBooking) {
             Date start_time_date_booking = dateFormat.parse(booking.getStartTime());
             Date end_time_date_booking = dateFormat.parse(booking.getEndTime());
-            Date booking_date_date_booking = dateFormat2.parse(booking.getBooking_date());
 
-            if (booking_date_date.after(booking_date_date_booking) || booking_date_date.before(booking_date_date_booking)) {
-                continue;
-            }
             if (end_time_date_booking.before(start_time_date)) {
                 continue;
             }

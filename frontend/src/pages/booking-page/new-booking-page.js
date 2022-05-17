@@ -79,7 +79,7 @@ function BookingPage() {
         const form = {
             seat_type: seatType,
             booking_date: bookingDate,
-            start_time: bookingTime,
+            start_time: `${bookingDate} ${bookingTime}`,
             duration: bookingDuration
         }
         console.log(form);
@@ -193,7 +193,7 @@ function BookingPage() {
                     </div>
                     <div className="booking-page-form-section" style={{display: showSeatType ? "block" : "none"}}>
                         <tr>
-                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={handleClick}>Choose a seat</button></td>
+                            <td className="booking-page-td"><button className="booking-page-choose-seat" onClick={(e) => handleClick(e)}>Choose a seat</button></td>
                         </tr>
                         <tr>
                             {getSeatChoices()}
