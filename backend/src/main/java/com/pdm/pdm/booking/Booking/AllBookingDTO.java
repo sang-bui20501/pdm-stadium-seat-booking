@@ -2,7 +2,7 @@ package com.pdm.pdm.booking.Booking;
 
 public class AllBookingDTO {
   private int booking_id;
-  private int bookingstadium_id;
+  //private int bookingstadium_id;
   private int id;
   private String type;
   private int rate;
@@ -11,10 +11,10 @@ public class AllBookingDTO {
   private String end_time;
   private String bookingStatus;
 
-  public AllBookingDTO(int booking_id, int bookingstadium_id, int id, String type, int rate, int duration,
+  public AllBookingDTO(int booking_id, int id, String type, int rate, int duration,
       String start_time, String end_time, String bookingStatus) {
     this.booking_id = booking_id;
-    this.bookingstadium_id = bookingstadium_id;
+    //this.bookingstadium_id = bookingstadium_id;
     this.id = id;
     this.type = type;
     this.rate = rate;
@@ -28,17 +28,19 @@ public class AllBookingDTO {
     return booking_id;
   }
 
+  /*
   public int getBookingstadium_id() {
     return bookingstadium_id;
-  }
+  }*/
 
   public void setBooking_id(int booking_id) {
     this.booking_id = booking_id;
   }
 
+  /*
   public void setBookingstadium_id(int bookingstadium_id) {
     this.bookingstadium_id = bookingstadium_id;
-  }
+  }*/
 
   public int getId() {
     return id;

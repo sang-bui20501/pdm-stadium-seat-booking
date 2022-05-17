@@ -20,7 +20,7 @@ public class BookingStadiumService {
     }
 
     public String findByBookingId(Integer booking_id) {
-        return bookingStadiumRepository.findBookingStadiumByBooking_id(booking_id).toString();
+        return bookingStadiumRepository.findBookingStadiumByBooking_id(booking_id);
     }
 
     public void deleteBookingStadium(int bookingStadiumId) throws Exception {

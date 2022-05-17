@@ -51,7 +51,7 @@ public class CustomerService {
         ArrayList<AllBookingDTO> allBooking = new ArrayList<>();
 
         for(Booking booking : bookingRepository.findAllByCustomerId(Integer.parseInt(customer_id))){
-            BookingStadium bookingStadium = bookingStadiumRepository.findBookingStadiumByBooking_id(booking.getbooking_id());
+            //BookingStadium bookingStadium = bookingStadiumRepository.findBookingStadiumByBooking_id(booking.getbooking_id());
             BookingSeat bookingSeat = bookingSeatRepository.findBookingSeatByBookingId(booking.getbooking_id());
             if(bookingSeat == null)
                 continue;
@@ -60,7 +60,7 @@ public class CustomerService {
             System.out.println(booking.getStatus());
             allBooking.add(
                 new AllBookingDTO(booking.getbooking_id(),
-                    bookingStadium.getId(),
+                    //bookingStadium.getId(),
                     seat.getId(),
                     seat.getType(),
                     price.getRate(),
