@@ -128,8 +128,7 @@ public class BookingController {
         booking.setEndTime(dateFormat.format(end_time_date));*/
 
 
-        bookingService.save(booking);
-
+        booking = bookingService.save(booking);
 
         if (booking_form.get("seat_id") != null) {
             String seat_id = booking_form.get("seat_id");
