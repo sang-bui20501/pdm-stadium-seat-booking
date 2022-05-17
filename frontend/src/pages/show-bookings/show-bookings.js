@@ -53,6 +53,7 @@ function ShowBookings () {
         const arr = [];
         for (let i in bookingList) {
             const item = bookingList[i];
+            console.log(item)
             if (item.bookingStatus === "PENDING") {
                 arr.push(
                     <div className="show-booking-item">
@@ -77,7 +78,7 @@ function ShowBookings () {
                     <div className="show-booking-item">
                         <div className="show-booking-item-general-info">
                             <p className="show-booking-item-title">Booking #{item.booking_id}</p>
-                            <button className="show-booking-pay-btn" style={{display: new Date(item.start_time).getTime() >= now ? "block" : "none"}} onClick={(e) => handleDelete(e, item.bookingId)}>Delete</button>
+                            <button className="show-booking-pay-btn" style={{display: new Date(item.start_time).getTime() >= now ? "block" : "none"}} onClick={(e) => handleDelete(e, item.booking_id)}>Delete</button>
                         </div>
                         <div className="show-booking-item-info">
                             <p className="show-booking-info-item">Seat info: Seat {item.id} {item.type}</p>

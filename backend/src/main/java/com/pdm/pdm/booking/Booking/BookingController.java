@@ -162,16 +162,16 @@ public class BookingController {
     public String removeBooking(@PathVariable("booking_id") int bookingId) throws Exception {
         Booking booking = bookingService.getBooking(bookingId);
         String booking_stadium_id = bookingStadiumService.findByBookingId(booking.getbooking_id());
-        String booking_seat_id = String.valueOf(bookingSeatService.findByBookingId(booking.getbooking_id()).getSeat_id());
+        String booking_seat_id = String.valueOf(bookingSeatService.findByBookingId(bookingId).getId());
 
         try {
+            if (booking_seat_id != null) {
+                bookingSeatService.deleteBookingSeat(Integer.parseInt(booking_seat_id));
+            }
+            bookingService.deleteBooking(bookingId);
             if (booking_stadium_id != null) {
                 bookingStadiumService.deleteBookingStadium(Integer.parseInt(booking_stadium_id));
             }
-            if (booking_seat_id != null) {
-                bookingSeatService.deleteBookingSeat(Integer.parseInt(booking_stadium_id));
-            }
-            bookingService.deleteBooking(bookingId);
         } catch (Exception e) {
             e.printStackTrace();
         }

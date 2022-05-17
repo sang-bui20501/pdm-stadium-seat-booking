@@ -10,7 +10,7 @@ export default function Payment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/booking/paying/${bookingId}`).then((response) => {
+        axios.post(`http://localhost:8080/booking/paying/${bookingId}`).then((response) => {
             if (response.data) {
                 navigate("/your-bookings");
             }
