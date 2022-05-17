@@ -49,6 +49,8 @@ public class CustomerService {
 
         for(Booking booking : bookingRepository.findAllByCustomerId(Integer.parseInt(customer_id))){
             BookingSeat bookingSeat = bookingSeatRepository.findBookingSeatByBookingId(booking.getbooking_id());
+            if(bookingSeat == null)
+                continue;
             Seat seat = seatRepository.findById(bookingSeat.getSeat_id()).get();
             Price price = priceRepository.findById(seat.getPrice_id()).get();
             System.out.println(booking.getStatus());
