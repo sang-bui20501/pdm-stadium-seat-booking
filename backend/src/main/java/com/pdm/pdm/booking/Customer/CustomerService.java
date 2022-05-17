@@ -51,6 +51,7 @@ public class CustomerService {
             BookingSeat bookingSeat = bookingSeatRepository.findBookingSeatByBookingId(booking.getbooking_id());
             Seat seat = seatRepository.findById(bookingSeat.getSeat_id()).get();
             Price price = priceRepository.findById(seat.getPrice_id()).get();
+            System.out.println(booking.getStatus());
             allBooking.add(
                 new AllBookingDTO(booking.getbooking_id(),
                     seat.getId(),
